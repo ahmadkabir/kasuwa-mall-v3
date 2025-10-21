@@ -42,8 +42,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { productApi } from '@/lib/api/client';
 import { getProductImageUrl } from '@/lib/utils/image';
 import { addressApi, paymentApi, orderApi } from '@/lib/api/checkout-api';
-// @ts-ignore
-import { InterswitchPay } from 'react-interswitch';
 
 interface Address {
   id: number;
@@ -155,45 +153,58 @@ export default function CheckoutPage() {
 
     setLoadingAddresses(true);
     try {
-      const result = await addressApi.getUserAddresses(user.id);
-      
-      if (result.success) {
-        setSavedAddresses(result.addresses);
+      const token = localStorage.getItem('@@token');
+      const response = await fetch(`/api/user-address?user_id=${user.id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
 
-        // Set default address as selected
-        const defaultAddress = result.addresses.find((addr: Address) => addr.is_default);
-        if (defaultAddress) {
-          setSelectedAddress(defaultAddress);
-          setSelectedAddressId(defaultAddress.id);
-          // Auto-fill form with default address
-          setFormData(prev => ({
-            ...prev,
-            firstName: defaultAddress.first_name,
-            lastName: defaultAddress.last_name,
-            phone: defaultAddress.phone,
-            address: defaultAddress.address_line_1,
-            city: defaultAddress.city,
-            state: defaultAddress.state,
-            postalCode: defaultAddress.postal_code || ''
-          }));
-        } else if (result.addresses.length > 0) {
-          // If no default, select first address
-          const firstAddress = result.addresses[0];
-          setSelectedAddress(firstAddress);
-          setSelectedAddressId(firstAddress.id);
-          // Auto-fill form with first address
-          setFormData(prev => ({
-            ...prev,
-            firstName: firstAddress.first_name,
-            lastName: firstAddress.last_name,
-            phone: firstAddress.phone,
-            address: firstAddress.address_line_1,
-            city: firstAddress.city,
-            state: firstAddress.state,
-            postalCode: firstAddress.postal_code || ''
-          }));
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setSavedAddresses(data.addresses);
+
+          // Set default address as selected
+          const defaultAddress = data.addresses.find((addr: Address) => addr.is_default);
+          if (defaultAddress) {
+            setSelectedAddress(defaultAddress);
+            setSelectedAddressId(defaultAddress.id);
+            // Auto-fill form with default address
+            setFormData(prev => ({
+              ...prev,
+              firstName: defaultAddress.first_name,
+              lastName: defaultAddress.last_name,
+              phone: defaultAddress.phone,
+              address: defaultAddress.address_line_1,
+              city: defaultAddress.city,
+              state: defaultAddress.state,
+              postalCode: defaultAddress.postal_code || ''
+            }));
+          } else if (data.addresses.length > 0) {
+            // If no default, select first address
+            const firstAddress = data.addresses[0];
+            setSelectedAddress(firstAddress);
+            setSelectedAddressId(firstAddress.id);
+            // Auto-fill form with first address
+            setFormData(prev => ({
+              ...prev,
+              firstName: firstAddress.first_name,
+              lastName: firstAddress.last_name,
+              phone: firstAddress.phone,
+              address: firstAddress.address_line_1,
+              city: firstAddress.city,
+              state: firstAddress.state,
+              postalCode: firstAddress.postal_code || ''
+            }));
+          }
+        } else {
+          setSavedAddresses([]);
         }
       } else {
+        console.log('Attempting to fetch addresses for user:', user.id);
+      console.error('Failed to fetch addresses');
         setSavedAddresses([]);
       }
     } catch (error) {
@@ -207,7 +218,7 @@ export default function CheckoutPage() {
   // Fetch addresses when user is available
   useEffect(() => {
     console.log('User availability changed:', user);
-    if (user?.id) {
+    if (user) {
       fetchUserAddresses();
     }
   }, [user?.id]);
@@ -386,7 +397,7 @@ export default function CheckoutPage() {
   // Interswitch payment callback
   const paymentCallback = async (response: any) => {
     const txnRef = response.txnref || response.txn_ref || response.reference || '';
-    const amountInKobo = (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100;
+    const amountInKobo = (getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)) * 100;
     const merchantCode = 'MX162337';
 
     if (
@@ -533,7 +544,7 @@ export default function CheckoutPage() {
         },
         body: JSON.stringify({
           reference_number: transactionRef,
-          amount: (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100, // Amount in kobo
+          amount: (getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)) * 100, // Amount in kobo
           userId: user?.id
         })
       });
@@ -559,7 +570,7 @@ export default function CheckoutPage() {
           merchant_code: "MX162337",
           pay_item_id: "Default_Payable_MX162337",
           txn_ref: transactionRef,
-          amount: ((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100).toString(),
+          amount: ((getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)) * 100).toString(),
           currency: 'NGN',
           site_redirect_url: `${window.location.origin}/checkout`, 
           cust_email: user?.email || '',
@@ -700,9 +711,10 @@ export default function CheckoutPage() {
         });
 
         message += `💰 *Order Summary:*\n`;
+        message += `Subtotal: ₦${getTotalPrice().toLocaleString()}\n`;
         message += `Shipping: ₦2,500\n`;
         message += `Tax: ₦${Math.round(getTotalPrice() * 0.075).toLocaleString()}\n`;
-        message += `*Total: ₦${(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}*\n\n`;
+        message += `*Total: ₦${(getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)).toLocaleString()}*\n\n`;
 
         message += `⚠️ *Important:* Do not make payment until you receive your order.\n`;
         message += `📞 *Support:* +2349067393633`;
@@ -779,7 +791,7 @@ export default function CheckoutPage() {
     text: "Pay with Interswitch",
     mode: "LIVE", // Use TEST for development, LIVE for production
     transactionReference: transactionRef,
-    amount: ((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100).toString(),
+    amount: ((getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)) * 100).toString(),
     style: {
       width: "200px",
       height: "40px",
@@ -1230,13 +1242,17 @@ export default function CheckoutPage() {
                             <span>₦{getTotalPrice().toLocaleString()}</span>
                           </div>
                           <div className="flex justify-between">
+                            <span>Shipping</span>
+                            <span>₦2,500</span>
+                          </div>
+                          <div className="flex justify-between">
                             <span>Tax</span>
                             <span>₦{Math.round(getTotalPrice() * 0.075).toLocaleString()}</span>
                           </div>
                           <Separator />
                           <div className="flex justify-between font-semibold text-lg">
                             <span>Total</span>
-                            <span>₦{(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}</span>
+                            <span>₦{(getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)).toLocaleString()}</span>
                           </div>
                         </div>
                       </>
@@ -1265,7 +1281,7 @@ export default function CheckoutPage() {
                           {selectedPaymentMethod === 'transfer' && <Banknote className="h-5 w-5 mr-2" />}
                           {selectedPaymentMethod === 'whatsapp' ? 'Send Order via WhatsApp' :
                            selectedPaymentMethod === 'card' ? 'Pay with Card' :
-                           'Place Order'} (₦{getTotalItems() > 0 ? (getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString() : '0'})
+                           'Place Order'} (₦{getTotalItems() > 0 ? (getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)).toLocaleString() : '0'})
                         </>
                       )}
                     </Button>
@@ -1300,12 +1316,16 @@ export default function CheckoutPage() {
                       <span>₦{getTotalPrice().toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
+                      <span>Shipping</span>
+                      <span>₦2,500</span>
+                    </div>
+                    <div className="flex justify-between">
                       <span>Tax</span>
                       <span>₦{Math.round(getTotalPrice() * 0.075).toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between font-semibold pt-2 border-t">
                       <span>Total</span>
-                      <span>₦{(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}</span>
+                      <span>₦{(getTotalPrice() + 2500 + Math.round(getTotalPrice() * 0.075)).toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -1338,10 +1358,23 @@ export default function CheckoutPage() {
               <DialogFooter className="flex-col space-y-2">
                 {selectedPaymentMethod === 'card' ? (
                   <>
-                    {/*  */}
-                    <div className="w-full flex justify-center">
-                      <InterswitchPay {...paymentParameters} />
-                    </div>
+                    <Button 
+                      onClick={handlePaymentConfirmation}
+                      className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90 text-white"
+                      disabled={isProcessing}
+                    >
+                      {isProcessing ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <CreditCard className="h-4 w-4 mr-2" />
+                          Pay with Card
+                        </>
+                      )}
+                    </Button>
                   </>
                 ) : (
                   <Button

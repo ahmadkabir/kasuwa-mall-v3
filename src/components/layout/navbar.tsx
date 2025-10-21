@@ -81,7 +81,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <NavLink to="/products" variant="white">Products</NavLink>
             <NavLink to="/categories" variant="white">Categories</NavLink>
-            <NavLink to="/deals" variant="white">Deals</NavLink>
+            {/* <NavLink to="/deals" variant="white">Deals</NavLink> */}
           </div>
 
           {/* Search Bar */}
@@ -121,14 +121,23 @@ export function Navbar() {
               <Search className="h-5 w-5" />
             </Button>
 
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-white hover:bg-white/20"
+              onClick={toggleTheme}
+            >
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+
             {/* Wishlist */}
-            {isAuthenticated && (
+            {/* {isAuthenticated && (
               <Link to="/wishlist">
                 <Button variant="ghost" size="icon" className="rounded-full relative text-white hover:bg-white/20">
                   <Heart className="h-5 w-5" />
                 </Button>
               </Link>
-            )}
+            )} */}
 
             {/* Cart */}
             <CartDropdown />
@@ -186,7 +195,7 @@ export function Navbar() {
               </div>
             ) : (
               <Link to="/login">
-                <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-kasuwa-primary">
+                <Button variant="outline" size="sm" className="text-black border-white hover:bg-white hover:text-kasuwa-primary">
                   Login
                 </Button>
               </Link>

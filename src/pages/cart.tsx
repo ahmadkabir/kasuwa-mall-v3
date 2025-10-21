@@ -16,8 +16,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/store/cart-store'
 import { useUserStore } from '@/store/user-store'
-import { cn } from '@/lib/utils/cn'
 import { getProductImageUrl } from '@/lib/utils/image'
+import RecommendedProducts from './recomendedProduct'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice, getTotalItems, clearCart } =
@@ -26,9 +26,8 @@ export default function CartPage() {
   const navigate = useNavigate()
 
   const subtotal = getTotalPrice()
-  const shipping = subtotal > 50000 ? 0 : 2500 // Free shipping over ₦50,000
   const tax = subtotal * 0.075 // 7.5% VAT
-  const total = subtotal + shipping + tax
+  const total = subtotal + tax
 
   const handleProceedToCheckout = () => {
     if (!isAuthenticated) {
@@ -248,19 +247,7 @@ export default function CartPage() {
                   <span className="font-semibold">₦{subtotal.toLocaleString()}</span>
                 </div>
 
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Shipping</span>
-                  <span className={cn('font-semibold', shipping === 0 && 'text-green-500')}>
-                    {shipping === 0 ? 'FREE' : `₦${shipping.toLocaleString()}`}
-                  </span>
-                </div>
 
-                {shipping > 0 && (
-                  <div className="text-xs text-muted-foreground bg-white/5 p-2 rounded-lg">
-                    <Truck className="h-3 w-3 inline mr-1" />
-                    Free shipping on orders over ₦50,000
-                  </div>
-                )}
 
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Tax (7.5% VAT)</span>
@@ -328,20 +315,9 @@ export default function CartPage() {
         </div>
       )}
 
-      {/* Recommended Products Section (Optional) */}
+      {/* Recommended Products Section */}
       {items.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="glass-card p-6 rounded-2xl"
-        >
-          <h2 className="text-xl font-bold mb-4">You might also like</h2>
-          <p className="text-muted-foreground text-sm">
-            Check out these recommended products based on your cart
-          </p>
-          {/* Add recommended products grid here if needed */}
-        </motion.div>
+        <RecommendedProducts cartItems={items} />
       )}
     </div>
   )
@@ -370,3 +346,5 @@ function CartItemImage({ item }: { item: any }) {
     </div>
   )
 }
+
+// Recommended Products Component

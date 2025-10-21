@@ -80,13 +80,13 @@ export function SearchNavbar() {
             </Button>
 
             {/* Wishlist */}
-            {isAuthenticated && (
+            {/* {isAuthenticated && (
               <Link to="/wishlist">
                 <Button variant="ghost" size="icon" className="rounded-full relative text-white hover:bg-white/20">
                   <Heart className="h-5 w-5" />
                 </Button>
               </Link>
-            )}
+            )} */}
 
             {/* Cart */}
             <CartDropdown />

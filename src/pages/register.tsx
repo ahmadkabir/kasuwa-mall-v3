@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { useUserStore } from '@/store/user-store'
 import { authApi } from '@/lib/api/client'
+import { useToast } from '@/components/ui/use-toast'
 import { User, Mail, Lock, Phone, User2, Store, MapPin } from 'lucide-react'
 
 export default function RegisterPage() {
@@ -15,6 +16,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
   const [role, setRole] = useState<'user' | 'vendor'>('user')
   const [shopName, setShopName] = useState('')
   const [shopAddress, setShopAddress] = useState('')
@@ -23,6 +25,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { login } = useUserStore()
+  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,11 +47,19 @@ export default function RegisterPage() {
           shopaddress: shopAddress,
           shopcontact: shopContact,
         }),
+        ...(role === 'user' && address && {
+          address: address,
+        }),
       }
 
       const response = await authApi.register(registrationData)
 
       if (response.success) {
+        // Show success message
+        toast({
+          title: 'Registration Successful!',
+          description: 'Your account has been created successfully. You can now log in.',
+        });
         // Registration successful - redirect to login page
         navigate('/login?registered=true')
       } else {
@@ -170,6 +181,23 @@ export default function RegisterPage() {
               />
             </div>
           </div>
+
+          {role === 'user' && (
+            <div>
+              <label className="text-sm font-medium mb-2 block">Address</label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input 
+                  type="text" 
+                  placeholder="Enter your address" 
+                  glass
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+            </div>
+          )}
 
           <div>
             <label className="text-sm font-medium mb-2 block">Account Type</label>

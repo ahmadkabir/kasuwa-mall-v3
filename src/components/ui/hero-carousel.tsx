@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 
@@ -83,20 +83,10 @@ export function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
 
-  const goToPrev = useCallback(() => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? heroSlides.length - 1 : prevIndex - 1
-    )
-  }, [])
-
   const goToNext = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === heroSlides.length - 1 ? 0 : prevIndex + 1
     )
-  }, [])
-
-  const goToSlide = useCallback((index: number) => {
-    setCurrentIndex(index)
   }, [])
 
   // Auto-play functionality (paused when user hovers over carousel)
@@ -219,47 +209,7 @@ export function HeroCarousel() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation Arrows */}
-      <Button
-        variant="glass"
-        size="icon"
-        className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white"
-        onClick={goToPrev}
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </Button>
-      
-      <Button
-        variant="glass"
-        size="icon"
-        className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white"
-        onClick={goToNext}
-      >
-        <ChevronRight className="h-6 w-6" />
-      </Button>
 
-      {/* Dots Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-        {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex 
-                ? 'bg-white scale-125 w-6' 
-                : 'bg-white/50 hover:bg-white/75'
-            }`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Slide Counter */}
-      <div className="absolute top-6 right-6 z-20 bg-black/30 backdrop-blur-sm rounded-full px-4 py-2">
-        <span className="text-white text-sm font-medium">
-          {currentIndex + 1} / {heroSlides.length}
-        </span>
-      </div>
       
       {/* Floating elements for modern effect */}
       <motion.div

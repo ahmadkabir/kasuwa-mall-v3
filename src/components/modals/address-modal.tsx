@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useUserStore } from '@/store/user-store';
+import { addressApi } from '@/lib/api/checkout-api';
 
 interface Address {
   id: number;
@@ -76,19 +77,10 @@ export function AddressModal({
   const fetchAddresses = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('@@token');
-      const response = await fetch(`/api/user-address?user_id=${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          setAddresses(data.addresses);
-        }
+      const result = await addressApi.getUserAddressesByUserId(userId);
+      
+      if (result.success) {
+        setAddresses(result.addresses);
       }
     } catch (error) {
       console.error('Error fetching addresses:', error);
@@ -99,27 +91,16 @@ export function AddressModal({
 
   const handleSaveAddress = async () => {
     try {
-      const token = localStorage.getItem('@@token');
-      const response = await fetch('/api/user-address', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          ...newAddress
-        })
+      const result = await addressApi.createUserAddress({
+        user_id: userId,
+        ...newAddress
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success) {
-          // Refresh addresses
-          fetchAddresses();
-          setShowNewAddressForm(false);
-          resetNewAddressForm();
-        }
+      if (result.success) {
+        // Refresh addresses
+        fetchAddresses();
+        setShowNewAddressForm(false);
+        resetNewAddressForm();
       }
     } catch (error) {
       console.error('Error saving address:', error);
@@ -194,52 +175,57 @@ export function AddressModal({
             ) : (
               <>
                 {/* Saved Addresses */}
-                <div className="space-y-4">
-                  {addresses.map((address) => {
-                    const IconComponent = getAddressIcon(address.address_type);
-                    return (
-                      <Card 
-                        key={address.id} 
-                        className={`cursor-pointer hover:shadow-md transition-all ${
-                          selectedAddressIdState === address.id ? 'ring-2 ring-kasuwa-primary' : ''
-                        }`}
-                        onClick={() => handleAddressSelect(address)}
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start space-x-3">
-                              <IconComponent className="h-5 w-5 text-kasuwa-primary mt-0.5" />
-                              <div>
-                                <div className="flex items-center space-x-2">
-                                  <span className="font-medium">
-                                    {address.first_name} {address.last_name}
-                                  </span>
-                                  {address.is_default && (
-                                    <span className="text-xs bg-kasuwa-primary text-white px-2 py-0.5 rounded">
-                                      Default
+                <RadioGroup 
+                  value={selectedAddressIdState?.toString()} 
+                  onValueChange={(value) => setSelectedAddressIdState(Number(value))}
+                >
+                  <div className="space-y-4">
+                    {addresses.map((address) => {
+                      const IconComponent = getAddressIcon(address.address_type);
+                      return (
+                        <Card 
+                          key={address.id} 
+                          className={`cursor-pointer hover:shadow-md transition-all ${
+                            selectedAddressIdState === address.id ? 'ring-2 ring-kasuwa-primary' : ''
+                          }`}
+                          onClick={() => handleAddressSelect(address)}
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-3">
+                                <IconComponent className="h-5 w-5 text-kasuwa-primary mt-0.5" />
+                                <div>
+                                  <div className="flex items-center space-x-2">
+                                    <span className="font-medium">
+                                      {address.first_name} {address.last_name}
                                     </span>
-                                  )}
+                                    {address.is_default && (
+                                      <span className="text-xs bg-kasuwa-primary text-white px-2 py-0.5 rounded">
+                                        Default
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm text-gray-600 mt-1">
+                                    {address.address_line_1} {address.address_line_2 && address.address_line_2}
+                                  </p>
+                                  <p className="text-sm text-gray-600">
+                                    {address.city}, {address.state} {address.postal_code}
+                                  </p>
+                                  <p className="text-sm text-gray-600">{address.phone}</p>
                                 </div>
-                                <p className="text-sm text-gray-600 mt-1">
-                                  {address.address_line_1} {address.address_line_2 && address.address_line_2}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                  {address.city}, {address.state} {address.postal_code}
-                                </p>
-                                <p className="text-sm text-gray-600">{address.phone}</p>
                               </div>
+                              <RadioGroupItem
+                                value={address.id.toString()}
+                                id={`address-${address.id}`}
+                                className="mt-0.5"
+                              />
                             </div>
-                            <RadioGroupItem
-                              value={address.id.toString()}
-                              checked={selectedAddressIdState === address.id}
-                              className="mt-0.5"
-                            />
-                          </div>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </RadioGroup>
 
                 {/* Add New Address Button */}
                 <div className="mt-6">
