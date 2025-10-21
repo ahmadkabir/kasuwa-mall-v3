@@ -38,34 +38,90 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ScrollToTop />
-        <MainLayout>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:id" element={<ProductDetailPage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/categories/:id" element={<CategoryPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            
-            {/* Auth Routes */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            
-            {/* Protected Routes */}
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
-            
-            {/* Vendor Routes */}
-            <Route path="/vendor/dashboard" element={<VendorDashboardPage />} />
-            
-            {/* 404 */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </MainLayout>
+        <Routes>
+          {/* Routes with MainLayout */}
+          <Route path="/" element={
+            <MainLayout>
+              <HomePage />
+            </MainLayout>
+          } />
+          <Route path="/products" element={
+            <MainLayout>
+              <ProductsPage />
+            </MainLayout>
+          } />
+          <Route path="/products/:id" element={
+            <MainLayout>
+              <ProductDetailPage />
+            </MainLayout>
+          } />
+          <Route path="/categories" element={
+            <MainLayout>
+              <CategoriesPage />
+            </MainLayout>
+          } />
+          <Route path="/categories/:id" element={
+            <MainLayout>
+              <CategoryPage />
+            </MainLayout>
+          } />
+          
+          {/* Search page without MainLayout */}
+          <Route path="/search" element={<SearchPage />} />
+          
+          {/* Auth Routes */}
+          <Route path="/login" element={
+            <MainLayout>
+              <LoginPage />
+            </MainLayout>
+          } />
+          <Route path="/register" element={
+            <MainLayout>
+              <RegisterPage />
+            </MainLayout>
+          } />
+          
+          {/* Protected Routes */}
+          <Route path="/cart" element={
+            <MainLayout>
+              <CartPage />
+            </MainLayout>
+          } />
+          <Route path="/checkout" element={
+            <MainLayout>
+              <CheckoutPage />
+            </MainLayout>
+          } />
+          <Route path="/account" element={
+            <MainLayout>
+              <AccountPage />
+            </MainLayout>
+          } />
+          <Route path="/orders" element={
+            <MainLayout>
+              <OrdersPage />
+            </MainLayout>
+          } />
+          <Route path="/wishlist" element={
+            <MainLayout>
+              <WishlistPage />
+            </MainLayout>
+          } />
+          
+          {/* Vendor Routes */}
+          <Route path="/vendor/dashboard" element={
+            <MainLayout>
+              <VendorDashboardPage />
+            </MainLayout>
+          } />
+          
+          {/* 404 */}
+          <Route path="*" element={
+            <MainLayout>
+              <NotFoundPage />
+            </MainLayout>
+          } />
+        </Routes>
         <Toaster />
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
