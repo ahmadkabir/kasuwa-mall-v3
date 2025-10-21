@@ -4,7 +4,9 @@
  */
 
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3002',
+  BASE_URL: (import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL.trim() !== '') 
+    ? import.meta.env.VITE_API_URL 
+    : 'http://localhost:3002',
   
   ENDPOINTS: {
     // Products

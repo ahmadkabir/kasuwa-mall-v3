@@ -95,7 +95,7 @@ export function HeroCarousel() {
 
     const interval = setInterval(() => {
       goToNext()
-    }, 5000)
+    }, 4000)
 
     return () => clearInterval(interval)
   }, [isHovered, goToNext])
