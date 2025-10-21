@@ -18,10 +18,11 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         glass:
-          'glass-button text-foreground hover:shadow-lg hover:scale-105 active:scale-95',
+          'bg-white text-foreground hover:bg-gray-100 hover:shadow-lg hover:scale-105 active:scale-95 border border-gray-200',
         gradient:
           'bg-gradient-to-r from-kasuwa-primary via-kasuwa-brown to-primary text-white hover:shadow-xl hover:shadow-primary/50 hover:scale-105 active:scale-95',
         glow: 'bg-primary text-primary-foreground shadow-lg shadow-primary/50 hover:shadow-xl hover:shadow-primary/70 hover:scale-105 active:scale-95',
+        white: 'bg-white text-foreground hover:bg-gray-100 shadow-sm hover:shadow-md border border-gray-200',
       },
       size: {
         default: 'h-10 px-4 py-2',

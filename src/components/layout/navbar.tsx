@@ -93,6 +93,7 @@ export function Navbar() {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onClick={() => navigate('/search')}
                   className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60 focus:ring-1 focus:ring-white/50 focus:border-white/50"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
@@ -219,6 +220,7 @@ export function Navbar() {
                     placeholder="Search products..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
+                    onClick={() => navigate('/search')}
                     className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-white/60 focus:ring-1 focus:ring-white/50 focus:border-white/50"
                   />
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />

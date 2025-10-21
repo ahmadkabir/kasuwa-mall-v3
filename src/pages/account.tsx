@@ -216,17 +216,17 @@ export default function AccountPage() {
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-kasuwa-secondary flex items-center justify-center mx-auto mb-4">
                 <User className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-xl font-semibold text-foreground">
                 {user?.firstname} {user?.lastname}
               </h3>
-              <p className="text-sm text-white/70">@{user?.username}</p>
+              <p className="text-sm text-muted-foreground">@{user?.username}</p>
               <div className="flex items-center justify-center mt-2 space-x-2">
                 {getRoleBadge(user?.role || '')}
                 {getStatusBadge(user?.status || '')}
               </div>
               <div className="flex items-center justify-center mt-2">
-                <Calendar className="h-4 w-4 text-white/60 mr-1" />
-                <span className="text-xs text-white/60">Member since {userStats.memberSince}</span>
+                <Calendar className="h-4 w-4 text-muted-foreground/60 mr-1" />
+                <span className="text-xs text-muted-foreground">Member since {userStats.memberSince}</span>
               </div>
             </div>
 
@@ -234,20 +234,20 @@ export default function AccountPage() {
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="glass-card p-3 rounded-lg text-center">
                 <Package className="h-5 w-5 text-primary mx-auto mb-1" />
-                <p className="text-lg font-semibold text-white">{userStats.totalOrders}</p>
-                <p className="text-xs text-white/70">Orders</p>
+                <p className="text-lg font-semibold text-foreground">{userStats.totalOrders}</p>
+                <p className="text-xs text-muted-foreground">Orders</p>
               </div>
               <div className="glass-card p-3 rounded-lg text-center">
                 <Heart className="h-5 w-5 text-primary mx-auto mb-1" />
-                <p className="text-lg font-semibold text-white">{userStats.wishlistItems}</p>
-                <p className="text-xs text-white/70">Wishlist</p>
+                <p className="text-lg font-semibold text-foreground">{userStats.wishlistItems}</p>
+                <p className="text-xs text-muted-foreground">Wishlist</p>
               </div>
             </div>
 
             {/* Total Spent */}
             <div className="mb-6 p-4 bg-gradient-to-r from-primary/20 to-kasuwa-secondary/20 rounded-lg text-center">
-              <p className="text-sm text-white/80">Total Spent</p>
-              <p className="text-xl font-bold text-white">₦{userStats.totalSpent.toLocaleString()}</p>
+              <p className="text-sm text-muted-foreground">Total Spent</p>
+              <p className="text-xl font-bold text-foreground">₦{userStats.totalSpent.toLocaleString()}</p>
             </div>
 
             {/* Quick Actions */}
@@ -345,9 +345,9 @@ export default function AccountPage() {
                       className="mt-1"
                     />
                   ) : (
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <User className="h-4 w-4 mr-2 text-white/70" />
-                      <span className="text-white">{formData.firstname || 'Not provided'}</span>
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="text-foreground">{formData.firstname || 'Not provided'}</span>
                     </div>
                   )}
                 </div>
@@ -363,9 +363,9 @@ export default function AccountPage() {
                       className="mt-1"
                     />
                   ) : (
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <User className="h-4 w-4 mr-2 text-white/70" />
-                      <span className="text-white">{formData.lastname || 'Not provided'}</span>
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="text-foreground">{formData.lastname || 'Not provided'}</span>
                     </div>
                   )}
                 </div>
@@ -381,9 +381,9 @@ export default function AccountPage() {
                       className="mt-1"
                     />
                   ) : (
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <User className="h-4 w-4 mr-2 text-white/70" />
-                      <span className="text-white">@{formData.username || 'Not provided'}</span>
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="text-foreground">@{formData.username || 'Not provided'}</span>
                     </div>
                   )}
                 </div>
@@ -400,15 +400,15 @@ export default function AccountPage() {
                       className="mt-1"
                     />
                   ) : (
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <Mail className="h-4 w-4 mr-2 text-white/70" />
-                      <span className="text-white">
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <Mail className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="text-foreground">
                         {!showEmail ? `${formData.email?.substring(0, 2)}***${formData.email?.substring(formData.email?.indexOf('@') - 2)}` : formData.email || 'Not provided'}
                       </span>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="ml-auto text-white/70 hover:text-white"
+                        className="ml-auto text-muted-foreground hover:text-foreground"
                         onClick={() => setShowEmail(!showEmail)}
                       >
                         {showEmail ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -428,15 +428,15 @@ export default function AccountPage() {
                       className="mt-1"
                     />
                   ) : (
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <Phone className="h-4 w-4 mr-2 text-white/70" />
-                      <span className="text-white">
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="text-foreground">
                         {!showPhone ? `${formData.phone?.substring(0, 4)}***${formData.phone?.substring(formData.phone?.length - 2)}` : formData.phone || 'Not provided'}
                       </span>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="ml-auto text-white/70 hover:text-white"
+                        className="ml-auto text-muted-foreground hover:text-foreground"
                         onClick={() => setShowPhone(!showPhone)}
                       >
                         {showPhone ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -449,7 +449,7 @@ export default function AccountPage() {
               {/* Account Information */}
               <Separator />
               <div className="space-y-4">
-                <h3 className="font-bold text-white flex items-center">
+                <h3 className="font-bold text-foreground flex items-center">
                   <Shield className="h-4 w-4 mr-2 text-primary" />
                   Account Information
                 </h3>
@@ -468,15 +468,15 @@ export default function AccountPage() {
                   </div>
                   <div>
                     <Label>Member Since</Label>
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <Calendar className="h-4 w-4 mr-2 text-white/70" />
-                      <span className="text-white">{userStats.memberSince}</span>
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="text-foreground">{userStats.memberSince}</span>
                     </div>
                   </div>
                   <div>
                     <Label>User ID</Label>
-                    <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                      <span className="text-sm font-mono text-white/80">{user?.id}</span>
+                    <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                      <span className="text-sm font-mono text-foreground/80">{user?.id}</span>
                     </div>
                   </div>
                 </div>
@@ -487,37 +487,37 @@ export default function AccountPage() {
                 <>
                   <Separator />
                   <div className="space-y-4">
-                    <h3 className="font-bold text-white flex items-center">
+                    <h3 className="font-bold text-foreground flex items-center">
                       <Store className="h-4 w-4 mr-2 text-primary" />
                       Vendor Information
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label>Shop Name</Label>
-                        <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                          <Store className="h-4 w-4 mr-2 text-white/70" />
-                          <span className="text-white">{user.shopname}</span>
+                        <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                          <Store className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span className="text-foreground">{user.shopname}</span>
                         </div>
                       </div>
                       <div>
                         <Label>Business Type</Label>
-                        <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                          <Building className="h-4 w-4 mr-2 text-white/70" />
-                          <span className="text-white">{user.type_of_bussiness || 'Not specified'}</span>
+                        <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                          <Building className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span className="text-foreground">{user.type_of_bussiness || 'Not specified'}</span>
                         </div>
                       </div>
                       <div>
                         <Label>Shop Address</Label>
-                        <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                          <MapPin className="h-4 w-4 mr-2 text-white/70" />
-                          <span className="text-white">{user.shopaddress || 'Not provided'}</span>
+                        <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                          <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span className="text-foreground">{user.shopaddress || 'Not provided'}</span>
                         </div>
                       </div>
                       <div>
                         <Label>Shop Contact</Label>
-                        <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                          <Phone className="h-4 w-4 mr-2 text-white/70" />
-                          <span className="text-white">{user.shopcontact || 'Not provided'}</span>
+                        <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                          <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
+                          <span className="text-foreground">{user.shopcontact || 'Not provided'}</span>
                         </div>
                       </div>
                     </div>
@@ -536,9 +536,9 @@ export default function AccountPage() {
                     className="mt-1"
                   />
                 ) : (
-                  <div className="flex items-center mt-1 p-3 bg-white/10 rounded-lg">
-                    <MapPin className="h-4 w-4 mr-2 text-white/70" />
-                    <span className="text-white">{formData.address || 'Not provided'}</span>
+                  <div className="flex items-center mt-1 p-3 bg-muted/30 rounded-lg">
+                    <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <span className="text-foreground">{formData.address || 'Not provided'}</span>
                   </div>
                 )}
               </div>
@@ -551,12 +551,12 @@ export default function AccountPage() {
                     name="bio"
                     value={formData.bio}
                     onChange={handleInputChange}
-                    className="w-full mt-1 p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    className="w-full mt-1 p-3 bg-muted border border-input rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                     rows={3}
                   />
                 ) : (
-                  <div className="mt-1 p-3 bg-white/10 rounded-lg">
-                    <span className="text-white">{formData.bio || 'No bio provided'}</span>
+                  <div className="mt-1 p-3 bg-muted/30 rounded-lg">
+                    <span className="text-foreground">{formData.bio || 'No bio provided'}</span>
                   </div>
                 )}
               </div>
@@ -581,7 +581,7 @@ export default function AccountPage() {
                   <Bell className="h-5 w-5 mr-3 text-primary" />
                   <div>
                     <p className="font-medium">Notifications</p>
-                    <p className="text-sm text-white/70">Manage your notification preferences</p>
+                    <p className="text-sm text-muted-foreground">Manage your notification preferences</p>
                   </div>
                 </div>
               </Button>
@@ -591,7 +591,7 @@ export default function AccountPage() {
                   <Shield className="h-5 w-5 mr-3 text-primary" />
                   <div>
                     <p className="font-medium">Security</p>
-                    <p className="text-sm text-white/70">Password and security settings</p>
+                    <p className="text-sm text-muted-foreground">Password and security settings</p>
                   </div>
                 </div>
               </Button>
@@ -601,7 +601,7 @@ export default function AccountPage() {
                   <MapPin className="h-5 w-5 mr-3 text-primary" />
                   <div>
                     <p className="font-medium">Addresses</p>
-                    <p className="text-sm text-white/70">Manage shipping addresses</p>
+                    <p className="text-sm text-muted-foreground">Manage shipping addresses</p>
                   </div>
                 </div>
               </Button>
@@ -611,7 +611,7 @@ export default function AccountPage() {
                   <Gift className="h-5 w-5 mr-3 text-primary" />
                   <div>
                     <p className="font-medium">Rewards</p>
-                    <p className="text-sm text-white/70">View your rewards and points</p>
+                    <p className="text-sm text-muted-foreground">View your rewards and points</p>
                   </div>
                 </div>
               </Button>
@@ -621,7 +621,7 @@ export default function AccountPage() {
                   <Lock className="h-5 w-5 mr-3 text-primary" />
                   <div>
                     <p className="font-medium">Privacy</p>
-                    <p className="text-sm text-white/70">Privacy settings</p>
+                    <p className="text-sm text-muted-foreground">Privacy settings</p>
                   </div>
                 </div>
               </Button>
@@ -631,7 +631,7 @@ export default function AccountPage() {
                   <Star className="h-5 w-5 mr-3 text-primary" />
                   <div>
                     <p className="font-medium">Reviews</p>
-                    <p className="text-sm text-white/70">Manage your product reviews</p>
+                    <p className="text-sm text-muted-foreground">Manage your product reviews</p>
                   </div>
                 </div>
               </Button>
@@ -648,32 +648,32 @@ export default function AccountPage() {
             <h2 className="text-xl font-bold mb-6">Recent Activity</h2>
             
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg">
+              <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg">
                 <Package className="h-5 w-5 text-primary" />
                 <div className="flex-1">
-                  <p className="font-medium text-white">Order #KM-2024-001 shipped</p>
-                  <p className="text-sm text-white/70">2 hours ago</p>
+                  <p className="font-medium text-foreground">Order #KM-2024-001 shipped</p>
+                  <p className="text-sm text-muted-foreground">2 hours ago</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg">
+              <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg">
                 <Heart className="h-5 w-5 text-primary" />
                 <div className="flex-1">
-                  <p className="font-medium text-white">Added 3 items to wishlist</p>
-                  <p className="text-sm text-white/70">1 day ago</p>
+                  <p className="font-medium text-foreground">Added 3 items to wishlist</p>
+                  <p className="text-sm text-muted-foreground">1 day ago</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg">
+              <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg">
                 <User className="h-5 w-5 text-primary" />
                 <div className="flex-1">
-                  <p className="font-medium text-white">Profile updated</p>
-                  <p className="text-sm text-white/70">3 days ago</p>
+                  <p className="font-medium text-foreground">Profile updated</p>
+                  <p className="text-sm text-muted-foreground">3 days ago</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 p-3 bg-white/10 rounded-lg">
+              <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg">
                 <Gift className="h-5 w-5 text-primary" />
                 <div className="flex-1">
-                  <p className="font-medium text-white">New reward earned</p>
-                  <p className="text-sm text-white/70">1 week ago</p>
+                  <p className="font-medium text-foreground">New reward earned</p>
+                  <p className="text-sm text-muted-foreground">1 week ago</p>
                 </div>
               </div>
             </div>
