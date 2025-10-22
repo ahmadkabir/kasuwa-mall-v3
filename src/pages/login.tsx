@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useUserStore } from '@/store/user-store'
 import { authApi } from '@/lib/api/client'
-import { Mail, Lock, User } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')

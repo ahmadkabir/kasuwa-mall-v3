@@ -3,10 +3,8 @@ import { motion } from 'framer-motion'
 import { 
   User, 
   ArrowLeft, 
-  Heart, 
   Sun, 
   Moon, 
-  Package 
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CartDropdown } from '@/components/layout/cart-dropdown'
@@ -16,7 +14,7 @@ import { useThemeStore } from '@/store/theme-store'
 
 export function SearchNavbar() {
   const { getTotalItems } = useCartStore()
-  const { user, isAuthenticated } = useUserStore()
+  const { isAuthenticated } = useUserStore()
   const { theme, toggleTheme } = useThemeStore()
   const navigate = useNavigate()
   

@@ -7,7 +7,7 @@
  * Get the backend URL from environment or default
  */
 export function getBackendUrl(): string {
-  return (import.meta.env?.VITE_API_URL as string) || 'http://localhost:3002'
+  return (process.env?.VITE_API_URL as string) || 'http://localhost:3002'
 }
 
 /**

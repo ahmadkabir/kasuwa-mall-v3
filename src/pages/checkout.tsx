@@ -13,11 +13,8 @@ import {
   Building, 
   Banknote, 
   Smartphone, 
-  AlertCircle, 
   CheckCircle, 
   Lock,
-  Package,
-  Clock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,15 +31,13 @@ import {
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AddressModal } from '@/components/modals/address-modal';
 import { useUserStore } from '@/store/user-store';
 import { useCartStore } from '@/store/cart-store';
 import { useToast } from '@/components/ui/use-toast';
-import { productApi } from '@/lib/api/client';
 import { getProductImageUrl } from '@/lib/utils/image';
-import { addressApi, paymentApi, orderApi } from '@/lib/api/checkout-api';
-// @ts-ignore
+import { addressApi, orderApi } from '@/lib/api/checkout-api';
 import { InterswitchPay } from 'react-interswitch';
 
 interface Address {
@@ -242,29 +237,7 @@ export default function CheckoutPage() {
     setShowNewAddressForm(false);
   };
 
-  // Handle address selection
-  const handleAddressSelection = (addressId: string) => {
-    if (addressId === 'new') {
-      setShowNewAddressForm(true);
-      setSelectedAddressId(null);
-      setSelectedAddress(null);
-      // Clear address fields for new address
-      setFormData(prev => ({
-        ...prev,
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        postalCode: ''
-      }));
-    } else {
-      const addressIdNum = parseInt(addressId);
-      const selectedAddr = savedAddresses.find(addr => addr.id === addressIdNum);
-      if (selectedAddr) {
-        handleAddressSelect(selectedAddr);
-      }
-    }
-  };
+
 
   const getAddressIcon = (type: string) => {
     switch (type) {

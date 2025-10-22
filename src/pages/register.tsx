@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
-import { useUserStore } from '@/store/user-store'
 import { authApi } from '@/lib/api/client'
 import { useToast } from '@/components/ui/use-toast'
 import { User, Mail, Lock, Phone, User2, Store, MapPin } from 'lucide-react'
@@ -24,7 +23,6 @@ export default function RegisterPage() {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { login } = useUserStore()
   const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {

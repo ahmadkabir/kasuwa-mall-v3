@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/cards/product-card'
 import { CategoryCard } from '@/components/cards/category-card'
-import { LoadingSpinner, LoadingSkeleton } from '@/components/ui/loading-spinner'
+import { LoadingSkeleton } from '@/components/ui/loading-spinner'
 import { productApi, categoryApi } from '@/lib/api/client'
 import { HeroCarousel } from '@/components/ui/hero-carousel'
 
@@ -124,7 +124,7 @@ export default function HomePage() {
             }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            {featuredProducts.map((product, index) => (
+            {featuredProducts.map((product) => (
               <motion.div
                 key={product.product_id}
                 variants={{

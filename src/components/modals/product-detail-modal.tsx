@@ -29,14 +29,20 @@ export function ProductDetailModal({ product }: ProductDetailModalProps) {
   const isOutOfStock = product.qty <= 0
 
   const handleAddToCart = () => {
+    // First add the item with quantity 1, then update the quantity
     addItem({
       product_id: product.product_id,
       name: product.name,
       price: product.price,
       image_urls: product.image_urls,
       maxQuantity: product.qty,
-      quantity,
-    })
+    });
+    
+    // Now update the quantity to the desired amount
+    const { updateQuantity } = useCartStore.getState();
+    // const existingItem = items.find(item => item.product_id === product.product_id);
+    // If the item was already in the cart, we still want to update to the selected quantity
+    updateQuantity(product.product_id, quantity);
   }
 
   const incrementQuantity = () => {
@@ -104,7 +110,7 @@ export function ProductDetailModal({ product }: ProductDetailModalProps) {
                 )}
               >
                 <img
-                  src={getProductImageUrl(imageUrls[index])}
+                  src={getProductImageUrl(imageUrls[index]) || ''}
                   alt={`${product.name} ${index + 1}`}
                   className="h-full w-full object-cover"
                   onError={(e) => {

@@ -5,8 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useUserStore } from '@/store/user-store';
+import { Card, CardContent } from '@/components/ui/card';
 import { addressApi } from '@/lib/api/checkout-api';
 
 interface Address {
@@ -42,7 +41,7 @@ export function AddressModal({
   onAddressSelect,
   selectedAddressId
 }: AddressModalProps) {
-  const { user } = useUserStore();
+
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);

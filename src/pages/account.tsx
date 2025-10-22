@@ -12,7 +12,6 @@ import {
   X,
   Package,
   Heart,
-  CreditCard,
   Bell,
   Settings,
   Shield,
@@ -43,8 +42,26 @@ interface UserStats {
   memberSince: string
 }
 
+interface User {
+  id: string
+  firstname?: string
+  lastname?: string
+  username?: string
+  email?: string
+  phone?: string
+  address?: string
+  status?: string
+  role?: string
+  createdAt?: string
+  shopname?: string
+  shopaddress?: string
+  shopcontact?: string // ✅ This fixes the error
+  type_of_bussiness?: string
+}
+
 export default function AccountPage() {
-  const { user, isAuthenticated, logout } = useUserStore()
+  const { isAuthenticated, logout } = useUserStore()
+  const { user } = useUserStore() as { user: User | null }
   const { toast } = useToast()
   const navigate = useNavigate()
   
@@ -82,7 +99,7 @@ export default function AccountPage() {
       })
       
       // Set user stats with safe date formatting
-      const memberSince = user.createdAt ? 
+      const memberSince = user?.createdAt ? 
         new Date(user.createdAt).toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long'

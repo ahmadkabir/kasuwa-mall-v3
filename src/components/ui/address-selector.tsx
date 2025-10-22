@@ -7,15 +7,13 @@ import {
   Plus, 
   CheckCircle, 
   User, 
-  Phone, 
-  Mail,
+  Phone,
   Edit,
   Trash2
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useUserStore } from '@/store/user-store'
 import { addressApi } from '@/lib/api/client'
 import { cn } from '@/lib/utils/cn'
@@ -225,7 +223,7 @@ export function AddressSelector({
         onAddressSelect(response.address)
       } else {
         console.log('API call failed:', response)
-        setErrors({ submit: response.message || 'Failed to save address. Please try again.' })
+        setErrors({ submit: 'Failed to save address. Please try again.' })
       }
     } catch (error) {
       console.error('Error saving address:', error)

@@ -163,19 +163,20 @@ export const authApi = {
   },
 
   async login(credentials: { email: string; password: string }) {
-    const response = await apiCall<{ success: boolean; token?: string; userDetails?: any }>(
+    const response = await apiCall<{ success: boolean; token?: string; userDetails?: any; message?: string }>(
       API_CONFIG.ENDPOINTS.USER_LOGIN,
       {
         method: 'POST',
         body: JSON.stringify(credentials),
       }
     )
-    
+
     // Transform response to match v3 expectations
     return {
       success: response.success,
       token: response.token,
-      result: response.userDetails
+      result: response.userDetails,
+      message: response.message
     }
   },
 

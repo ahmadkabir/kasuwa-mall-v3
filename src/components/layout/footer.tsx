@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Facebook, Mail, Phone, MapPin, MessageCircle, Instagram, Globe } from 'lucide-react'
+import { Facebook, Mail, Phone, MapPin, MessageCircle, Globe } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -116,7 +116,7 @@ export function Footer() {
                     className="text-white hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110" 
                     asChild
                   >
-                    <Link href="https://www.facebook.com/kasuwamall/" target="_blank" rel="noopener noreferrer">
+                    <Link to="https://www.facebook.com/kasuwamall/" target="_blank" rel="noopener noreferrer">
                       <Facebook className="h-5 w-5" />
                     </Link>
                   </Button>
@@ -150,7 +150,7 @@ export function Footer() {
               ].map((item, index) => (
                 <li key={index}>
                   <Link 
-                    href={item.href} 
+                    to={item.href} 
                     className="group flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
                   >
                     <span className="text-lg">{item.icon}</span>
@@ -184,7 +184,7 @@ export function Footer() {
               ].map((item, index) => (
                 <li key={index}>
                   <Link 
-                    href={item.href} 
+                    to={item.href} 
                     className="group flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
                   >
                     <span className="text-lg">{item.icon}</span>
@@ -265,7 +265,7 @@ export function Footer() {
               <div className="text-center md:text-left">
                 <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
                   <p className="text-white/90 font-medium">
-                    © 2024 <Link href="#" className="text-white hover:text-white/80 font-bold border-b border-white/30 hover:border-white/60 transition-all duration-300">KASUWAMALL Inc</Link>, All Rights Reserved.
+                    © 2024 <Link to="#" className="text-white hover:text-white/80 font-bold border-b border-white/30 hover:border-white/60 transition-all duration-300">KASUWAMALL Inc</Link>, All Rights Reserved.
                   </p>
                   <div className="flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -277,10 +277,10 @@ export function Footer() {
               
               <div className="text-center md:text-right">
                 <div className="flex items-center space-x-6 text-sm">
-                  <Link href="/privacy" className="text-white/70 hover:text-white transition-colors duration-300 hover:underline underline-offset-4">
+                  <Link to="/privacy" className="text-white/70 hover:text-white transition-colors duration-300 hover:underline underline-offset-4">
                     Privacy
                   </Link>
-                  <Link href="/terms" className="text-white/70 hover:text-white transition-colors duration-300 hover:underline underline-offset-4">
+                  <Link to="/terms" className="text-white/70 hover:text-white transition-colors duration-300 hover:underline underline-offset-4">
                     Terms
                   </Link>
                   <div className="flex items-center space-x-2 text-white/60">

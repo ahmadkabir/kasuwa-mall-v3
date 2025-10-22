@@ -6,7 +6,6 @@ import {
   Search,
   Menu,
   X,
-  Heart,
   Sun,
   Moon,
   LogOut,

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ProductCard } from '@/components/cards/product-card'
 import { LoadingSkeleton } from '@/components/ui/loading-spinner'
-import { productApi, categoryApi, Category } from '@/lib/api/client'
+import { productApi, categoryApi } from '@/lib/api/client'
 
 export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -23,7 +23,19 @@ export default function ProductsPage() {
 
   const { data: categories, isLoading: isLoadingCategories } = useQuery({
     queryKey: ['categories'],
-    queryFn: categoryApi.getAllCategories,
+    queryFn: async () => {
+      try {
+        // Try both endpoints to see which one works
+        let categories = await categoryApi.getAll();
+        if (!categories || categories.length === 0) {
+          categories = await categoryApi.getAllCategories();
+        }
+        return categories;
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+      }
+    },
   })
 
   // Combined filtering logic
