@@ -23,7 +23,7 @@ export default function HomePage() {
   const featuredProducts = products?.slice(0, 8) || []
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-10">
       {/* Hero Carousel Section */}
       <section className="relative overflow-hidden">
         <HeroCarousel />
@@ -49,7 +49,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-8">
+      <section className="py-5">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-2xl font-bold mb-1">Shop by Category</h2>
@@ -140,7 +140,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-10 overflow-hidden">
         <div className="glass-card p-12 text-center rounded-3xl">
           <h2 className="text-4xl font-bold mb-4">
             Ready to Start Shopping?

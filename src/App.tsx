@@ -21,6 +21,8 @@ import WishlistPage from '@/pages/wishlist'
 import SearchPage from '@/pages/search'
 import VendorDashboardPage from '@/pages/vendor-dashboard'
 import NotFoundPage from '@/pages/not-found'
+import PrivacyPage from '@/pages/privacy'
+import TermsPage from '@/pages/terms'
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -115,6 +117,20 @@ function App() {
             </MainLayout>
           } />
           
+          {/* Privacy Route */}
+          <Route path="/privacy" element={
+            <MainLayout>
+              <PrivacyPage />
+            </MainLayout>
+          } />
+          
+          {/* Terms Route */}
+          <Route path="/terms" element={
+            <MainLayout>
+              <TermsPage />
+            </MainLayout>
+          } />
+          
           {/* 404 */}
           <Route path="*" element={
             <MainLayout>
@@ -124,7 +140,7 @@ function App() {
         </Routes>
         <Toaster />
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   )
 }

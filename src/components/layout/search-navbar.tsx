@@ -68,14 +68,14 @@ export function SearchNavbar() {
           {/* Right Actions */}
           <div className="flex items-center space-x-2">
             {/* Theme Toggle */}
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               className="rounded-full text-white hover:bg-white/20"
               onClick={toggleTheme}
             >
               {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
+            </Button> */}
 
             {/* Wishlist */}
             {/* {isAuthenticated && (

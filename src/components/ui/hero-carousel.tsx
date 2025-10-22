@@ -117,8 +117,7 @@ export function HeroCarousel() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1)_0%,rgba(0,0,0,0)_70%)]" />
+
 
       {/* Slides container */}
       <div className="relative w-full h-full">
@@ -210,32 +209,7 @@ export function HeroCarousel() {
       </div>
 
 
-      
-      {/* Floating elements for modern effect */}
-      <motion.div
-        animate={{
-          y: [0, -15, 0],
-          rotate: [0, 3, 0],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        className="absolute top-20 left-20 w-16 h-16 bg-gradient-to-br from-kasuwa-secondary to-kasuwa-primary rounded-full opacity-20 blur-lg"
-      />
-      <motion.div
-        animate={{
-          y: [0, 15, 0],
-          rotate: [0, -3, 0],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-primary to-kasuwa-brown rounded-full opacity-20 blur-lg"
-      />
+
     </div>
   )
 }
