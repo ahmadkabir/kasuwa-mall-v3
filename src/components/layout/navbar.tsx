@@ -6,8 +6,6 @@ import {
   Search,
   Menu,
   X,
-  Sun,
-  Moon,
   LogOut,
   Package,
   Settings,
@@ -17,7 +15,7 @@ import { Input } from '@/components/ui/input'
 import { CartDropdown } from '@/components/layout/cart-dropdown'
 import { useCartStore } from '@/store/cart-store'
 import { useUserStore } from '@/store/user-store'
-import { useThemeStore } from '@/store/theme-store'
+// import { useThemeStore } from '@/store/theme-store'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,7 +25,7 @@ export function Navbar() {
   
   const { getTotalItems } = useCartStore()
   const { user, isAuthenticated, logout } = useUserStore()
-  const { theme, toggleTheme } = useThemeStore()
+  // const { theme, toggleTheme } = useThemeStore()
   const navigate = useNavigate()
 
   const cartItemsCount = getTotalItems()

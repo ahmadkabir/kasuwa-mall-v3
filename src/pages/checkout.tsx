@@ -37,7 +37,8 @@ import { useUserStore } from '@/store/user-store';
 import { useCartStore } from '@/store/cart-store';
 import { useToast } from '@/components/ui/use-toast';
 import { getProductImageUrl } from '@/lib/utils/image';
-import { addressApi, orderApi } from '@/lib/api/checkout-api';
+import { addressApi, paymentApi } from '@/lib/api/checkout-api';
+import { orderApi as mainOrderApi } from '@/lib/api/client';
 import { InterswitchPay } from 'react-interswitch';
 
 interface Address {
@@ -359,8 +360,6 @@ export default function CheckoutPage() {
   // Interswitch payment callback
   const paymentCallback = async (response: any) => {
     const txnRef = response.txnref || response.txn_ref || response.reference || '';
-    const amountInKobo = (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100;
-    const merchantCode = 'MX162337';
 
     if (
       response.resp === '00' ||
@@ -373,34 +372,15 @@ export default function CheckoutPage() {
       });
 
       try {
-        // Immediate verification with Interswitch API
-        const verifyResp = await fetch(
-          `https://webpay.interswitchng.com/collections/api/v1/gettransaction.json?merchantcode=${merchantCode}&transactionreference=${txnRef}&amount=${amountInKobo}`,
-          {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
+        // Send payment reference to backend for server-side verification
+        const callbackData = await paymentApi.handlePaymentCallback({
+          paymentReference: txnRef
+        });
 
-        const verifyData = await verifyResp.json();
-        console.log('Interswitch verification result:', verifyData);
+        console.log('Secure payment callback result:', callbackData);
 
-        if (verifyData.ResponseCode === '00') {
-          // Save payment response to backend
-          await fetch('/api/payment/verify', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('@@token')}`
-            },
-            body: JSON.stringify({
-              transactionreference: txnRef,
-              ResponseCode: verifyData.ResponseCode,
-              Amount: verifyData.Amount,
-            })
-          });
-
-          // Create order
+        if (callbackData.success) {
+          // Create order after successful payment verification
           const orderCreated = await createOrder();
           
           if (orderCreated) {
@@ -415,57 +395,56 @@ export default function CheckoutPage() {
           }
           setIsProcessing(false);
           return;
-        }
-      } catch (err) {
-        console.error('Immediate verification failed', err);
-      }
-
-      // Fallback: Poll backend for payment confirmation
-      let attempts = 0;
-      const interval = setInterval(async () => {
-        attempts++;
-        try {
-          const res = await fetch('/api/payment/status', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('@@token')}`
-            },
-            body: JSON.stringify({ reference: txnRef })
-          });
-
-          const data = await res.json();
-          if (data.status === 'success') {
-            clearInterval(interval);
-            
-            const orderCreated = await createOrder();
-            if (orderCreated) {
-              clearCart();
-              setOrderSuccess(true);
-              setShowPaymentModal(false);
-              
-              toast({
-                title: 'Payment Successful!',
-                description: 'Your order has been placed and payment confirmed.',
-              });
-            }
-            setIsProcessing(false);
-          }
-        } catch (err) {
-          console.error('Error checking payment status', err);
-        }
-
-        if (attempts > 12) {
-          // ~1 minute timeout
-          clearInterval(interval);
+        } else {
+          // Payment not verified by server
           setIsProcessing(false);
           toast({
-            title: 'Payment Timeout',
-            description: 'Payment confirmation timed out. Please contact support.',
+            title: 'Payment Verification Failed',
+            description: 'Payment could not be verified. Please contact support.',
             variant: 'destructive',
           });
         }
-      }, 5000);
+      } catch (err) {
+        console.error('Secure payment callback failed', err);
+        
+        // Fallback: Check payment status from server using the new API
+        let attempts = 0;
+        const interval = setInterval(async () => {
+          attempts++;
+          try {
+            const statusData = await paymentApi.checkPaymentStatus(txnRef);
+            if (statusData.success && statusData.data?.status === 'completed') {
+              clearInterval(interval);
+              
+              const orderCreated = await createOrder();
+              if (orderCreated) {
+                clearCart();
+                setOrderSuccess(true);
+                setShowPaymentModal(false);
+                
+                toast({
+                  title: 'Payment Successful!',
+                  description: 'Your order has been placed and payment confirmed.',
+                });
+              }
+              setIsProcessing(false);
+            }
+          } catch (err) {
+            console.error('Error checking payment status', err);
+          }
+
+          if (attempts > 12) {
+            // ~1 minute timeout
+            clearInterval(interval);
+            setIsProcessing(false);
+            toast({
+              title: 'Payment Verification Timeout',
+              description: 'Payment confirmation timed out. Please contact support.',
+              variant: 'destructive',
+            });
+          }
+        }, 5000);
+      }
     } else {
       setIsProcessing(false);
       toast({
@@ -497,69 +476,67 @@ export default function CheckoutPage() {
     setIsProcessing(true);
     
     try {
-      // 1. Initiate payment in backend
-      const response = await fetch('/api/payment/initiate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('@@token')}`
-        },
-        body: JSON.stringify({
-          reference_number: transactionRef,
-          amount: (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100, // Amount in kobo
-          userId: user?.id
-        })
+      // 1. Initiate secure payment session in backend with cart/order details
+      const paymentInitiationData = await paymentApi.initiateSecurePayment({
+        amount: getTotalPrice() + Math.round(getTotalPrice() * 0.075), // Amount in naira
+        userId: user?.id || '',
+        // Note: We might not have a specific cart_id in the current implementation,
+        // but we could generate and store cart details server-side if needed
+        customerEmail: user?.email || '',
+        customerName: `${user?.firstname || ''} ${user?.lastname || ''}`.trim()
       });
 
-      if (response.ok) {
-        toast({
-          title: 'Initiating Payment',
-          description: 'Redirecting to secure payment gateway...',
-        });
-        
-        // 2. Close the payment modal and redirect to Interswitch
-        setShowPaymentModal(false);
-        
-        // Create and submit the form to Interswitch
-        // Instead of opening in a new tab, we'll redirect the current window to maintain proper flow
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'https://webpay.interswitchng.com/collections/w/pay';
-        form.target = '_self'; // Redirect current window
-        form.style.display = 'none';
-
-        const fields = {
-          merchant_code: "MX162337",
-          pay_item_id: "Default_Payable_MX162337",
-          txn_ref: transactionRef,
-          amount: ((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100).toString(),
-          currency: 'NGN',
-          site_redirect_url: `${window.location.origin}/checkout`, 
-          cust_email: user?.email || '',
-          cust_name: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
-          pay_method: 'both',
-          mode: "LIVE"
-        };
-
-        Object.entries(fields).forEach(([key, value]) => {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = String(value);
-          form.appendChild(input);
-        });
-
-        document.body.appendChild(form);
-        form.submit();
-        // Note: The page will redirect, so no code after this will execute
-      } else {
-        throw new Error('Failed to initiate payment');
+      if (!paymentInitiationData.success) {
+        throw new Error(paymentInitiationData.message || 'Failed to initiate secure payment');
       }
+
+      const { paymentReference } = paymentInitiationData;
+
+      toast({
+        title: 'Initiating Payment',
+        description: 'Redirecting to secure payment gateway...',
+      });
+      
+      // 2. Close the payment modal and redirect to Interswitch
+      setShowPaymentModal(false);
+      
+      // Create and submit the form to Interswitch with secure reference
+      // Instead of opening in a new tab, we'll redirect the current window to maintain proper flow
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://webpay.interswitchng.com/collections/w/pay';
+      form.target = '_self'; // Redirect current window
+      form.style.display = 'none';
+
+      const fields = {
+        merchant_code: "MX162337",
+        pay_item_id: "Default_Payable_MX162337",
+        txn_ref: paymentReference, // Use secure payment reference from backend
+        amount: (Math.round((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100)).toString(), // Amount in kobo
+        currency: 'NGN',
+        site_redirect_url: `${window.location.origin}/checkout`, 
+        cust_email: user?.email || '',
+        cust_name: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
+        pay_method: 'both',
+        mode: "LIVE"
+      };
+
+      Object.entries(fields).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = String(value);
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+      // Note: The page will redirect, so no code after this will execute
     } catch (error) {
-      console.error('Payment initiation error:', error);
+      console.error('Secure payment initiation error:', error);
       toast({
         title: 'Payment Failed',
-        description: 'Unable to start payment. Please try again.',
+        description: 'Unable to start secure payment. Please try again.',
         variant: 'destructive',
       });
       setIsProcessing(false);
@@ -622,21 +599,37 @@ export default function CheckoutPage() {
   // Handle order creation
   const createOrder = async () => {
     try {
-      const orderData = items.map((item) => ({
-        customer_id: user?.id,
-        product: item.name,
-        quantity: item.quantity,
-        product_id: item.product_id,
+      // Prepare order data - using the structure that matches the backend API
+      // The backend expects: customer_id (number), cart_id (number), total (number), status (string), products array
+      const orderData = {
+        customer_id: parseInt(user?.id) || 0, // Convert string ID to number as expected by backend
+        cart_id: 0, // Use 0 as placeholder - in a real implementation you might create a cart first
+        total: getTotalPrice() + Math.round(getTotalPrice() * 0.075), // Include tax
         status: 'Pending',
-        shop_id: 'default',
-        order_image: getProductImageUrl(item.image_urls) || '',
-      }));
+        products: items.map((item) => ({
+          product: item.name,
+          quantity: item.quantity,
+          product_id: item.product_id, // Keep as string to match original format
+          status: 'Pending',
+          shop_id: 'default', // Keep as string based on original usage
+          order_image: getProductImageUrl(item.image_urls) || '',
+          // Include delivery info that might be needed by backend procedure
+          delivery_address: `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`,
+        }))
+      };
 
-      const result = await orderApi.createOrder({ products: orderData });
-      if (result.success) {
+      const result = await mainOrderApi.create(orderData);
+      if (result.success && result.result) {
+        console.log('Order created successfully:', result);
         return true;
       } else {
-        throw new Error(result.message || 'Failed to create order');
+        console.error('Order creation failed:', result);
+        // The result from client.ts orderApi.create returns { success: boolean; result: any }
+        // The actual message might be within result.result depending on backend response
+        const errorMessage = typeof result.result === 'object' && result.result?.message 
+          ? result.result.message 
+          : 'Failed to create order';
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error('Order creation error:', error);
@@ -743,16 +736,16 @@ export default function CheckoutPage() {
     }
   };
 
-  // Interswitch payment parameters
+  // Interswitch payment parameters - This is used by the InterswitchPay component if still being used
   const paymentParameters = {
     merchantCode: "MX162337",
     payItemID: "Default_Payable_MX162337",
     customerEmail: user?.email || '',
-    redirectURL: "http://localhost:5173", // This should match your frontend URL
+    redirectURL: `${window.location.origin}/checkout`, // Redirect back to checkout page to handle response
     text: "Pay with Interswitch",
     mode: "LIVE", // Use TEST for development, LIVE for production
-    transactionReference: transactionRef,
-    amount: ((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100).toString(),
+    transactionReference: transactionRef, // This will be replaced by the secure reference in handleCardPayment
+    amount: (Math.round((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100)).toString(), // Amount in kobo
     style: {
       width: "200px",
       height: "40px",

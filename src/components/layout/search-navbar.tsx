@@ -3,19 +3,19 @@ import { motion } from 'framer-motion'
 import { 
   User, 
   ArrowLeft, 
-  Sun, 
-  Moon, 
+  // Sun, 
+  // Moon, 
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CartDropdown } from '@/components/layout/cart-dropdown'
 import { useCartStore } from '@/store/cart-store'
 import { useUserStore } from '@/store/user-store'
-import { useThemeStore } from '@/store/theme-store'
+// import { useThemeStore } from '@/store/theme-store'
 
 export function SearchNavbar() {
   const { getTotalItems } = useCartStore()
   const { isAuthenticated } = useUserStore()
-  const { theme, toggleTheme } = useThemeStore()
+  // const { theme, toggleTheme } = useThemeStore()
   const navigate = useNavigate()
   
   const cartItemsCount = getTotalItems()

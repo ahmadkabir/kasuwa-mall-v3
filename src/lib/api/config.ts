@@ -44,9 +44,10 @@ export const API_CONFIG = {
     CREATE_ADDRESS: 'api/user-address',
     
     // Payments
-    INITIATE_PAYMENT: 'api/initiate-payment',
-    UPDATE_PAYMENT_STATUS: 'api/update-payment-status',
-    INTERSWITCH_RESPONSE: 'api/inter-response',
+    INITIATE_PAYMENT: 'api/secure-payment/initiate',
+    UPDATE_PAYMENT_STATUS: 'api/secure-payment/callback',
+    INTERSWITCH_RESPONSE: 'api/secure-payment/webhook',
+    CHECK_PAYMENT_STATUS: 'api/secure-payment/status',
   },
   
   // Token storage keys (matching backend)

@@ -253,12 +253,15 @@ export const addressApi = {
 
 // Payment API
 export const paymentApi = {
-  async initiatePayment(paymentData: {
+  async initiateSecurePayment(paymentData: {
     amount: number
-    customer_email: string
-    customer_id: string
+    userId: string
+    cartId?: number
+    orderId?: string
+    customerEmail?: string
+    customerName?: string
   }) {
-    return apiCall<{ success: boolean; result: any }>(
+    return apiCall<{ success: boolean; paymentReference: string; secureToken: string; message?: string }>(
       API_CONFIG.ENDPOINTS.INITIATE_PAYMENT,
       {
         method: 'POST',
@@ -267,15 +270,23 @@ export const paymentApi = {
     )
   },
 
-  async updatePaymentStatus(statusData: {
-    transaction_reference: string
-    status: string
+  async checkPaymentStatus(reference: string) {
+    return apiCall<{ success: boolean; data: { reference: string; status: string; amount: number; userId: string; createdAt: string }; message?: string }>(
+      `${API_CONFIG.ENDPOINTS.CHECK_PAYMENT_STATUS}?reference=${encodeURIComponent(reference)}`,
+      {
+        method: 'GET',
+      }
+    )
+  },
+
+  async handlePaymentCallback(callbackData: {
+    paymentReference: string
   }) {
-    return apiCall<{ success: boolean; result: any }>(
+    return apiCall<{ success: boolean; data: { reference: string; status: string; orderId?: string }; message?: string }>(
       API_CONFIG.ENDPOINTS.UPDATE_PAYMENT_STATUS,
       {
         method: 'POST',
-        body: JSON.stringify(statusData),
+        body: JSON.stringify(callbackData),
       }
     )
   },

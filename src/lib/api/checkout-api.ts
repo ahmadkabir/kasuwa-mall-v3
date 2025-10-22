@@ -66,11 +66,23 @@ export const addressApi = {
   },
 };
 
-// Payment API functions
+// Payment API functions - Updated for secure payment flow
 export const paymentApi = {
-  // Initiate payment
-  initiatePayment: async (paymentData: { reference_number: string; amount: number; userId?: string }) => {
-    return apiCall<{ success: boolean; transactionRef?: string; message?: string }>(
+  // Initiate secure payment
+  initiateSecurePayment: async (paymentData: { 
+    amount: number; 
+    userId: string; 
+    cartId?: number; 
+    orderId?: string; 
+    customerEmail?: string; 
+    customerName?: string 
+  }) => {
+    return apiCall<{ 
+      success: boolean; 
+      paymentReference: string; 
+      secureToken: string; 
+      message?: string 
+    }>(
       API_CONFIG.ENDPOINTS.INITIATE_PAYMENT,
       {
         method: 'POST',
@@ -79,24 +91,31 @@ export const paymentApi = {
     );
   },
 
-  // Verify payment
-  verifyPayment: async (paymentData: { transactionreference: string; ResponseCode: string; Amount: number }) => {
-    return apiCall<{ success: boolean; message?: string }>(
-      API_CONFIG.ENDPOINTS.INTERSWITCH_RESPONSE || 'api/payment/verify', // Use fallback if not defined
+  // Handle payment callback (after return from payment gateway)
+  handlePaymentCallback: async (callbackData: { paymentReference: string }) => {
+    return apiCall<{ 
+      success: boolean; 
+      data: { reference: string; status: string; orderId?: string }; 
+      message?: string 
+    }>(
+      API_CONFIG.ENDPOINTS.UPDATE_PAYMENT_STATUS,
       {
         method: 'POST',
-        body: JSON.stringify(paymentData),
+        body: JSON.stringify(callbackData),
       }
     );
   },
 
-  // Check payment status
+  // Check payment status by reference
   checkPaymentStatus: async (reference: string) => {
-    return apiCall<{ status: string; message?: string }>(
-      'api/payment/status', // This endpoint is not in the main config
+    return apiCall<{ 
+      success: boolean; 
+      data: { reference: string; status: string; amount: number; userId: string; createdAt: string }; 
+      message?: string 
+    }>(
+      `${API_CONFIG.ENDPOINTS.CHECK_PAYMENT_STATUS}?reference=${encodeURIComponent(reference)}`,
       {
-        method: 'POST',
-        body: JSON.stringify({ reference }),
+        method: 'GET',
       }
     );
   },
@@ -118,10 +137,9 @@ export const orderApi = {
   // Get orders by customer
   getOrdersByCustomer: async (customerId: string) => {
     return apiCall<{ success: boolean; orders: any[]; message?: string }>(
-      API_CONFIG.ENDPOINTS.GET_ORDERS_BY_CUSTOMER,
+      `${API_CONFIG.ENDPOINTS.GET_ORDERS_BY_CUSTOMER}?customer_id=${customerId}`,
       {
-        method: 'POST', // Using POST as it might involve data in body
-        body: JSON.stringify({ customer_id: customerId }),
+        method: 'GET', // Changed to GET with query parameter as per original client.ts
       }
     );
   },
