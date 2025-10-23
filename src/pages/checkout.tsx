@@ -602,7 +602,7 @@ export default function CheckoutPage() {
       // Prepare order data - using the structure that matches the backend API
       // The backend expects: customer_id (number), cart_id (number), total (number), status (string), products array
       const orderData = {
-        customer_id: parseInt(user?.id) || 0, // Convert string ID to number as expected by backend
+        customer_id: user?.id ? parseInt(user.id) : 0, // Convert string ID to number as expected by backend
         cart_id: 0, // Use 0 as placeholder - in a real implementation you might create a cart first
         total: getTotalPrice() + Math.round(getTotalPrice() * 0.075), // Include tax
         status: 'Pending',
