@@ -24,6 +24,7 @@
     --input: 38 15% 85%;
     --ring: 345 57% 25%; /* Primary color */
     --radius: 0.5rem;
+    --whatsapp: 122 39% 49%; /* #25D366 - WhatsApp green */
   }
 
   .dark {
@@ -46,6 +47,7 @@
     --border: 345 10% 20%;
     --input: 345 10% 20%;
     --ring: 345 40% 40%;
+    --whatsapp: 122 39% 49%; /* #25D366 - WhatsApp green */
   }
 }
 
@@ -142,6 +144,23 @@
   .smooth-transition {
     @apply transition-all duration-300 ease-in-out;
   }
+  
+  /* WhatsApp Color */
+  .bg-whatsapp {
+    @apply bg-[hsl(var(--whatsapp))];
+  }
+  
+  .text-whatsapp {
+    @apply text-[hsl(var(--whatsapp))];
+  }
+  
+  .border-whatsapp {
+    @apply border-[hsl(var(--whatsapp))];
+  }
+  
+  .hover\:bg-whatsapp:hover {
+    @apply bg-[hsl(var(--whatsapp))];
+  }
 }
 
 /* Custom Animations */
@@ -151,6 +170,15 @@
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
@@ -164,4 +192,27 @@
 /* Focus Visible */
 .focus-ring {
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+}
+
+/* Marquee Animation */
+.animate-marquee {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* WhatsApp Color Classes */
+.bg-whatsapp {
+  @apply bg-[hsl(122,39%,49%)];
+}
+
+.hover\:bg-whatsapp:hover {
+  @apply bg-[hsl(122,39%,40%)];
+}
+
+.text-whatsapp {
+  @apply text-[hsl(122,39%,49%)];
 }

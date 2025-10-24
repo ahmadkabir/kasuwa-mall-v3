@@ -39,6 +39,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { getProductImageUrl } from '@/lib/utils/image';
 import { addressApi, paymentApi } from '@/lib/api/checkout-api';
 import { orderApi as mainOrderApi } from '@/lib/api/client';
+import { sendOrderNotification, formatOrderForNotification } from '@/services/notificationService';
 import { InterswitchPay } from 'react-interswitch';
 
 interface Address {
@@ -621,6 +622,22 @@ export default function CheckoutPage() {
       const result = await mainOrderApi.create(orderData);
       if (result.success && result.result) {
         console.log('Order created successfully:', result);
+        
+        // Send notification after successful order creation
+        try {
+          // Format order data for notification
+          const formattedOrder = formatOrderForNotification(orderData, user, `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`);
+          
+          // Send notification (this is for demonstration - in real implementation notifications are handled server-side)
+          console.log('Order notification formatted:', formattedOrder);
+          
+          // In a real implementation, you might want to send this to your backend
+          // await sendOrderNotification(formattedOrder, user, `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`);
+        } catch (notificationError) {
+          console.error('Error with post-order notification:', notificationError);
+          // Don't fail the order creation if notification fails
+        }
+        
         return true;
       } else {
         console.error('Order creation failed:', result);

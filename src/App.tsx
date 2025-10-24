@@ -23,6 +23,7 @@ import VendorDashboardPage from '@/pages/vendor-dashboard'
 import NotFoundPage from '@/pages/not-found'
 import PrivacyPage from '@/pages/privacy'
 import TermsPage from '@/pages/terms'
+import ContactPage from '@/pages/contact'
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -128,6 +129,13 @@ function App() {
           <Route path="/terms" element={
             <MainLayout>
               <TermsPage />
+            </MainLayout>
+          } />
+          
+          {/* Contact Route */}
+          <Route path="/contact" element={
+            <MainLayout>
+              <ContactPage />
             </MainLayout>
           } />
           

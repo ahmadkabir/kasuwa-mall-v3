@@ -37,6 +37,14 @@ export function Footer() {
                 <Phone className="h-5 w-5 text-white/90 flex-shrink-0" />
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Call Us</p>
+                  <p className="text-xs text-white/80">+234 703 097 5118</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                <MessageCircle className="h-5 w-5 text-white/90 flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-medium text-white mb-1">WhatsApp</p>
                   <p className="text-xs text-white/80">+234 701 722 2999</p>
                 </div>
               </div>
@@ -119,7 +127,7 @@ export function Footer() {
                 { href: '#', label: 'Careers' },
                 { href: '/privacy', label: 'Privacy Policy' },
                 { href: '/terms', label: 'Terms & Conditions' },
-                { href: '#', label: 'Contact Us' }
+                { href: '/contact', label: 'Contact Us' }
               ].map((item, index) => (
                 <li key={index}>
                   <Link 
