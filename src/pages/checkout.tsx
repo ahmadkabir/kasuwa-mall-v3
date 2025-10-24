@@ -39,7 +39,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { getProductImageUrl } from '@/lib/utils/image';
 import { addressApi, paymentApi } from '@/lib/api/checkout-api';
 import { orderApi as mainOrderApi } from '@/lib/api/client';
-import { sendOrderNotification, formatOrderForNotification } from '@/services/notificationService';
+import { formatOrderForNotification } from '@/services/notificationService';
 import { InterswitchPay } from 'react-interswitch';
 
 interface Address {

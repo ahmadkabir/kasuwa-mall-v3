@@ -1,7 +1,7 @@
 // components/layout/marquee-banner.tsx
 // Marquee banner for displaying rotating contact and promotional information
 
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { Phone, MessageCircle, Truck, Shield, Star, Headphones, Clock, MapPin } from 'lucide-react';
 
 export function MarqueeBanner() {
@@ -60,33 +60,6 @@ export function MarqueeBanner() {
           </div>
         ))}
       </div>
-      
-      {/* Add animation styles */}
-      <style jsx>{`
-        .animate-marquee {
-          display: flex;
-          animation: marquee 30s linear infinite;
-        }
-        
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-        
-        @keyframes marquee {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .animate-marquee {
-            animation-duration: 20s;
-          }
-        }
-      `}</style>
     </div>
   );
 }

@@ -204,6 +204,12 @@
   animation-play-state: paused;
 }
 
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 20s;
+  }
+}
+
 /* WhatsApp Color Classes */
 .bg-whatsapp {
   @apply bg-[hsl(122,39%,49%)];

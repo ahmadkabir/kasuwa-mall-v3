@@ -4,6 +4,7 @@ import { ShoppingCart, Heart, Package, Star, Truck, Shield, RefreshCw } from 'lu
 import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/store/cart-store'
 import { getProductImageUrl } from '@/lib/utils/image'
+import { formatCurrency } from '@/lib/utils/currency'
 import type { Product } from '@/lib/api/client'
 import { cn } from '@/lib/utils/cn'
 
@@ -148,7 +149,7 @@ export function ProductDetailModal({ product }: ProductDetailModalProps) {
           {/* Price */}
           <div className="space-y-0.5">
             <div className="text-xl font-bold text-primary">
-              ₦{product.price.toLocaleString()}
+              {formatCurrency(product.price)}
             </div>
             {product.qty > 0 && product.qty < 10 && (
               <p className="text-xs text-orange-500 font-medium">

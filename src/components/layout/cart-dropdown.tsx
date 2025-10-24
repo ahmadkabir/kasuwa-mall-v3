@@ -5,6 +5,7 @@ import { ShoppingCart, Trash2, ArrowRight, Package, ShoppingBag } from 'lucide-r
 import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/store/cart-store'
 import { getProductImageUrl } from '@/lib/utils/image'
+import { formatCurrency } from '@/lib/utils/currency'
 
 export function CartDropdown() {
   const [isOpen, setIsOpen] = useState(false)
@@ -162,7 +163,7 @@ export function CartDropdown() {
                             <div className="flex items-center justify-between mt-2">
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-bold text-primary">
-                                  ₦{item.price.toLocaleString()}
+                                  {formatCurrency(item.price)}
                                 </span>
                                 <span className="text-xs text-muted-foreground">
                                   × {item.quantity}
@@ -210,7 +211,7 @@ export function CartDropdown() {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Subtotal</span>
                   <span className="font-bold text-lg gradient-text">
-                    ₦{totalPrice.toLocaleString()}
+                    {formatCurrency(totalPrice)}
                   </span>
                 </div>
 
@@ -232,7 +233,7 @@ export function CartDropdown() {
                 {/* Free Shipping Info */}
                 {totalPrice < 50000 && (
                   <p className="text-xs text-center text-muted-foreground">
-                    Add ₦{(50000 - totalPrice).toLocaleString()} more for free shipping
+                    Add {formatCurrency(50000 - totalPrice)} more for free shipping
                   </p>
                 )}
               </div>

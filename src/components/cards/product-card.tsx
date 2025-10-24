@@ -8,6 +8,7 @@ import { ProductDetailModal } from '@/components/modals/product-detail-modal'
 import { useCartStore } from '@/store/cart-store'
 import { cn } from '@/lib/utils/cn'
 import { getProductImageUrl } from '@/lib/utils/image'
+import { formatCurrency } from '@/lib/utils/currency'
 import type { Product } from '@/lib/api/client'
 
 interface ProductCardProps {
@@ -132,7 +133,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-lg font-bold text-primary">
-                    ₦{product.price.toLocaleString()}
+                    {formatCurrency(product.price)}
                   </p>
                   {product.qty > 0 && product.qty < 10 && (
                     <p className="text-xs text-orange-500">
