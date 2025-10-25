@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Facebook, Mail, Phone, MapPin, MessageCircle, Globe } from 'lucide-react'
+import pospora from './prosporatech2.png'
 
 export function Footer() {
   return (
@@ -211,6 +212,15 @@ export function Footer() {
               <p className="text-white/50 text-xs">
                 Trusted by customers across Nigeria • Fast delivery • Quality products
               </p>
+              <div className="mt-4 flex justify-center items-center">
+                <span className="text-white/70 text-sm mr-2">Powered By</span>
+                <img
+                  src={pospora}
+                  style={{ width: "10rem", paddingLeft: "0.5rem" }}
+                  className=" m-0"
+                  alt="Prosporatech Logo"
+                />
+              </div>
             </div>
           </div>
         </div>

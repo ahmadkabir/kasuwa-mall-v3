@@ -3,6 +3,7 @@
 
 // import { motion } from 'framer-motion';
 import { Phone, MessageCircle, Truck, Shield, Star, Headphones, Clock, MapPin } from 'lucide-react';
+import pospora from './prosporatech2.png';
 
 export function MarqueeBanner() {
   // Handle phone call
@@ -34,6 +35,17 @@ export function MarqueeBanner() {
     {icon: Shield, text: '100% Secure Shopping'},
     {icon: Star, text: 'High Quality Products'},
     {icon: Headphones, text: '24/7 Customer Support'},
+    {icon: null, text: 'Powered By', customContent: (
+      <div className="flex items-center" style={{ marginRight: "5rem" }} >
+        <span className="mr-2">Powered By</span>
+        <img
+          src={pospora}
+          style={{ width: "10rem", paddingLeft: "0.5rem" }}
+          className=" m-0"
+          alt="Prosporatech Logo"
+        />
+      </div>
+    )},
     {icon: Clock, text: 'Mon-Sat: 8AM-8PM, Sun: 10AM-6PM'},
     {icon: MapPin, text: 'No 33. H.M House, Kano State'},
     {icon: Phone, text: 'Call us: 07030975118', action: () => handlePhoneCall('07030975118')},
@@ -50,13 +62,19 @@ export function MarqueeBanner() {
         {/* Repeat items twice to ensure smooth looping */}
         {[...items, ...items].map((item, index) => (
           <div key={index} className="mx-6 flex items-center text-white text-sm font-medium">
-            <item.icon className="h-4 w-4 mr-2 text-white/90 flex-shrink-0" />
-            <span 
-              className={`cursor-pointer hover:underline hover:text-white transition-colors ${item.action ? 'hover:decoration-white' : ''}`}
-              onClick={item.action || undefined}
-            >
-              {item.text}
-            </span>
+            {item.customContent ? (
+              item.customContent
+            ) : (
+              <>
+                <item.icon className="h-4 w-4 mr-2 text-white/90 flex-shrink-0" />
+                <span 
+                  className={`cursor-pointer hover:underline hover:text-white transition-colors ${item.action ? 'hover:decoration-white' : ''}`}
+                  onClick={item.action || undefined}
+                >
+                  {item.text}
+                </span>
+              </>
+            )}
           </div>
         ))}
       </div>
