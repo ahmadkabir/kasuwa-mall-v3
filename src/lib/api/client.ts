@@ -117,7 +117,60 @@ export const productApi = {
     const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   },
+
+  // Get products by a specific category
+  async getByCategoryWithLimit(ctgry_id: string, limit: number = 8) {
+    try {
+      const response = await apiCall<any>(
+        `${API_CONFIG.ENDPOINTS.GET_PRODUCTS_BY_CATEGORY}?ctgry_id=${ctgry_id}`
+      );
+      
+      // Backend might return in different structures, trying common patterns
+      let products = [];
+      if (response.result && Array.isArray(response.result)) {
+        products = response.result;
+      } else if (response.response && Array.isArray(response.response[0])) {
+        products = response.response[0];
+      } else if (Array.isArray(response)) {
+        products = response;
+      }
+      
+      // Limit the products without shuffling to get the latest ones
+      return products.slice(0, limit);
+    } catch (error) {
+      console.error(`Error fetching products for category ${ctgry_id}:`, error);
+      return [];
+    }
+  },
+
+  // Get latest products by a specific category (most recently added)
+  async getLatestByCategory(ctgry_id: string, limit: number = 8) {
+    try {
+      const response = await apiCall<any>(
+        `${API_CONFIG.ENDPOINTS.GET_PRODUCTS_BY_CATEGORY}?ctgry_id=${ctgry_id}`
+      );
+      
+      // Backend might return in different structures, trying common patterns
+      let products = [];
+      if (response.result && Array.isArray(response.result)) {
+        products = response.result;
+      } else if (response.response && Array.isArray(response.response[0])) {
+        products = response.response[0];
+      } else if (Array.isArray(response)) {
+        products = response;
+      }
+      
+      // Since the API returns products in descending order by default (based on the stored procedure),
+      // the first items are already the latest ones
+      return products.slice(0, limit);
+    } catch (error) {
+      console.error(`Error fetching latest products for category ${ctgry_id}:`, error);
+      return [];
+    }
+  },
 }
+
+// Category API
 
 // Category API
 export const categoryApi = {

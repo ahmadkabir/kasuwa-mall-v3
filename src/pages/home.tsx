@@ -26,6 +26,27 @@ export default function HomePage() {
     queryFn: () => productApi.getRandom(8),
   })
 
+  // Fetch latest products for known categories that have products (from database)
+  const fabricProductsQuery = useQuery({
+    queryKey: ['products', 'latest-by-category', 'FAB001'],
+    queryFn: () => productApi.getLatestByCategory('FAB001', 8),
+  });
+
+  const fashionProductsQuery = useQuery({
+    queryKey: ['products', 'latest-by-category', 'FAS001'],
+    queryFn: () => productApi.getLatestByCategory('FAS001', 8),
+  });
+
+  const babyProductsQuery = useQuery({
+    queryKey: ['products', 'latest-by-category', 'BAB001'],
+    queryFn: () => productApi.getLatestByCategory('BAB001', 8),
+  });
+
+  const homeProductsQuery = useQuery({
+    queryKey: ['products', 'latest-by-category', 'HOM001'],
+    queryFn: () => productApi.getLatestByCategory('HOM001', 8),
+  });
+
   const featuredProducts = products?.slice(0, 8) || []
 
   return (
@@ -94,12 +115,33 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* Random Products Carousel */}
+      {/* Category-Based Product Carousels */}
       <ProductCarousel 
-        products={randomProducts || []} 
-        isLoading={isLoadingRandom}
-        title="You May Also Like"
-        subtitle="Handpicked random products just for you"
+        products={fabricProductsQuery.data || []} 
+        isLoading={fabricProductsQuery.isLoading}
+        title="Fabric Products"
+        subtitle="Discover amazing fabric products"
+      />
+
+      <ProductCarousel 
+        products={fashionProductsQuery.data || []} 
+        isLoading={fashionProductsQuery.isLoading}
+        title="Fashion Products"
+        subtitle="Discover amazing fashion products"
+      />
+
+      <ProductCarousel 
+        products={babyProductsQuery.data || []} 
+        isLoading={babyProductsQuery.isLoading}
+        title="Baby Products"
+        subtitle="Discover amazing baby products"
+      />
+
+      <ProductCarousel 
+        products={homeProductsQuery.data || []} 
+        isLoading={homeProductsQuery.isLoading}
+        title="Home & Kitchen Products"
+        subtitle="Discover amazing home and kitchen products"
       />
 
       {/* Featured Products */}
