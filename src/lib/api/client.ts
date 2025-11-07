@@ -109,6 +109,14 @@ export const productApi = {
     )
     return response.results || []
   },
+
+  // Get a random selection of products from available products
+  async getRandom(count: number = 8) {
+    const allProducts = await this.getAll();
+    // Shuffle the array and take the first 'count' items
+    const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  },
 }
 
 // Category API

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ProductCard } from '@/components/cards/product-card'
 import { CategoryCard } from '@/components/cards/category-card'
 import { LoadingSkeleton } from '@/components/ui/loading-spinner'
+import { ProductCarousel } from '@/components/ui/product-carousel'
 import { productApi, categoryApi } from '@/lib/api/client'
 import { HeroCarousel } from '@/components/ui/hero-carousel'
 
@@ -18,6 +19,11 @@ export default function HomePage() {
   const { data: categories, isLoading: isLoadingCategories } = useQuery({
     queryKey: ['categories'],
     queryFn: categoryApi.getAll,
+  })
+
+  const { data: randomProducts, isLoading: isLoadingRandom } = useQuery({
+    queryKey: ['products', 'random'],
+    queryFn: () => productApi.getRandom(8),
   })
 
   const featuredProducts = products?.slice(0, 8) || []
@@ -87,6 +93,14 @@ export default function HomePage() {
           </div>
         )}
       </section>
+
+      {/* Random Products Carousel */}
+      <ProductCarousel 
+        products={randomProducts || []} 
+        isLoading={isLoadingRandom}
+        title="You May Also Like"
+        subtitle="Handpicked random products just for you"
+      />
 
       {/* Featured Products */}
       <section>
