@@ -21,10 +21,7 @@ export default function HomePage() {
     queryFn: categoryApi.getAll,
   })
 
-  const { data: randomProducts, isLoading: isLoadingRandom } = useQuery({
-    queryKey: ['products', 'random'],
-    queryFn: () => productApi.getRandom(8),
-  })
+
 
   // Fetch latest products for known categories that have products (from database)
   const fabricProductsQuery = useQuery({

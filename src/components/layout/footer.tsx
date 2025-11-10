@@ -124,7 +124,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-2">
               {[
-                { href: '#', label: 'About Us' },
+                { href: '/about', label: 'About Us' },
                 { href: '#', label: 'Careers' },
                 { href: '/privacy', label: 'Privacy Policy' },
                 { href: '/terms', label: 'Terms & Conditions' },

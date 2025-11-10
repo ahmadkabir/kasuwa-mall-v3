@@ -24,6 +24,7 @@ import NotFoundPage from '@/pages/not-found'
 import PrivacyPage from '@/pages/privacy'
 import TermsPage from '@/pages/terms'
 import ContactPage from '@/pages/contact'
+import AboutPage from '@/pages/about'
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -132,6 +133,13 @@ function App() {
             </MainLayout>
           } />
           
+          {/* About Route */}
+          <Route path="/about" element={
+            <MainLayout>
+              <AboutPage />
+            </MainLayout>
+          } />
+
           {/* Contact Route */}
           <Route path="/contact" element={
             <MainLayout>

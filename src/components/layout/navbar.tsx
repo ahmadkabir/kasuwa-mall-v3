@@ -86,6 +86,7 @@ export function Navbar() {
             <div className="hidden md:flex items-center space-x-8">
               <NavLink to="/products" variant="white">Products</NavLink>
               <NavLink to="/categories" variant="white">Categories</NavLink>
+              <NavLink to="/about" variant="white">About</NavLink>
               {/* <NavLink to="/deals" variant="white">Deals</NavLink> */}
             </div>
 
@@ -263,6 +264,7 @@ export function Navbar() {
               >
                 <MobileNavLink to="/products">Products</MobileNavLink>
                 <MobileNavLink to="/categories">Categories</MobileNavLink>
+                <MobileNavLink to="/about">About</MobileNavLink>
                 <MobileNavLink to="/deals">Deals</MobileNavLink>
                 <MobileNavLink to="/cart">
                   <div className="flex items-center justify-between">
