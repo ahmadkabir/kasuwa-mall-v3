@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Facebook, Mail, Phone, MapPin, MessageCircle, Globe } from 'lucide-react'
+import { Facebook, Mail, Phone, MapPin, MessageCircle, Globe, Instagram, Linkedin } from 'lucide-react'
 import pospora from './prosporatech2.png'
 
 export function Footer() {
@@ -27,9 +27,9 @@ export function Footer() {
               <div className="flex items-start space-x-3 p-3 rounded-lg bg-white/5 border border-white/10">
                 <MapPin className="h-5 w-5 text-white/90 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-xs font-medium text-white mb-1">Location</p>
+                  <p className="text-xs font-medium text-white mb-1">Location/ Pickup Point</p>
                   <p className="text-xs text-white/80 leading-relaxed">
-                    No 33. H.M House, Kano State
+                    Office No. 4, HM House Unity Road, Kantin Kwari, Kano.
                   </p>
                 </div>
               </div>
@@ -66,13 +66,6 @@ export function Footer() {
                   variant="ghost" 
                   size="icon" 
                   className="text-white hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 text-xs"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="text-white hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 text-xs"
                   asChild
                 >
                   <Link to="https://www.facebook.com/kasuwamall/" target="_blank" rel="noopener noreferrer">
@@ -83,8 +76,31 @@ export function Footer() {
                   variant="ghost" 
                   size="icon" 
                   className="text-white hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 text-xs"
+                  asChild
                 >
-                  <Globe className="h-4 w-4" />
+                  <Link to="https://vm.tiktok.com/ZSHcELFuUg6Fb-xoONS/" target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-white hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 text-xs"
+                  asChild
+                >
+                  <Link to="https://www.instagram.com/kasuwamallonlinestore?igsh=OWpsOG0wNHF6Mm8=" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button 
+                  variant="ghost"
+                  size="icon" 
+                  className="text-white hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 text-xs"
+                  asChild
+                >
+                  <Link to="https://www.linkedin.com/company/kasuwamall/" target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
