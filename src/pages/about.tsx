@@ -1,4 +1,4 @@
-import { Users, Award, Globe, Shield, Truck, Clock, Heart, Building2, Phone, Mail, MapPin } from 'lucide-react';
+import { Users, Award, Globe, Shield, Heart, Building2, Phone, Mail, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AboutPage = () => {

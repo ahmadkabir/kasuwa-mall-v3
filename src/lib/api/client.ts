@@ -262,7 +262,11 @@ export const orderApi = {
     status: string
     products: any[]
   }) {
-    return apiCall<{ success: boolean; result: any }>(
+    return apiCall<{
+  success: boolean;
+  result?: any;
+  results?: any;
+}>(
       API_CONFIG.ENDPOINTS.CREATE_ORDER,
       {
         method: 'POST',
