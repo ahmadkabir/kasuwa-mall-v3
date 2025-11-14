@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { 
-  ShoppingCart, 
-  CreditCard, 
-  User, 
-  Mail, 
-  MapPin, 
-  Phone, 
-  Plus, 
-  Home, 
-  Building, 
-  Banknote, 
-  Smartphone, 
-  CheckCircle, 
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import {
+  ShoppingCart,
+  CreditCard,
+  User,
+  Mail,
+  MapPin,
+  Phone,
+  Plus,
+  Home,
+  Building,
+  Banknote,
+  Smartphone,
+  CheckCircle,
   Lock,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Dialog,
   DialogContent,
@@ -28,71 +28,71 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AddressModal } from '@/components/modals/address-modal';
-import { useUserStore } from '@/store/user-store';
-import { useCartStore } from '@/store/cart-store';
-import { useToast } from '@/components/ui/use-toast';
-import { getProductImageUrl } from '@/lib/utils/image';
-import { addressApi, paymentApi } from '@/lib/api/checkout-api';
-import { orderApi as mainOrderApi } from '@/lib/api/client';
-import { formatOrderForNotification } from '@/services/notificationService';
-import { InterswitchPay } from 'react-interswitch';
+} from '@/components/ui/dialog'
+import { Separator } from '@/components/ui/separator'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { AddressModal } from '@/components/modals/address-modal'
+import { useUserStore } from '@/store/user-store'
+import { useCartStore } from '@/store/cart-store'
+import { useToast } from '@/components/ui/use-toast'
+import { getProductImageUrl } from '@/lib/utils/image'
+import { addressApi, paymentApi } from '@/lib/api/checkout-api'
+import { orderApi as mainOrderApi } from '@/lib/api/client'
+import { formatOrderForNotification } from '@/services/notificationService'
+import { InterswitchPay } from 'react-interswitch'
 
 interface Address {
-  id: number;
-  user_id: string;
-  address_type: 'home' | 'work' | 'other';
-  first_name: string;
-  last_name: string;
-  phone: string;
-  address_line_1: string;
-  address_line_2?: string;
-  city: string;
-  state: string;
-  postal_code?: string;
-  country: string;
-  is_default: boolean;
-  created_at: string;
-  updated_at: string;
+  id: number
+  user_id: string
+  address_type: 'home' | 'work' | 'other'
+  first_name: string
+  last_name: string
+  phone: string
+  address_line_1: string
+  address_line_2?: string
+  city: string
+  state: string
+  postal_code?: string
+  country: string
+  is_default: boolean
+  created_at: string
+  updated_at: string
 }
 
 interface CheckoutFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  postalCode: string;
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  address: string
+  city: string
+  state: string
+  postalCode: string
 }
 
 interface PaymentMethod {
-  id: string;
-  name: string;
-  description: string;
-  icon: any;
-  type: 'card' | 'transfer' | 'whatsapp';
+  id: string
+  name: string
+  description: string
+  icon: any
+  type: 'card' | 'transfer' | 'whatsapp'
 }
 
 export default function CheckoutPage() {
-  const { user, isAuthenticated } = useUserStore();
-  const { items, getTotalPrice, getTotalItems, clearCart } = useCartStore();
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
-  const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-  const [showAddressModal, setShowAddressModal] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('whatsapp');
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [orderSuccess, setOrderSuccess] = useState(false);
-  const [transactionRef, setTransactionRef] = useState('');
+  const { user, isAuthenticated } = useUserStore()
+  const { items, getTotalPrice, getTotalItems, clearCart } = useCartStore()
+  const { toast } = useToast()
+  const navigate = useNavigate()
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null)
+  const [showNewAddressForm, setShowNewAddressForm] = useState(false)
+  const [showAddressModal, setShowAddressModal] = useState(false)
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null)
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('whatsapp')
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [orderSuccess, setOrderSuccess] = useState(false)
+  const [transactionRef, setTransactionRef] = useState('')
 
   // Payment methods available
   const paymentMethods: PaymentMethod[] = [
@@ -101,27 +101,27 @@ export default function CheckoutPage() {
       name: 'WhatsApp Order',
       description: 'Contact seller via WhatsApp (Recommended)',
       icon: Smartphone,
-      type: 'whatsapp'
+      type: 'whatsapp',
     },
     {
       id: 'card',
       name: 'Credit/Debit Card',
       description: 'Pay with Visa, Mastercard via Interswitch',
       icon: CreditCard,
-      type: 'card'
+      type: 'card',
     },
     {
       id: 'transfer',
       name: 'Bank Transfer',
       description: 'Direct bank transfer',
       icon: Banknote,
-      type: 'transfer'
-    }
-  ];
+      type: 'transfer',
+    },
+  ]
 
   // User addresses state
-  const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
-  const [loadingAddresses, setLoadingAddresses] = useState(true);
+  const [savedAddresses, setSavedAddresses] = useState<Address[]>([])
+  const [loadingAddresses, setLoadingAddresses] = useState(true)
 
   const [formData, setFormData] = useState<CheckoutFormData>({
     firstName: '',
@@ -131,8 +131,8 @@ export default function CheckoutPage() {
     address: '',
     city: '',
     state: '',
-    postalCode: ''
-  });
+    postalCode: '',
+  })
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -141,29 +141,29 @@ export default function CheckoutPage() {
         title: 'Authentication Required',
         description: 'Please log in to proceed with checkout.',
         variant: 'destructive',
-      });
-      navigate('/login?returnUrl=/checkout');
+      })
+      navigate('/login?returnUrl=/checkout')
     }
-  }, [isAuthenticated, navigate, toast]);
+  }, [isAuthenticated, navigate, toast])
 
   // Fetch user addresses from backend
   const fetchUserAddresses = async () => {
-    if (!user) return;
+    if (!user) return
 
-    setLoadingAddresses(true);
+    setLoadingAddresses(true)
     try {
-      const result = await addressApi.getUserAddresses(user.id);
-      
+      const result = await addressApi.getUserAddresses(user.id)
+
       if (result.success) {
-        setSavedAddresses(result.addresses);
+        setSavedAddresses(result.addresses)
 
         // Set default address as selected
-        const defaultAddress = result.addresses.find((addr: Address) => addr.is_default);
+        const defaultAddress = result.addresses.find((addr: Address) => addr.is_default)
         if (defaultAddress) {
-          setSelectedAddress(defaultAddress);
-          setSelectedAddressId(defaultAddress.id);
+          setSelectedAddress(defaultAddress)
+          setSelectedAddressId(defaultAddress.id)
           // Auto-fill form with default address
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             firstName: defaultAddress.first_name,
             lastName: defaultAddress.last_name,
@@ -171,15 +171,15 @@ export default function CheckoutPage() {
             address: defaultAddress.address_line_1,
             city: defaultAddress.city,
             state: defaultAddress.state,
-            postalCode: defaultAddress.postal_code || ''
-          }));
+            postalCode: defaultAddress.postal_code || '',
+          }))
         } else if (result.addresses.length > 0) {
           // If no default, select first address
-          const firstAddress = result.addresses[0];
-          setSelectedAddress(firstAddress);
-          setSelectedAddressId(firstAddress.id);
+          const firstAddress = result.addresses[0]
+          setSelectedAddress(firstAddress)
+          setSelectedAddressId(firstAddress.id)
           // Auto-fill form with first address
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             firstName: firstAddress.first_name,
             lastName: firstAddress.last_name,
@@ -187,46 +187,46 @@ export default function CheckoutPage() {
             address: firstAddress.address_line_1,
             city: firstAddress.city,
             state: firstAddress.state,
-            postalCode: firstAddress.postal_code || ''
-          }));
+            postalCode: firstAddress.postal_code || '',
+          }))
         }
       } else {
-        setSavedAddresses([]);
+        setSavedAddresses([])
       }
     } catch (error) {
-      console.error('Error fetching user addresses:', error);
-      setSavedAddresses([]);
+      console.error('Error fetching user addresses:', error)
+      setSavedAddresses([])
     } finally {
-      setLoadingAddresses(false);
+      setLoadingAddresses(false)
     }
-  };
+  }
 
   // Fetch addresses when user is available
   useEffect(() => {
-    console.log('User availability changed:', user);
+    console.log('User availability changed:', user)
     if (user?.id) {
-      fetchUserAddresses();
+      fetchUserAddresses()
     }
-  }, [user?.id]);
+  }, [user?.id])
 
   // Pre-fill form with user data
   useEffect(() => {
     if (user) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         firstName: user.firstname || '',
         lastName: user.lastname || '',
         email: user.email || '',
-        phone: user.phone || ''
-      }));
+        phone: user.phone || '',
+      }))
     }
-  }, [user]);
+  }, [user])
 
   // Handle address selection from modal
   const handleAddressSelect = (address: Address) => {
-    setSelectedAddress(address);
-    setSelectedAddressId(address.id);
-    setFormData(prev => ({
+    setSelectedAddress(address)
+    setSelectedAddressId(address.id)
+    setFormData((prev) => ({
       ...prev,
       firstName: address.first_name,
       lastName: address.last_name,
@@ -234,25 +234,26 @@ export default function CheckoutPage() {
       address: address.address_line_1,
       city: address.city,
       state: address.state,
-      postalCode: address.postal_code || ''
-    }));
-    setShowNewAddressForm(false);
-  };
-
-
+      postalCode: address.postal_code || '',
+    }))
+    setShowNewAddressForm(false)
+  }
 
   const getAddressIcon = (type: string) => {
     switch (type) {
-      case 'home': return Home;
-      case 'work': return Building;
-      default: return MapPin;
+      case 'home':
+        return Home
+      case 'work':
+        return Building
+      default:
+        return MapPin
     }
-  };
+  }
 
   // Handle opening address modal
   const handleChangeAddress = () => {
-    setShowAddressModal(true);
-  };
+    setShowAddressModal(true)
+  }
 
   // Redirect if cart is empty
   useEffect(() => {
@@ -261,18 +262,18 @@ export default function CheckoutPage() {
         title: 'Empty Cart',
         description: 'Your cart is empty. Add some items before checkout.',
         variant: 'destructive',
-      });
-      navigate('/cart');
+      })
+      navigate('/cart')
     }
-  }, [isAuthenticated, getTotalItems, navigate, toast]);
+  }, [isAuthenticated, getTotalItems, navigate, toast])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+    const { name, value } = e.target
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }));
-  };
+      [name]: value,
+    }))
+  }
 
   // Save new address to backend
   const saveNewAddress = async (addressData: Partial<Address>) => {
@@ -281,19 +282,19 @@ export default function CheckoutPage() {
         title: 'Authentication Error',
         description: 'You must be logged in to save an address.',
         variant: 'destructive',
-      });
-      return false;
+      })
+      return false
     }
 
     try {
-      const token = localStorage.getItem('@@token');
+      const token = localStorage.getItem('@@token')
       if (!token) {
         toast({
           title: 'Authentication Error',
           description: 'No authentication token found. Please log in again.',
           variant: 'destructive',
-        });
-        return false;
+        })
+        return false
       }
 
       // Prepare the request body
@@ -308,174 +309,171 @@ export default function CheckoutPage() {
         state: addressData.state || '',
         postal_code: addressData.postal_code || '',
         country: 'Nigeria',
-        is_default: savedAddresses.length === 0 // First address becomes default
-      };
+        is_default: savedAddresses.length === 0, // First address becomes default
+      }
 
-      console.log('Saving address with data:', requestBody); // Debug log
+      console.log('Saving address with data:', requestBody) // Debug log
 
       const response = await fetch('/api/user-address', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestBody)
-      });
+        body: JSON.stringify(requestBody),
+      })
 
-      const result = await response.json();
-      console.log('Address save response:', result); // Debug log
+      const result = await response.json()
+      console.log('Address save response:', result) // Debug log
 
       if (response.ok && result.success) {
         toast({
           title: 'Address Saved',
           description: 'Your address has been saved for future orders.',
-        });
+        })
         // Refresh addresses
-        fetchUserAddresses();
-        return true;
+        fetchUserAddresses()
+        return true
       } else {
         toast({
           title: 'Failed to Save Address',
           description: result.message || 'Please check your information and try again.',
           variant: 'destructive',
-        });
-        return false;
+        })
+        return false
       }
     } catch (error) {
-      console.error('Error saving address:', error);
+      console.error('Error saving address:', error)
       toast({
         title: 'Network Error',
         description: 'Could not connect to the server. Please try again later.',
         variant: 'destructive',
-      });
-      return false;
+      })
+      return false
     }
-  };
+  }
 
   // Generate transaction reference
   useEffect(() => {
-    const txnRef = `txn_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
-    setTransactionRef(txnRef);
-  }, []);
+    const txnRef = `txn_${Date.now()}_${Math.floor(Math.random() * 1000)}`
+    setTransactionRef(txnRef)
+  }, [])
 
   // Interswitch payment callback
   const paymentCallback = async (response: any) => {
-    const txnRef = response.txnref || response.txn_ref || response.reference || '';
+    const txnRef = response.txnref || response.txn_ref || response.reference || ''
 
-    if (
-      response.resp === '00' ||
-      response.desc === 'Approved by Financial Institution'
-    ) {
-      setIsProcessing(true);
+    if (response.resp === '00' || response.desc === 'Approved by Financial Institution') {
+      setIsProcessing(true)
       toast({
         title: 'Payment Processing',
         description: 'Verifying payment...',
-      });
+      })
 
       try {
         // Send payment reference to backend for server-side verification
         const callbackData = await paymentApi.handlePaymentCallback({
-          paymentReference: txnRef
-        });
+          paymentReference: txnRef,
+        })
 
-        console.log('Secure payment callback result:', callbackData);
+        console.log('Secure payment callback result:', callbackData)
 
         if (callbackData.success) {
           // Create order after successful payment verification
-          const orderCreated = await createOrder();
-          
+          const orderCreated = await createOrder()
+
           if (orderCreated) {
-            clearCart();
-            setOrderSuccess(true);
-            setShowPaymentModal(false);
-            
+            clearCart()
+            setOrderSuccess(true)
+            setShowPaymentModal(false)
+
             toast({
               title: 'Payment Successful!',
               description: 'Your order has been placed and payment confirmed.',
-            });
+            })
           }
-          setIsProcessing(false);
-          return;
+          setIsProcessing(false)
+          return
         } else {
           // Payment not verified by server
-          setIsProcessing(false);
+          setIsProcessing(false)
           toast({
             title: 'Payment Verification Failed',
             description: 'Payment could not be verified. Please contact support.',
             variant: 'destructive',
-          });
+          })
         }
       } catch (err) {
-        console.error('Secure payment callback failed', err);
-        
+        console.error('Secure payment callback failed', err)
+
         // Fallback: Check payment status from server using the new API
-        let attempts = 0;
+        let attempts = 0
         const interval = setInterval(async () => {
-          attempts++;
+          attempts++
           try {
-            const statusData = await paymentApi.checkPaymentStatus(txnRef);
+            const statusData = await paymentApi.checkPaymentStatus(txnRef)
             if (statusData.success && statusData.data?.status === 'completed') {
-              clearInterval(interval);
-              
-              const orderCreated = await createOrder();
+              clearInterval(interval)
+
+              const orderCreated = await createOrder()
               if (orderCreated) {
-                clearCart();
-                setOrderSuccess(true);
-                setShowPaymentModal(false);
-                
+                clearCart()
+                setOrderSuccess(true)
+                setShowPaymentModal(false)
+
                 toast({
                   title: 'Payment Successful!',
                   description: 'Your order has been placed and payment confirmed.',
-                });
+                })
               }
-              setIsProcessing(false);
+              setIsProcessing(false)
             }
           } catch (err) {
-            console.error('Error checking payment status', err);
+            console.error('Error checking payment status', err)
           }
 
           if (attempts > 12) {
             // ~1 minute timeout
-            clearInterval(interval);
-            setIsProcessing(false);
+            clearInterval(interval)
+            setIsProcessing(false)
             toast({
               title: 'Payment Verification Timeout',
               description: 'Payment confirmation timed out. Please contact support.',
               variant: 'destructive',
-            });
+            })
           }
-        }, 5000);
+        }, 5000)
       }
     } else {
-      setIsProcessing(false);
+      setIsProcessing(false)
       toast({
         title: 'Payment Failed',
         description: 'Payment was not successful. Please try again.',
         variant: 'destructive',
-      });
+      })
     }
-  };
+  }
 
   // Check for payment response in URL after returning from Interswitch
   // This should run once when the component mounts to handle redirects
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const response = urlParams.get('resp') || urlParams.get('response');
-    const txnRef = urlParams.get('transactionreference');
-    
+    const urlParams = new URLSearchParams(window.location.search)
+    const response = urlParams.get('resp') || urlParams.get('response')
+    const txnRef = urlParams.get('transactionreference')
+
     if (response || txnRef) {
       // Process the payment response
       paymentCallback({
         resp: response,
-        txn_ref: txnRef
-      });
+        txn_ref: txnRef,
+      })
     }
-  }, []); // Run only on mount
+  }, []) // Run only on mount
 
   // Handle card payment with Interswitch
   const handleCardPayment = async () => {
-    setIsProcessing(true);
-    
+    setIsProcessing(true)
+
     try {
       // 1. Initiate secure payment session in backend with cart/order details
       const paymentInitiationData = await paymentApi.initiateSecurePayment({
@@ -484,84 +482,97 @@ export default function CheckoutPage() {
         // Note: We might not have a specific cart_id in the current implementation,
         // but we could generate and store cart details server-side if needed
         customerEmail: user?.email || '',
-        customerName: `${user?.firstname || ''} ${user?.lastname || ''}`.trim()
-      });
+        customerName: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
+      })
 
       if (!paymentInitiationData.success) {
-        throw new Error(paymentInitiationData.message || 'Failed to initiate secure payment');
+        throw new Error(
+          paymentInitiationData.message || 'Failed to initiate secure payment'
+        )
       }
 
-      const { paymentReference } = paymentInitiationData;
+      const { paymentReference } = paymentInitiationData
 
       toast({
         title: 'Initiating Payment',
         description: 'Redirecting to secure payment gateway...',
-      });
-      
+      })
+
       // 2. Close the payment modal and redirect to Interswitch
-      setShowPaymentModal(false);
-      
+      setShowPaymentModal(false)
+
       // Create and submit the form to Interswitch with secure reference
       // Instead of opening in a new tab, we'll redirect the current window to maintain proper flow
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://webpay.interswitchng.com/collections/w/pay';
-      form.target = '_self'; // Redirect current window
-      form.style.display = 'none';
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = 'https://webpay.interswitchng.com/collections/w/pay'
+      form.target = '_self' // Redirect current window
+      form.style.display = 'none'
 
       const fields = {
-        merchant_code: "MX162337",
-        pay_item_id: "Default_Payable_MX162337",
+        merchant_code: 'MX162337',
+        pay_item_id: 'Default_Payable_MX162337',
         txn_ref: paymentReference, // Use secure payment reference from backend
-        amount: (Math.round((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100)).toString(), // Amount in kobo
+        amount: Math.round(
+          (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100
+        ).toString(), // Amount in kobo
         currency: 'NGN',
-        site_redirect_url: `${window.location.origin}/checkout`, 
+        site_redirect_url: `${window.location.origin}/checkout`,
         cust_email: user?.email || '',
         cust_name: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
         pay_method: 'both',
-        mode: "LIVE"
-      };
+        mode: 'LIVE',
+      }
 
       Object.entries(fields).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = String(value);
-        form.appendChild(input);
-      });
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = key
+        input.value = String(value)
+        form.appendChild(input)
+      })
 
-      document.body.appendChild(form);
-      form.submit();
+      document.body.appendChild(form)
+      form.submit()
       // Note: The page will redirect, so no code after this will execute
     } catch (error) {
-      console.error('Secure payment initiation error:', error);
+      console.error('Secure payment initiation error:', error)
       toast({
         title: 'Payment Failed',
         description: 'Unable to start secure payment. Please try again.',
         variant: 'destructive',
-      });
-      setIsProcessing(false);
+      })
+      setIsProcessing(false)
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
+    e.preventDefault()
+    setIsProcessing(true)
 
     try {
       // Validate required fields
-      const requiredFields = ['firstName', 'lastName', 'email', 'address', 'city', 'state'];
+      const requiredFields = [
+        'firstName',
+        'lastName',
+        'email',
+        'address',
+        'city',
+        'state',
+      ]
 
-      const missingFields = requiredFields.filter(field => !formData[field as keyof CheckoutFormData]);
+      const missingFields = requiredFields.filter(
+        (field) => !formData[field as keyof CheckoutFormData]
+      )
 
       if (missingFields.length > 0) {
         toast({
           title: 'Missing Information',
           description: 'Please fill in all required fields.',
           variant: 'destructive',
-        });
-        setIsProcessing(false);
-        return;
+        })
+        setIsProcessing(false)
+        return
       }
 
       // Save new address if user entered one
@@ -573,29 +584,29 @@ export default function CheckoutPage() {
           address_line_1: formData.address,
           city: formData.city,
           state: formData.state,
-          postal_code: formData.postalCode
-        });
-        
+          postal_code: formData.postalCode,
+        })
+
         // Only continue if address was saved successfully
         if (!addressSaved) {
-          setIsProcessing(false);
-          return; // Stop the submission process
+          setIsProcessing(false)
+          return // Stop the submission process
         }
       }
 
       // Show payment confirmation modal
-      setShowPaymentModal(true);
-      setIsProcessing(false);
+      setShowPaymentModal(true)
+      setIsProcessing(false)
     } catch (error) {
-      console.error('Checkout error:', error);
+      console.error('Checkout error:', error)
       toast({
         title: 'Checkout Error',
         description: 'There was an error processing your checkout. Please try again.',
         variant: 'destructive',
-      });
-      setIsProcessing(false);
+      })
+      setIsProcessing(false)
     }
-  };
+  }
 
   // Handle order creation
   const createOrder = async () => {
@@ -616,190 +627,204 @@ export default function CheckoutPage() {
           order_image: getProductImageUrl(item.image_urls) || '',
           // Include delivery info that might be needed by backend procedure
           delivery_address: `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`,
-        }))
-      };
+        })),
+      }
 
-      const result = await mainOrderApi.create(orderData);
-      if (result.success && result.result) {
-        console.log('Order created successfully:', result);
-        
+      const result = await mainOrderApi.create(orderData)
+      if (result.success && (result.result || result.results)) {
+        // console.log('Order created successfully:', result)
+        const responseData = result.result || result.results
+        console.log('Order created successfully:', responseData)
+        return true
+
         // Send notification after successful order creation
         try {
           // Format order data for notification
-          const formattedOrder = formatOrderForNotification(orderData, user, `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`);
-          
+          const formattedOrder = formatOrderForNotification(
+            orderData,
+            user,
+            `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`
+          )
+
           // Send notification (this is for demonstration - in real implementation notifications are handled server-side)
-          console.log('Order notification formatted:', formattedOrder);
-          
+          console.log('Order notification formatted:', formattedOrder)
+
           // In a real implementation, you might want to send this to your backend
           // await sendOrderNotification(formattedOrder, user, `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`);
         } catch (notificationError) {
-          console.error('Error with post-order notification:', notificationError);
+          console.error('Error with post-order notification:', notificationError)
           // Don't fail the order creation if notification fails
         }
-        
-        return true;
+
+        return true
       } else {
-        console.error('Order creation failed:', result);
+        console.error('Order creation failed:', result)
         // The result from client.ts orderApi.create returns { success: boolean; result: any }
         // The actual message might be within result.result depending on backend response
-        const errorMessage = typeof result.result === 'object' && result.result?.message 
-          ? result.result.message 
-          : 'Failed to create order';
-        throw new Error(errorMessage);
+        const errorMessage =
+          typeof result.result === 'object' && result.result?.message
+            ? result.result.message
+            : 'Failed to create order'
+        throw new Error(errorMessage)
       }
     } catch (error) {
-      console.error('Order creation error:', error);
-      return false;
+      console.error('Order creation error:', error)
+      return false
     }
-  };
+  }
 
   // Handle WhatsApp order
   const handleWhatsAppOrder = async () => {
-    setIsProcessing(true);
+    setIsProcessing(true)
 
     try {
       // Create order in database
-      const orderCreated = await createOrder();
+      const orderCreated = await createOrder()
 
       if (orderCreated) {
         // Prepare WhatsApp message
-        let message = `📦 *New Order from Kasuwa Mall*\n\n`;
-        message += `👤 *Customer Details:*\n`;
-        message += `Name: ${formData.firstName} ${formData.lastName}\n`;
-        message += `Email: ${formData.email}\n`;
-        message += `Phone: ${formData.phone}\n\n`;
+        let message = `📦 *New Order from Kasuwa Mall*\n\n`
+        message += `👤 *Customer Details:*\n`
+        message += `Name: ${formData.firstName} ${formData.lastName}\n`
+        message += `Email: ${formData.email}\n`
+        message += `Phone: ${formData.phone}\n\n`
 
-        message += `📍 *Delivery Address:*\n`;
-        message += `${formData.address}\n`;
-        message += `${formData.city}, ${formData.state} ${formData.postalCode}\n\n`;
+        message += `📍 *Delivery Address:*\n`
+        message += `${formData.address}\n`
+        message += `${formData.city}, ${formData.state} ${formData.postalCode}\n\n`
 
-        message += `🛒 *Order Items:*\n`;
+        message += `🛒 *Order Items:*\n`
         items.forEach((item, index) => {
-          message += `${index + 1}. ${item.name}\n`;
-          message += `   Quantity: ${item.quantity}\n`;
-          message += `   Price: ₦${item.price.toLocaleString()}\n`;
-          message += `   Subtotal: ₦${(item.price * item.quantity).toLocaleString()}\n\n`;
-        });
+          message += `${index + 1}. ${item.name}\n`
+          message += `   Quantity: ${item.quantity}\n`
+          message += `   Price: ₦${item.price.toLocaleString()}\n`
+          message += `   Subtotal: ₦${(item.price * item.quantity).toLocaleString()}\n\n`
+        })
 
-        message += `💰 *Order Summary:*\n`;
-        message += `Shipping: ₦2,500\n`;
-        message += `Tax: ₦${Math.round(getTotalPrice() * 0.075).toLocaleString()}\n`;
-        message += `*Total: ₦${(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}*\n\n`;
+        message += `💰 *Order Summary:*\n`
+        message += `Shipping: ₦2,500\n`
+        message += `Tax: ₦${Math.round(getTotalPrice() * 0.075).toLocaleString()}\n`
+        message += `*Total: ₦${(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}*\n\n`
 
-        message += `⚠️ *Important:* Do not make payment until you receive your order.\n`;
-        message += `📞 *Support:* +2349067393633`;
+        message += `⚠️ *Important:* Do not make payment until you receive your order.\n`
+        message += `📞 *Support:* +2349067393633`
 
         // Admin WhatsApp Number
-        const adminWhatsAppNumber = '+2347030975118';
-        const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+        const adminWhatsAppNumber = '+2347030975118'
+        const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`
 
         // Clear cart
-        clearCart();
+        clearCart()
 
         // Open WhatsApp
-        window.open(whatsappUrl, '_blank');
+        window.open(whatsappUrl, '_blank')
 
         // Show success
-        setOrderSuccess(true);
-        setShowPaymentModal(false);
+        setOrderSuccess(true)
+        setShowPaymentModal(false)
 
         toast({
           title: 'Order Sent Successfully!',
-          description: 'Your order has been sent via WhatsApp. Our team will respond within 24 hours.',
-        });
+          description:
+            'Your order has been sent via WhatsApp. Our team will respond within 24 hours.',
+        })
       } else {
-        throw new Error('Failed to create order');
+        throw new Error('Failed to create order')
       }
     } catch (error) {
-      console.error('WhatsApp order error:', error);
+      console.error('WhatsApp order error:', error)
       toast({
         title: 'Order Failed',
         description: 'There was an error processing your order. Please try again.',
         variant: 'destructive',
-      });
+      })
     } finally {
-      setIsProcessing(false);
+      setIsProcessing(false)
     }
-  };
+  }
 
   // Handle bank transfer
   const handleBankTransfer = async () => {
-    setIsProcessing(true);
+    setIsProcessing(true)
 
     try {
       // Create order
-      const orderCreated = await createOrder();
+      const orderCreated = await createOrder()
 
       if (orderCreated) {
-        clearCart();
-        setOrderSuccess(true);
-        setShowPaymentModal(false);
+        clearCart()
+        setOrderSuccess(true)
+        setShowPaymentModal(false)
 
         toast({
           title: 'Order Placed!',
-          description: 'Please make payment to the provided bank details. Your order will be processed after payment confirmation.',
-        });
+          description:
+            'Please make payment to the provided bank details. Your order will be processed after payment confirmation.',
+        })
       }
     } catch (error) {
-      console.error('Bank transfer error:', error);
+      console.error('Bank transfer error:', error)
       toast({
         title: 'Order Failed',
         description: 'There was an error processing your order. Please try again.',
         variant: 'destructive',
-      });
+      })
     } finally {
-      setIsProcessing(false);
+      setIsProcessing(false)
     }
-  };
+  }
 
   // Interswitch payment parameters - This is used by the InterswitchPay component if still being used
   const paymentParameters = {
-    merchantCode: "MX162337",
-    payItemID: "Default_Payable_MX162337",
+    merchantCode: 'MX162337',
+    payItemID: 'Default_Payable_MX162337',
     customerEmail: user?.email || '',
     redirectURL: `${window.location.origin}/checkout`, // Redirect back to checkout page to handle response
-    text: "Pay with Interswitch",
-    mode: "LIVE", // Use TEST for development, LIVE for production
+    text: 'Pay with Interswitch',
+    mode: 'LIVE', // Use TEST for development, LIVE for production
     transactionReference: transactionRef, // This will be replaced by the secure reference in handleCardPayment
-    amount: (Math.round((getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100)).toString(), // Amount in kobo
+    amount: Math.round(
+      (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100
+    ).toString(), // Amount in kobo
     style: {
-      width: "200px",
-      height: "40px",
-      border: "none",
-      color: "#fff",
-      backgroundColor: "#552b2b",
-      borderRadius: "5px",
+      width: '200px',
+      height: '40px',
+      border: 'none',
+      color: '#fff',
+      backgroundColor: '#552b2b',
+      borderRadius: '5px',
     },
     callback: (response: any) => {
-      console.log(response);
-      paymentCallback(response);
+      console.log(response)
+      paymentCallback(response)
     },
-  };
+  }
 
   // Handle payment confirmation
   const handlePaymentConfirmation = async () => {
-    const selectedMethod = paymentMethods.find(method => method.id === selectedPaymentMethod);
+    const selectedMethod = paymentMethods.find(
+      (method) => method.id === selectedPaymentMethod
+    )
 
     switch (selectedMethod?.type) {
       case 'whatsapp':
-        await handleWhatsAppOrder();
-        break;
+        await handleWhatsAppOrder()
+        break
       case 'card':
-        setShowPaymentModal(false);
-        await handleCardPayment();
-        break;
+        setShowPaymentModal(false)
+        await handleCardPayment()
+        break
       case 'transfer':
-        await handleBankTransfer();
-        break;
+        await handleBankTransfer()
+        break
       default:
         toast({
           title: 'Invalid Payment Method',
           description: 'Please select a valid payment method.',
           variant: 'destructive',
-        });
+        })
     }
-  };
+  }
 
   // Show success page if order completed
   if (orderSuccess) {
@@ -809,29 +834,29 @@ export default function CheckoutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8 text-center"
+            className="mx-auto max-w-md rounded-2xl bg-white p-8 text-center shadow-xl"
           >
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h1>
-            <p className="text-gray-600 mb-6">
+            <h1 className="mb-2 text-2xl font-bold text-gray-900">Order Confirmed!</h1>
+            <p className="mb-6 text-gray-600">
               {selectedPaymentMethod === 'whatsapp'
                 ? 'Your order has been sent via WhatsApp. Our team will contact you within 24 hours.'
                 : selectedPaymentMethod === 'card'
-                ? 'Your payment has been processed and order confirmed.'
-                : 'Your order has been placed. Please make payment to the provided bank details.'}
+                  ? 'Your payment has been processed and order confirmed.'
+                  : 'Your order has been placed. Please make payment to the provided bank details.'}
             </p>
             <Button
               onClick={() => navigate('/')}
-              className="bg-kasuwa-primary hover:bg-kasuwa-primary/90 w-full"
+              className="w-full bg-kasuwa-primary hover:bg-kasuwa-primary/90"
             >
               Continue Shopping
             </Button>
           </motion.div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -840,21 +865,26 @@ export default function CheckoutPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-6xl mx-auto"
+          className="mx-auto max-w-6xl"
         >
           {/* Header with user info */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary bg-clip-text text-transparent">
+            <div className="mb-4 flex items-center justify-between">
+              <h1 className="bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary bg-clip-text text-3xl font-bold text-transparent">
                 Checkout
               </h1>
-              <Badge variant="outline" className="text-kasuwa-primary border-kasuwa-primary">
+              <Badge
+                variant="outline"
+                className="border-kasuwa-primary text-kasuwa-primary"
+              >
                 {getTotalItems()} items
               </Badge>
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               <User className="h-4 w-4" />
-              <span>Welcome back, {user?.firstname} {user?.lastname}</span>
+              <span>
+                Welcome back, {user?.firstname} {user?.lastname}
+              </span>
               <span className="text-gray-400">•</span>
               <Mail className="h-4 w-4" />
               <span>{user?.email}</span>
@@ -869,30 +899,35 @@ export default function CheckoutPage() {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
               {/* Checkout Form */}
-              <div className="lg:col-span-2 space-y-6">
+              <div className="space-y-6 lg:col-span-2">
                 <Card className="glass-card">
                   <CardHeader>
                     <CardTitle className="flex items-center text-2xl">
-                      <MapPin className="h-6 w-6 mr-3 text-kasuwa-primary" />
+                      <MapPin className="mr-3 h-6 w-6 text-kasuwa-primary" />
                       Shipping Information
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Address Selection */}
                     <div>
-                      <Label className="text-base font-medium mb-4 block">Choose Delivery Address</Label>
+                      <Label className="mb-4 block text-base font-medium">
+                        Choose Delivery Address
+                      </Label>
 
                       {loadingAddresses ? (
                         <div className="space-y-3">
                           {[1, 2].map((i) => (
-                            <div key={i} className="flex items-start space-x-3 p-4 border rounded-lg">
-                              <div className="w-4 h-4 bg-gray-200 rounded-full animate-pulse mt-1" />
+                            <div
+                              key={i}
+                              className="flex items-start space-x-3 rounded-lg border p-4"
+                            >
+                              <div className="mt-1 h-4 w-4 animate-pulse rounded-full bg-gray-200" />
                               <div className="flex-1 space-y-2">
-                                <div className="h-4 bg-gray-200 rounded animate-pulse w-1/3" />
-                                <div className="h-3 bg-gray-200 rounded animate-pulse w-full" />
-                                <div className="h-3 bg-gray-200 rounded animate-pulse w-2/3" />
+                                <div className="h-4 w-1/3 animate-pulse rounded bg-gray-200" />
+                                <div className="h-3 w-full animate-pulse rounded bg-gray-200" />
+                                <div className="h-3 w-2/3 animate-pulse rounded bg-gray-200" />
                               </div>
                             </div>
                           ))}
@@ -904,26 +939,38 @@ export default function CheckoutPage() {
                             <motion.div
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
-                              className="p-4 border rounded-lg bg-kasuwa-primary/5 border-kasuwa-primary"
+                              className="rounded-lg border border-kasuwa-primary bg-kasuwa-primary/5 p-4"
                             >
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
-                                  <div className="flex items-center space-x-2 mb-2">
+                                  <div className="mb-2 flex items-center space-x-2">
                                     {(() => {
-                                      const IconComponent = getAddressIcon(selectedAddress.address_type);
-                                      return <IconComponent className="h-5 w-5 text-kasuwa-primary" />;
+                                      const IconComponent = getAddressIcon(
+                                        selectedAddress.address_type
+                                      )
+                                      return (
+                                        <IconComponent className="h-5 w-5 text-kasuwa-primary" />
+                                      )
                                     })()}
                                     <span className="font-medium">
-                                      {selectedAddress.first_name} {selectedAddress.last_name}
+                                      {selectedAddress.first_name}{' '}
+                                      {selectedAddress.last_name}
                                     </span>
                                     {selectedAddress.is_default && (
-                                      <Badge variant="outline" className="text-xs">Default</Badge>
+                                      <Badge variant="outline" className="text-xs">
+                                        Default
+                                      </Badge>
                                     )}
                                   </div>
                                   <div className="text-sm text-gray-600">
                                     <p>{selectedAddress.address_line_1}</p>
-                                    {selectedAddress.address_line_2 && <p>{selectedAddress.address_line_2}</p>}
-                                    <p>{selectedAddress.city}, {selectedAddress.state} {selectedAddress.postal_code}</p>
+                                    {selectedAddress.address_line_2 && (
+                                      <p>{selectedAddress.address_line_2}</p>
+                                    )}
+                                    <p>
+                                      {selectedAddress.city}, {selectedAddress.state}{' '}
+                                      {selectedAddress.postal_code}
+                                    </p>
                                     <p>{selectedAddress.phone}</p>
                                   </div>
                                 </div>
@@ -932,7 +979,7 @@ export default function CheckoutPage() {
                                   variant="outline"
                                   size="sm"
                                   onClick={handleChangeAddress}
-                                  className="text-kasuwa-primary border-kasuwa-primary hover:bg-kasuwa-primary hover:text-white"
+                                  className="border-kasuwa-primary text-kasuwa-primary hover:bg-kasuwa-primary hover:text-white"
                                 >
                                   Change
                                 </Button>
@@ -942,22 +989,23 @@ export default function CheckoutPage() {
                             <motion.div
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
-                              className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center"
+                              className="rounded-lg border-2 border-dashed border-gray-300 p-4 text-center"
                             >
-                              <MapPin className="h-10 w-10 text-gray-400 mx-auto mb-3" />
-                              <p className="text-gray-600 mb-3">
+                              <MapPin className="mx-auto mb-3 h-10 w-10 text-gray-400" />
+                              <p className="mb-3 text-gray-600">
                                 {savedAddresses.length === 0
                                   ? 'No saved addresses found. Add your delivery address to continue.'
-                                  : 'Select a delivery address'
-                                }
+                                  : 'Select a delivery address'}
                               </p>
                               <Button
                                 type="button"
                                 onClick={handleChangeAddress}
                                 className="bg-kasuwa-primary hover:bg-kasuwa-primary/90"
                               >
-                                <Plus className="h-4 w-4 mr-2" />
-                                {savedAddresses.length === 0 ? 'Add Address' : 'Select Address'}
+                                <Plus className="mr-2 h-4 w-4" />
+                                {savedAddresses.length === 0
+                                  ? 'Add Address'
+                                  : 'Select Address'}
                               </Button>
                             </motion.div>
                           )}
@@ -968,9 +1016,9 @@ export default function CheckoutPage() {
                               type="button"
                               variant="outline"
                               onClick={() => setShowNewAddressForm(true)}
-                              className="w-full border-dashed border-2 hover:border-kasuwa-primary hover:text-kasuwa-primary"
+                              className="w-full border-2 border-dashed hover:border-kasuwa-primary hover:text-kasuwa-primary"
                             >
-                              <Plus className="h-4 w-4 mr-2" />
+                              <Plus className="mr-2 h-4 w-4" />
                               Add New Address for This Order
                             </Button>
                           )}
@@ -983,7 +1031,7 @@ export default function CheckoutPage() {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="space-y-4 p-4 bg-gray-50 rounded-lg"
+                        className="space-y-4 rounded-lg bg-gray-50 p-4"
                       >
                         <h4 className="font-medium text-gray-900">New Address Details</h4>
 
@@ -1094,45 +1142,66 @@ export default function CheckoutPage() {
                 <Card className="glass-card">
                   <CardHeader>
                     <CardTitle className="flex items-center text-2xl">
-                      <CreditCard className="h-6 w-6 mr-3 text-kasuwa-primary" />
+                      <CreditCard className="mr-3 h-6 w-6 text-kasuwa-primary" />
                       Payment Method
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <RadioGroup value={selectedPaymentMethod} onValueChange={setSelectedPaymentMethod}>
+                    <RadioGroup
+                      value={selectedPaymentMethod}
+                      onValueChange={setSelectedPaymentMethod}
+                    >
                       {paymentMethods.map((method) => {
-                        const IconComponent = method.icon;
+                        const IconComponent = method.icon
                         return (
-                          <div key={method.id} className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-all">
-                            <RadioGroupItem value={method.id} id={method.id} className="mt-1" />
+                          <div
+                            key={method.id}
+                            className="flex cursor-pointer items-start space-x-3 rounded-lg border p-4 transition-all hover:bg-gray-50"
+                          >
+                            <RadioGroupItem
+                              value={method.id}
+                              id={method.id}
+                              className="mt-1"
+                            />
                             <div className="flex-1">
                               <Label htmlFor={method.id} className="cursor-pointer">
-                                <div className="flex items-center space-x-2 mb-2">
+                                <div className="mb-2 flex items-center space-x-2">
                                   <IconComponent className="h-5 w-5 text-kasuwa-primary" />
                                   <span className="font-medium">{method.name}</span>
                                   {method.id === 'whatsapp' && (
-                                    <Badge variant="outline" className="text-xs">Recommended</Badge>
+                                    <Badge variant="outline" className="text-xs">
+                                      Recommended
+                                    </Badge>
                                   )}
                                 </div>
-                                <p className="text-sm text-gray-600">{method.description}</p>
+                                <p className="text-sm text-gray-600">
+                                  {method.description}
+                                </p>
                               </Label>
                             </div>
                           </div>
-                        );
+                        )
                       })}
                     </RadioGroup>
 
                     {/* Payment method specific information */}
                     {selectedPaymentMethod === 'transfer' && (
-                      <Alert className="bg-blue-50 border-blue-200">
+                      <Alert className="border-blue-200 bg-blue-50">
                         <Banknote className="h-4 w-4" />
                         <AlertDescription>
-                          <div className="space-y-2 mt-2">
+                          <div className="mt-2 space-y-2">
                             <div className="font-semibold">Bank Transfer Details:</div>
-                            <div className="text-sm space-y-1">
-                              <div><strong>Bank:</strong> Keystone Bank</div>
-                              <div><strong>Account Number:</strong> 1013842470</div>
-                              <div><strong>Account Name:</strong> Prospora Tech Nigeria Limited</div>
+                            <div className="space-y-1 text-sm">
+                              <div>
+                                <strong>Bank:</strong> Keystone Bank
+                              </div>
+                              <div>
+                                <strong>Account Number:</strong> 1013842470
+                              </div>
+                              <div>
+                                <strong>Account Name:</strong> Prospora Tech Nigeria
+                                Limited
+                              </div>
                             </div>
                           </div>
                         </AlertDescription>
@@ -1140,15 +1209,17 @@ export default function CheckoutPage() {
                     )}
 
                     {selectedPaymentMethod === 'whatsapp' && (
-                      <Alert className="bg-green-50 border-green-200">
+                      <Alert className="border-green-200 bg-green-50">
                         <Smartphone className="h-4 w-4" />
                         <AlertDescription>
-                          <div className="space-y-2 mt-2">
+                          <div className="mt-2 space-y-2">
                             <div className="font-semibold">WhatsApp Order Process:</div>
-                            <div className="text-sm space-y-1">
+                            <div className="space-y-1 text-sm">
                               <div>• Your order details will be sent via WhatsApp</div>
                               <div>• Our team will respond within 24 hours</div>
-                              <div>• Do not make payment until you receive your order</div>
+                              <div>
+                                • Do not make payment until you receive your order
+                              </div>
                               <div>• Support: +2349067393633</div>
                             </div>
                           </div>
@@ -1157,14 +1228,16 @@ export default function CheckoutPage() {
                     )}
 
                     {selectedPaymentMethod === 'card' && (
-                      <Alert className="bg-purple-50 border-purple-200">
+                      <Alert className="border-purple-200 bg-purple-50">
                         <Lock className="h-4 w-4" />
                         <AlertDescription>
-                          <div className="space-y-2 mt-2">
+                          <div className="mt-2 space-y-2">
                             <div className="font-semibold">Secure Card Payment:</div>
-                            <div className="text-sm space-y-1">
+                            <div className="space-y-1 text-sm">
                               <div>• Powered by Interswitch payment gateway</div>
-                              <div>• Card details entered securely on Interswitch platform</div>
+                              <div>
+                                • Card details entered securely on Interswitch platform
+                              </div>
                               <div>• Supports Visa, Mastercard, and Verve</div>
                               <div>• No card information stored on our servers</div>
                             </div>
@@ -1186,69 +1259,103 @@ export default function CheckoutPage() {
                     {getTotalItems() > 0 ? (
                       <>
                         {/* Cart Items */}
-                        <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                        <div className="max-h-96 space-y-3 overflow-y-auto pr-2">
                           {items.map((item) => (
-                            <div key={item.product_id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                            <div
+                              key={item.product_id}
+                              className="flex items-center space-x-3 rounded-lg bg-gray-50 p-3"
+                            >
                               <img
-                                src={getProductImageUrl(item.image_urls) || '/images/no-image-placeholder-optimized.jpg'}
+                                src={
+                                  getProductImageUrl(item.image_urls) ||
+                                  '/images/no-image-placeholder-optimized.jpg'
+                                }
                                 alt={item.name}
-                                className="w-16 h-16 object-cover rounded"
+                                className="h-16 w-16 rounded object-cover"
                                 loading="lazy"
                               />
-                              <div className="flex-1 min-w-0">
-                                <h4 className="font-medium text-sm truncate">{item.name}</h4>
-                                <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                              <div className="min-w-0 flex-1">
+                                <h4 className="truncate text-sm font-medium">
+                                  {item.name}
+                                </h4>
+                                <p className="text-xs text-gray-500">
+                                  Qty: {item.quantity}
+                                </p>
                               </div>
                               <div className="text-right">
-                                <p className="font-medium">₦{(item.price * item.quantity).toLocaleString()}</p>
+                                <p className="font-medium">
+                                  ₦{(item.price * item.quantity).toLocaleString()}
+                                </p>
                               </div>
                             </div>
                           ))}
                         </div>
 
                         {/* Order Totals */}
-                        <div className="space-y-2 pt-4 border-t border-gray-200">
+                        <div className="space-y-2 border-t border-gray-200 pt-4">
                           <div className="flex justify-between">
                             <span>Subtotal ({getTotalItems()} items)</span>
                             <span>₦{getTotalPrice().toLocaleString()}</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Tax</span>
-                            <span>₦{Math.round(getTotalPrice() * 0.075).toLocaleString()}</span>
+                            <span>
+                              ₦{Math.round(getTotalPrice() * 0.075).toLocaleString()}
+                            </span>
                           </div>
                           <Separator />
-                          <div className="flex justify-between font-semibold text-lg">
+                          <div className="flex justify-between text-lg font-semibold">
                             <span>Total</span>
-                            <span>₦{(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}</span>
+                            <span>
+                              ₦
+                              {(
+                                getTotalPrice() + Math.round(getTotalPrice() * 0.075)
+                              ).toLocaleString()}
+                            </span>
                           </div>
                         </div>
                       </>
                     ) : (
-                      <div className="text-center py-8">
-                        <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                      <div className="py-8 text-center">
+                        <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
                         <p className="text-muted-foreground">No items in cart</p>
                       </div>
                     )}
 
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90 text-white"
+                      className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary text-white hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90"
                       size="lg"
                       disabled={getTotalItems() === 0 || isProcessing}
                     >
                       {isProcessing ? (
                         <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                          <div className="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
                           Processing...
                         </>
                       ) : (
                         <>
-                          {selectedPaymentMethod === 'whatsapp' && <Smartphone className="h-5 w-5 mr-2" />}
-                          {selectedPaymentMethod === 'card' && <CreditCard className="h-5 w-5 mr-2" />}
-                          {selectedPaymentMethod === 'transfer' && <Banknote className="h-5 w-5 mr-2" />}
-                          {selectedPaymentMethod === 'whatsapp' ? 'Send Order via WhatsApp' :
-                           selectedPaymentMethod === 'card' ? 'Pay with Card' :
-                           'Place Order'} (₦{getTotalItems() > 0 ? (getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString() : '0'})
+                          {selectedPaymentMethod === 'whatsapp' && (
+                            <Smartphone className="mr-2 h-5 w-5" />
+                          )}
+                          {selectedPaymentMethod === 'card' && (
+                            <CreditCard className="mr-2 h-5 w-5" />
+                          )}
+                          {selectedPaymentMethod === 'transfer' && (
+                            <Banknote className="mr-2 h-5 w-5" />
+                          )}
+                          {selectedPaymentMethod === 'whatsapp'
+                            ? 'Send Order via WhatsApp'
+                            : selectedPaymentMethod === 'card'
+                              ? 'Pay with Card'
+                              : 'Place Order'}{' '}
+                          (₦
+                          {getTotalItems() > 0
+                            ? (
+                                getTotalPrice() + Math.round(getTotalPrice() * 0.075)
+                              ).toLocaleString()
+                            : '0'}
+                          )
                         </>
                       )}
                     </Button>
@@ -1263,9 +1370,15 @@ export default function CheckoutPage() {
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle className="flex items-center">
-                  {selectedPaymentMethod === 'whatsapp' && <Smartphone className="h-5 w-5 mr-2 text-green-600" />}
-                  {selectedPaymentMethod === 'card' && <CreditCard className="h-5 w-5 mr-2 text-blue-600" />}
-                  {selectedPaymentMethod === 'transfer' && <Banknote className="h-5 w-5 mr-2 text-purple-600" />}
+                  {selectedPaymentMethod === 'whatsapp' && (
+                    <Smartphone className="mr-2 h-5 w-5 text-green-600" />
+                  )}
+                  {selectedPaymentMethod === 'card' && (
+                    <CreditCard className="mr-2 h-5 w-5 text-blue-600" />
+                  )}
+                  {selectedPaymentMethod === 'transfer' && (
+                    <Banknote className="mr-2 h-5 w-5 text-purple-600" />
+                  )}
                   Confirm Your Order
                 </DialogTitle>
                 <DialogDescription>
@@ -1275,8 +1388,8 @@ export default function CheckoutPage() {
 
               <div className="space-y-4">
                 {/* Order Summary */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Order Summary</h4>
+                <div className="rounded-lg bg-gray-50 p-4">
+                  <h4 className="mb-2 font-medium">Order Summary</h4>
                   <div className="space-y-1 text-sm">
                     <div className="flex justify-between">
                       <span>Items ({getTotalItems()})</span>
@@ -1286,33 +1399,52 @@ export default function CheckoutPage() {
                       <span>Tax</span>
                       <span>₦{Math.round(getTotalPrice() * 0.075).toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between font-semibold pt-2 border-t">
+                    <div className="flex justify-between border-t pt-2 font-semibold">
                       <span>Total</span>
-                      <span>₦{(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}</span>
+                      <span>
+                        ₦
+                        {(
+                          getTotalPrice() + Math.round(getTotalPrice() * 0.075)
+                        ).toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Payment Method Info */}
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Payment Method</h4>
+                <div className="rounded-lg bg-blue-50 p-4">
+                  <h4 className="mb-2 font-medium">Payment Method</h4>
                   <div className="flex items-center space-x-2">
-                    {selectedPaymentMethod === 'whatsapp' && <Smartphone className="h-4 w-4 text-green-600" />}
-                    {selectedPaymentMethod === 'card' && <CreditCard className="h-4 w-4 text-blue-600" />}
-                    {selectedPaymentMethod === 'transfer' && <Banknote className="h-4 w-4 text-purple-600" />}
+                    {selectedPaymentMethod === 'whatsapp' && (
+                      <Smartphone className="h-4 w-4 text-green-600" />
+                    )}
+                    {selectedPaymentMethod === 'card' && (
+                      <CreditCard className="h-4 w-4 text-blue-600" />
+                    )}
+                    {selectedPaymentMethod === 'transfer' && (
+                      <Banknote className="h-4 w-4 text-purple-600" />
+                    )}
                     <span className="text-sm">
-                      {paymentMethods.find(method => method.id === selectedPaymentMethod)?.name}
+                      {
+                        paymentMethods.find(
+                          (method) => method.id === selectedPaymentMethod
+                        )?.name
+                      }
                     </span>
                   </div>
                 </div>
 
                 {/* Delivery Address */}
-                <div className="bg-green-50 p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Delivery Address</h4>
+                <div className="rounded-lg bg-green-50 p-4">
+                  <h4 className="mb-2 font-medium">Delivery Address</h4>
                   <div className="text-sm text-gray-600">
-                    <div>{formData.firstName} {formData.lastName}</div>
+                    <div>
+                      {formData.firstName} {formData.lastName}
+                    </div>
                     <div>{formData.address}</div>
-                    <div>{formData.city}, {formData.state} {formData.postalCode}</div>
+                    <div>
+                      {formData.city}, {formData.state} {formData.postalCode}
+                    </div>
                     <div>{formData.phone}</div>
                   </div>
                 </div>
@@ -1322,24 +1454,24 @@ export default function CheckoutPage() {
                 {selectedPaymentMethod === 'card' ? (
                   <>
                     {/*  */}
-                    <div className="w-full flex justify-center">
+                    <div className="flex w-full justify-center">
                       <InterswitchPay {...paymentParameters} />
                     </div>
                   </>
                 ) : (
                   <Button
                     onClick={handlePaymentConfirmation}
-                    className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90 text-white"
+                    className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary text-white hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90"
                     disabled={isProcessing}
                   >
                     {isProcessing ? (
                       <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white"></div>
                         Processing...
                       </>
                     ) : (
                       <>
-                        <CheckCircle className="h-4 w-4 mr-2" />
+                        <CheckCircle className="mr-2 h-4 w-4" />
                         Confirm Order
                       </>
                     )}
@@ -1360,5 +1492,5 @@ export default function CheckoutPage() {
         </motion.div>
       </div>
     </div>
-  );
+  )
 }
