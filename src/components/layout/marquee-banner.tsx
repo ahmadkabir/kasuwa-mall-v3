@@ -29,7 +29,7 @@ export function MarqueeBanner() {
 
   // Marquee items
   const items = [
-    {icon: Phone, text: 'Call us: 07030975118', action: () => handlePhoneCall('07030975118')},
+    {icon: Phone, text: 'Call us: 07040531004', action: () => handlePhoneCall('07040531004')},
     {icon: MessageCircle, text: 'WhatsApp: 07017222999', action: () => handleWhatsAppMessage('07017222999')},
     {icon: Truck, text: 'Free delivery on orders above ₦10,000'},
     {icon: Shield, text: '100% Secure Shopping'},
@@ -48,7 +48,7 @@ export function MarqueeBanner() {
     )},
     {icon: Clock, text: 'Mon-Sat: 8AM-8PM, Sun: 10AM-6PM'},
     {icon: MapPin, text: 'No 33. H.M House, Kano State'},
-    {icon: Phone, text: 'Call us: 07030975118', action: () => handlePhoneCall('07030975118')},
+    {icon: Phone, text: 'Call us: 07040531004', action: () => handlePhoneCall('07040531004')},
     {icon: MessageCircle, text: 'WhatsApp: 07017222999', action: () => handleWhatsAppMessage('07017222999')},
     {icon: Truck, text: 'Fast & Reliable Delivery'},
     {icon: Shield, text: 'Secure Payment Options'},

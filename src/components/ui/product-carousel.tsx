@@ -1,19 +1,24 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { ProductCard } from '@/components/cards/product-card';
 import { LoadingSkeleton } from '@/components/ui/loading-spinner';
+import { Button } from '@/components/ui/button';
 
 interface ProductCarouselProps {
   products: any[];
   isLoading: boolean;
   title?: string;
   subtitle?: string;
+  viewAllLink?: string;
 }
 
 export function ProductCarousel({ 
   products = [], 
   isLoading = false, 
   title = "You May Also Like", 
-  subtitle = "Discover amazing products handpicked just for you"
+  subtitle = "Discover amazing products handpicked just for you",
+  viewAllLink
 }: ProductCarouselProps) {
   return (
     <section className="py-1">
@@ -22,6 +27,14 @@ export function ProductCarousel({
           <h2 className="text-2xl font-bold mb-1">{title}</h2>
           <p className="text-muted-foreground text-sm">{subtitle}</p>
         </div>
+        {viewAllLink && (
+          <Link to={viewAllLink}>
+            <Button variant="glass" size="sm">
+              View All
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        )}
       </div>
 
       {isLoading ? (

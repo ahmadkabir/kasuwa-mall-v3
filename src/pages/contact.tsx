@@ -24,7 +24,7 @@ export default function ContactPage() {
   const contactNumbers = [
     {
       id: 1,
-      number: '07030975118',
+      number: '07040531004',
       label: 'Customer Support Line 1',
       type: 'phone'
     },
@@ -227,7 +227,7 @@ export default function ContactPage() {
                   <Button 
                     className="w-full justify-start" 
                     variant="outline"
-                    onClick={() => handlePhoneCall('07030975118')}
+                    onClick={() => handlePhoneCall('07040531004')}
                   >
                     <Phone className="h-5 w-5 mr-3 text-blue-500" />
                     Call Customer Support

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useMemo, useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowRight, Sparkles, TrendingUp, Shield } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -44,7 +45,37 @@ export default function HomePage() {
     queryFn: () => productApi.getLatestByCategory('HOM001', 8),
   });
 
-  const featuredProducts = products?.slice(0, 8) || []
+  // State to track shuffle interval (updates every 2 hours to trigger reshuffle)
+  const [shuffleKey, setShuffleKey] = useState(() => Math.floor(Date.now() / (2 * 60 * 60 * 1000)))
+  
+  // Refresh key that changes on every page load/refresh to trigger reshuffle
+  const [refreshKey] = useState(() => Math.random())
+
+  // Update shuffle key every 2 hours to trigger randomization
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShuffleKey(Math.floor(Date.now() / (2 * 60 * 60 * 1000)))
+    }, 2 * 60 * 60 * 1000) // 2 hours in milliseconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Shuffle function to randomize products (Fisher-Yates algorithm)
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
+  }
+
+  // Randomize featured products instead of showing the last items
+  // Reshuffles when products data changes, every 2 hours (via shuffleKey), or on page refresh (via refreshKey)
+  const featuredProducts = useMemo(() => {
+    if (!products || products.length === 0) return []
+    return shuffleArray(products).slice(0, 8)
+  }, [products, shuffleKey, refreshKey])
 
   return (
     <div className="space-y-10">
@@ -118,6 +149,7 @@ export default function HomePage() {
         isLoading={fabricProductsQuery.isLoading}
         title="Fabric Products"
         subtitle="Discover amazing fabric products"
+        viewAllLink="/categories/FAB001"
       />
 
       <ProductCarousel 
@@ -125,6 +157,7 @@ export default function HomePage() {
         isLoading={fashionProductsQuery.isLoading}
         title="Fashion Products"
         subtitle="Discover amazing fashion products"
+        viewAllLink="/categories/FAS001"
       />
 
       <ProductCarousel 
@@ -132,6 +165,7 @@ export default function HomePage() {
         isLoading={babyProductsQuery.isLoading}
         title="Baby Products"
         subtitle="Discover amazing baby products"
+        viewAllLink="/categories/BAB001"
       />
 
       <ProductCarousel 
@@ -139,6 +173,7 @@ export default function HomePage() {
         isLoading={homeProductsQuery.isLoading}
         title="Home & Kitchen Products"
         subtitle="Discover amazing home and kitchen products"
+        viewAllLink="/categories/HOM001"
       />
 
       {/* Featured Products */}

@@ -9,7 +9,7 @@ This document summarizes all the enhancements made to the Kasuwa Mall applicatio
 Added floating contact buttons on the right side of the screen for easy access to:
 - **Phone Call Button 1**: +234 703 097 5118 (Green button)
 - **Phone Call Button 2**: +234 701 722 2999 (Blue button)
-- **WhatsApp Button**: +234 703 097 5118 (WhatsApp green button)
+- **WhatsApp Button**: +234 701 722 2999 (WhatsApp green button)
 
 Features:
 - Animated entrance with staggered delays

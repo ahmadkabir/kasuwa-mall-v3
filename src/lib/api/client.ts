@@ -256,11 +256,23 @@ export const authApi = {
 // Order API
 export const orderApi = {
   async create(orderData: {
-    customer_id: number
-    cart_id: number
-    total: number
-    status: string
-    products: any[]
+    id: number // p_id parameter (INT) - typically 0 for new orders
+    products: Array<{
+      customer_id: string // p_customer_id (VARCHAR) - the actual customer ID string (e.g., "CTM00001")
+      product: string
+      quantity: number
+      product_id: string
+      status?: string
+      shop_id?: string
+      order_image?: string
+      delivery_address?: string
+      [key: string]: any // Allow additional properties
+    }>
+    // Legacy fields (optional for backward compatibility)
+    customer_id?: number
+    cart_id?: number
+    total?: number
+    status?: string
   }) {
     return apiCall<{ success: boolean; result: any }>(
       API_CONFIG.ENDPOINTS.CREATE_ORDER,

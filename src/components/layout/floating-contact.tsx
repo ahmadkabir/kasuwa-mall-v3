@@ -12,9 +12,9 @@ interface FloatingContactProps {
 }
 
 export function FloatingContact({ 
-  phoneNumber1 = '07030975118', 
-  phoneNumber2 = '07017222999',
-  whatsappNumber = '07030975118'
+  phoneNumber1 = '07017222999', 
+  phoneNumber2 = '07040531004',
+  whatsappNumber = '07017222999'
 }: FloatingContactProps) {
   // Clean phone numbers (remove any non-digit characters)
   const cleanPhoneNumber1 = phoneNumber1.replace(/\D/g, '');
