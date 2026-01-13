@@ -54,7 +54,7 @@ export function Footer() {
                 <Mail className="h-5 w-5 text-white/90 flex-shrink-0" />
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Email Us</p>
-                  <p className="text-xs text-white/80">help@kasuwamall.com</p>
+                  <p className="text-xs text-white/80">help@naccima.com</p>
                 </div>
               </div>
             </div>
@@ -206,7 +206,7 @@ export function Footer() {
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="text-center md:text-left">
                 <p className="text-white/90 text-sm">
-                  © 2024 <Link to="#" className="text-white hover:text-white/80 font-medium border-b border-white/30 hover:border-white/60 transition-all duration-300">Kasuwa Mall</Link>, All Rights Reserved.
+                  © 2024 <Link to="#" className="text-white hover:text-white/80 font-medium border-b border-white/30 hover:border-white/60 transition-all duration-300">NACCIMA E-commerce</Link>, All Rights Reserved.
                 </p>
               </div>
               
@@ -229,13 +229,7 @@ export function Footer() {
                 Trusted by customers across Nigeria • Fast delivery • Quality products
               </p>
               <div className="mt-4 flex justify-center items-center">
-                <span className="text-white/70 text-sm mr-2">Powered By</span>
-                <img
-                  src={pospora}
-                  style={{ width: "10rem", paddingLeft: "0.5rem" }}
-                  className=" m-0"
-                  alt="Prosporatech Logo"
-                />
+                <span className="text-white/70 text-sm mr-2">Powered By NACCIMA</span>
               </div>
             </div>
           </div>

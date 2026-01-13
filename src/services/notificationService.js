@@ -79,7 +79,7 @@ export const generateEmailTemplate = (notificationData) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation - Kasuwa Mall</title>
+    <title>Order Confirmation - NACCIMA E-commerce</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -145,7 +145,7 @@ export const generateEmailTemplate = (notificationData) => {
 </head>
 <body>
     <div class="header">
-        <div class="logo">KASUWA MALL</div>
+        <div class="logo">NACCIMA E-COMMERCE</div>
         <h1>Order Confirmation</h1>
         <p>Thank you for your purchase!</p>
     </div>
@@ -201,7 +201,7 @@ export const generateEmailTemplate = (notificationData) => {
         
         <div class="footer">
             <p>We appreciate your business and hope you enjoy your purchase!</p>
-            <p><strong>- The Kasuwa Mall Team</strong></p>
+            <p><strong>- The NACCIMA E-commerce Team</strong></p>
         </div>
     </div>
 </body>
@@ -217,7 +217,7 @@ export const generateWhatsAppMessage = (notificationData) => {
   
   let message = `🎉 *PAYMENT CONFIRMED - ORDER #${reference}*\n\n`;
   message += `Hello ${customer.name},\n`;
-  message += `Your payment has been processed successfully. Thank you for shopping with Kasuwa Mall!\n\n`;
+  message += `Your payment has been processed successfully. Thank you for shopping with NACCIMA E-commerce!\n\n`;
   
   message += `*ORDER DETAILS:*\n`;
   items.forEach((item, index) => {
@@ -232,7 +232,7 @@ export const generateWhatsAppMessage = (notificationData) => {
   message += `*DELIVERY ADDRESS:*\n${deliveryAddress || 'Not specified'}\n\n`;
   
   message += `We appreciate your business and hope you enjoy your purchase!\n`;
-  message += `- The Kasuwa Mall Team 🛍️`;
+  message += `- The NACCIMA E-commerce Team 🛍️`;
   
   return message;
 };

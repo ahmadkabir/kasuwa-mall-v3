@@ -75,7 +75,7 @@ export default function RegisterPage() {
     <div className="max-w-md mx-auto">
       <div className="glass-card p-8 rounded-2xl">
         <h1 className="text-3xl font-bold mb-2 text-center">Create Account</h1>
-        <p className="text-muted-foreground text-center mb-6">Join Kasuwa Mall today</p>
+        <p className="text-muted-foreground text-center mb-6">Join NACCIMA E-commerce today</p>
 
         {error && (
           <div className="mb-4 p-3 bg-destructive/10 text-destructive rounded-lg text-sm">

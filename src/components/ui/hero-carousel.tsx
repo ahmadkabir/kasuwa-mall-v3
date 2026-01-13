@@ -15,67 +15,67 @@ interface HeroSlide {
   backgroundColor: string
 }
 
-// Kasuwa Mall promotional banner slides - using v2 images with v3 styling
+// NACCIMA E-commerce promotional banner slides - using v2 images with v3 styling
 const heroSlides: HeroSlide[] = [
   {
     id: '1',
-    title: 'Kasuwa Mall',
+    title: 'NACCIMA E-commerce',
     subtitle: 'Your Premier Shopping Destination',
     description: 'Discover amazing deals and quality products at unbeatable prices',
     image: '/images/1-kasuwa-mall-ads-optimized.jpg',
     ctaText: 'Shop Now',
     ctaLink: '/products',
-    backgroundColor: 'from-kasuwa-primary to-kasuwa-brown'
+    backgroundColor: 'from-primary to-accent'
   },
   {
     id: '2',
-    title: 'Kasuwa Mall',
+    title: 'NACCIMA E-commerce',
     subtitle: 'Quality Products, Great Prices',
     description: 'Experience the best shopping with fast delivery across Nigeria',
     image: '/images/2-kasuwa-mall-ads-optimized.jpg',
     ctaText: 'Explore Deals',
     ctaLink: '/products',
-    backgroundColor: 'from-kasuwa-brown to-kasuwa-secondary'
+    backgroundColor: 'from-accent to-secondary'
   },
   {
     id: '3',
-    title: 'Kasuwa Mall',
+    title: 'NACCIMA E-commerce',
     subtitle: 'Shop with Confidence',
     description: 'Trusted by thousands of customers for quality and reliability',
     image: '/images/3-kasuwa-mall-ads-optimized.jpg',
     ctaText: 'Browse Categories',
     ctaLink: '/products',
-    backgroundColor: 'from-kasuwa-secondary to-kasuwa-primary'
+    backgroundColor: 'from-secondary to-primary'
   },
   {
     id: '4',
-    title: 'Kasuwa Mall',
+    title: 'NACCIMA E-commerce',
     subtitle: 'Everything You Need',
     description: 'From fashion to electronics, find everything you need in one place',
     image: '/images/4-kasuwa-mall-ads-optimized.jpg',
     ctaText: 'Shop All',
     ctaLink: '/products',
-    backgroundColor: 'from-kasuwa-primary to-secondary'
+    backgroundColor: 'from-primary to-secondary'
   },
   {
     id: '5',
-    title: 'Kasuwa Mall',
+    title: 'NACCIMA E-commerce',
     subtitle: 'Special Offers',
     description: 'Don\'t miss out on our exclusive deals and seasonal promotions',
     image: '/images/5-kasuwa-mall-ads-optimized.jpg',
     ctaText: 'View Offers',
     ctaLink: '/products',
-    backgroundColor: 'from-kasuwa-secondary to-kasuwa-brown'
+    backgroundColor: 'from-secondary to-accent'
   },
   {
     id: '6',
-    title: 'Kasuwa Mall',
+    title: 'NACCIMA E-commerce',
     subtitle: 'Premium Shopping Experience',
-    description: 'Join thousands of satisfied customers shopping at Kasuwa Mall',
+    description: 'Join thousands of satisfied customers shopping at NACCIMA E-commerce',
     image: '/images/6-kasuwa-mall-ads-optimized.jpg',
     ctaText: 'Start Shopping',
     ctaLink: '/products',
-    backgroundColor: 'from-kasuwa-brown to-primary'
+    backgroundColor: 'from-accent to-primary'
   }
 ]
 

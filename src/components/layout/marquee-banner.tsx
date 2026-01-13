@@ -57,7 +57,7 @@ export function MarqueeBanner() {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary py-1.5 overflow-hidden border-b border-white/20">
+    <div className="w-full bg-gradient-to-r from-primary to-secondary py-1.5 overflow-hidden border-b border-white/20">
       <div className="flex animate-marquee whitespace-nowrap">
         {/* Repeat items twice to ensure smooth looping */}
         {[...items, ...items].map((item, index) => (

@@ -114,7 +114,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               )}
               
               {product.prod_status === 'featured' && (
-                <div className="absolute top-2 left-2 bg-gradient-to-r from-kasuwa-primary to-kasuwa-brown text-white px-3 py-1 rounded-full text-xs font-semibold">
+                <div className="absolute top-2 left-2 bg-gradient-to-r from-primary to-secondary text-white px-3 py-1 rounded-full text-xs font-semibold">
                   Featured
                 </div>
               )}

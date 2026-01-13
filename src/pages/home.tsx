@@ -262,7 +262,7 @@ function FeatureCard({
       whileHover={{ y: -5 }}
       className="glass-card p-6 rounded-2xl text-center"
     >
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-kasuwa-brown/20 mb-4">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 mb-4">
         <div className="text-primary">{icon}</div>
       </div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>

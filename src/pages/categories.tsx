@@ -30,17 +30,17 @@ const categoryIcons: { [key: string]: any } = {
   default: Package,
 }
 
-// Color mapping for categories (v3 gradient theme)
+// Color mapping for categories (NACCIMA color theme)
 const categoryColors: { [key: string]: string } = {
-  FAS001: 'from-kasuwa-primary to-kasuwa-brown',
-  ELE001: 'from-kasuwa-brown to-kasuwa-secondary',
-  HOM001: 'from-kasuwa-secondary to-kasuwa-primary',
+  FAS001: 'from-primary to-accent',
+  ELE001: 'from-accent to-secondary',
+  HOM001: 'from-secondary to-primary',
   SPO001: 'from-primary to-secondary',
-  FAB001: 'from-kasuwa-primary to-kasuwa-secondary',
-  BOO001: 'from-kasuwa-secondary to-kasuwa-brown',
+  FAB001: 'from-primary to-secondary',
+  BOO001: 'from-secondary to-accent',
   BAB001: 'from-secondary to-primary',
-  AUT001: 'from-kasuwa-brown to-primary',
-  default: 'from-primary to-kasuwa-brown',
+  AUT001: 'from-accent to-primary',
+  default: 'from-primary to-secondary',
 }
 
 export default function CategoriesPage() {

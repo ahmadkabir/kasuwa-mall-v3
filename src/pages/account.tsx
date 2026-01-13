@@ -95,7 +95,7 @@ export default function AccountPage() {
         email: user.email || '',
         phone: user.phone || '',
         address: user.address || '',
-        bio: 'Welcome to my Kasuwa Mall profile!'
+        bio: 'Welcome to my NACCIMA E-commerce profile!'
       })
       
       // Set user stats with safe date formatting
@@ -153,7 +153,7 @@ export default function AccountPage() {
         email: user.email || '',
         phone: user.phone || '',
         address: user.address || '',
-        bio: 'Welcome to my Kasuwa Mall profile!'
+        bio: 'Welcome to my NACCIMA E-commerce profile!'
       })
     }
     setIsEditing(false)
@@ -214,7 +214,7 @@ export default function AccountPage() {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8"
       >
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-kasuwa-secondary bg-clip-text text-transparent">My Account</h1>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">My Account</h1>
         <p className="text-muted-foreground">Manage your profile and account settings</p>
       </motion.div>
 
@@ -230,7 +230,7 @@ export default function AccountPage() {
           >
             {/* Profile Avatar */}
             <div className="text-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-kasuwa-secondary flex items-center justify-center mx-auto mb-4">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
                 <User className="h-10 w-10 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-foreground">
@@ -262,7 +262,7 @@ export default function AccountPage() {
             </div>
 
             {/* Total Spent */}
-            <div className="mb-6 p-4 bg-gradient-to-r from-primary/20 to-kasuwa-secondary/20 rounded-lg text-center">
+            <div className="mb-6 p-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg text-center">
               <p className="text-sm text-muted-foreground">Total Spent</p>
               <p className="text-xl font-bold text-foreground">₦{userStats.totalSpent.toLocaleString()}</p>
             </div>

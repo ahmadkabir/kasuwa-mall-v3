@@ -56,11 +56,11 @@ const AboutPage = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center p-3 rounded-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary mb-6">
+            <div className="inline-flex items-center justify-center p-3 rounded-full bg-gradient-to-r from-primary to-secondary mb-6">
               <Building2 className="h-10 w-10 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              About Kasuwa Mall
+              About NACCIMA E-commerce
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Your premier online shopping destination, connecting customers with quality products and trusted vendors across Nigeria.
@@ -78,7 +78,7 @@ const AboutPage = () => {
               <div>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-3">Our Story</h2>
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  Kasuwa Mall was founded with a vision to revolutionize online shopping in Nigeria. Our mission is to provide customers with a seamless, secure, and satisfying shopping experience while supporting local businesses and vendors.
+                  NACCIMA E-commerce was founded with a vision to revolutionize online shopping in Nigeria. Our mission is to provide customers with a seamless, secure, and satisfying shopping experience while supporting local businesses and vendors.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
                   We understand that online shopping can be challenging in Nigeria, which is why we've built a platform that prioritizes security, reliability, and customer satisfaction. Our team works tirelessly to ensure that every transaction is smooth and every delivery reaches its destination on time.
@@ -91,7 +91,7 @@ const AboutPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
             {achievements.map((achievement, index) => (
               <div key={index} className="bg-white rounded-xl shadow-md p-6 text-center border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                <div className="text-3xl font-bold text-kasuwa-primary mb-2">{achievement.number}</div>
+                <div className="text-3xl font-bold text-primary mb-2">{achievement.number}</div>
                 <div className="text-gray-600 text-sm">{achievement.label}</div>
               </div>
             ))}
@@ -101,7 +101,7 @@ const AboutPage = () => {
           <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border border-gray-100">
             <div className="flex items-center mb-6">
               <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                <Heart className="h-6 w-6 text-kasuwa-primary" />
+                <Heart className="h-6 w-6 text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900">Our Core Values</h2>
             </div>
@@ -110,9 +110,9 @@ const AboutPage = () => {
               {ourValues.map((value, index) => {
                 const Icon = value.icon;
                 return (
-                  <div key={index} className="flex items-start space-x-4 p-4 rounded-lg border border-gray-100 hover:border-kasuwa-primary/50 transition-colors duration-300">
+                  <div key={index} className="flex items-start space-x-4 p-4 rounded-lg border border-gray-100 hover:border-primary/50 transition-colors duration-300">
                     <div className="flex-shrink-0 mt-1">
-                      <div className="p-2 rounded-full bg-kasuwa-primary/10 text-kasuwa-primary">
+                      <div className="p-2 rounded-full bg-primary/10 text-primary">
                         <Icon className="h-5 w-5" />
                       </div>
                     </div>
@@ -130,7 +130,7 @@ const AboutPage = () => {
           <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border border-gray-100">
             <div className="flex items-center mb-6">
               <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                <Globe className="h-6 w-6 text-kasuwa-primary" />
+                <Globe className="h-6 w-6 text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900">How We Operate</h2>
             </div>
@@ -138,7 +138,7 @@ const AboutPage = () => {
             <div className="space-y-4">
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-kasuwa-primary text-white flex items-center justify-center text-sm font-bold">1</div>
+                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">1</div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Vendor Vetting</h3>
@@ -150,7 +150,7 @@ const AboutPage = () => {
               
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-kasuwa-primary text-white flex items-center justify-center text-sm font-bold">2</div>
+                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">2</div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Secure Transactions</h3>
@@ -162,7 +162,7 @@ const AboutPage = () => {
               
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-kasuwa-primary text-white flex items-center justify-center text-sm font-bold">3</div>
+                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">3</div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Fast Delivery</h3>
@@ -174,7 +174,7 @@ const AboutPage = () => {
               
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-kasuwa-primary text-white flex items-center justify-center text-sm font-bold">4</div>
+                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">4</div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">Customer Support</h3>
@@ -190,7 +190,7 @@ const AboutPage = () => {
           <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border border-gray-100">
             <div className="flex items-center mb-6">
               <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                <Phone className="h-6 w-6 text-kasuwa-primary" />
+                <Phone className="h-6 w-6 text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
             </div>
@@ -201,7 +201,7 @@ const AboutPage = () => {
                 return (
                   <div key={index} className="flex items-start space-x-4 p-4 rounded-lg border border-gray-100">
                     <div className="flex-shrink-0 mt-1">
-                      <div className="p-2 rounded-full bg-kasuwa-primary/10 text-kasuwa-primary">
+                      <div className="p-2 rounded-full bg-primary/10 text-primary">
                         <Icon className="h-5 w-5" />
                       </div>
                     </div>
@@ -218,10 +218,10 @@ const AboutPage = () => {
           {/* Mission & Vision */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Mission */}
-            <div className="bg-gradient-to-br from-kasuwa-primary/5 to-kasuwa-secondary/5 rounded-2xl shadow-lg p-6 md:p-8 border border-kasuwa-primary/20">
+            <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl shadow-lg p-6 md:p-8 border border-primary/20">
               <div className="flex items-center mb-6">
-                <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-kasuwa-primary/10">
-                  <Award className="h-6 w-6 text-kasuwa-primary" />
+                <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-primary/10">
+                  <Award className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">Our Mission</h2>
               </div>
@@ -247,17 +247,17 @@ const AboutPage = () => {
           {/* Call to Action */}
           <div className="mt-12 text-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to start shopping with us?</h3>
-            <p className="text-gray-600 mb-6">Join thousands of satisfied customers on Kasuwa Mall today!</p>
+            <p className="text-gray-600 mb-6">Join thousands of satisfied customers on NACCIMA E-commerce today!</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link 
                 to="/products" 
-                className="px-6 py-3 bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105"
+                className="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105"
               >
                 Shop Products
               </Link>
               <Link 
                 to="/contact" 
-                className="px-6 py-3 bg-white text-kasuwa-primary font-semibold rounded-lg border border-kasuwa-primary hover:bg-kasuwa-primary hover:text-white transition-all duration-300"
+                className="px-6 py-3 bg-white text-primary font-semibold rounded-lg border border-primary hover:bg-primary hover:text-white transition-all duration-300"
               >
                 Contact Us
               </Link>

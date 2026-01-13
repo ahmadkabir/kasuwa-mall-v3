@@ -15,6 +15,7 @@ import {
   Smartphone,
   CheckCircle,
   Lock,
+  Package,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -612,9 +613,24 @@ export default function CheckoutPage() {
         }
       }
 
-      // Show payment confirmation modal
-      setShowPaymentModal(true)
-      setIsProcessing(false)
+      // Create order directly without payment
+      const orderCreated = await createOrder()
+
+      if (orderCreated) {
+        // Clear cart
+        clearCart()
+        
+        // Show success message
+        toast({
+          title: 'Order Placed Successfully!',
+          description: 'Your order has been placed and saved to your orders.',
+        })
+        
+        // Redirect to orders page
+        navigate('/orders')
+      } else {
+        throw new Error('Failed to create order')
+      }
     } catch (error) {
       console.error('Checkout error:', error)
       toast({
@@ -622,6 +638,7 @@ export default function CheckoutPage() {
         description: 'There was an error processing your checkout. Please try again.',
         variant: 'destructive',
       })
+    } finally {
       setIsProcessing(false)
     }
   }
@@ -692,13 +709,6 @@ export default function CheckoutPage() {
           delivery_address: `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`,
         })),
       }
-
-      const result = await mainOrderApi.create(orderData)
-      if (result.success && (result.result || result.results)) {
-        // console.log('Order created successfully:', result)
-        const responseData = result.result || result.results
-        console.log('Order created successfully:', responseData)
-        return true
 
       console.log('Creating order with data:', orderData);
 
@@ -810,7 +820,7 @@ export default function CheckoutPage() {
 
       if (orderCreated) {
         // Prepare WhatsApp message
-        let message = `📦 *New Order from Kasuwa Mall*\n\n`
+        let message = `📦 *New Order from NACCIMA E-commerce*\n\n`
         message += `👤 *Customer Details:*\n`
         message += `Name: ${formData.firstName} ${formData.lastName}\n`
         message += `Email: ${formData.email}\n`
@@ -956,7 +966,7 @@ export default function CheckoutPage() {
   // Show success page if order completed
   if (orderSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-kasuwa-primary/5 to-kasuwa-secondary/5 py-12">
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 py-12">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -976,7 +986,7 @@ export default function CheckoutPage() {
             </p>
             <Button
               onClick={() => navigate('/')}
-              className="w-full bg-kasuwa-primary hover:bg-kasuwa-primary/90"
+              className="w-full bg-primary hover:bg-primary/90"
             >
               Continue Shopping
             </Button>
@@ -987,7 +997,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-kasuwa-primary/5 to-kasuwa-secondary/5 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 py-8">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -997,12 +1007,12 @@ export default function CheckoutPage() {
           {/* Header with user info */}
           <div className="mb-8">
             <div className="mb-4 flex items-center justify-between">
-              <h1 className="bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary bg-clip-text text-3xl font-bold text-transparent">
+              <h1 className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-3xl font-bold text-transparent">
                 Checkout
               </h1>
               <Badge
                 variant="outline"
-                className="border-kasuwa-primary text-kasuwa-primary"
+                className="border-primary text-primary"
               >
                 {getTotalItems()} items
               </Badge>
@@ -1032,7 +1042,7 @@ export default function CheckoutPage() {
                 <Card className="glass-card">
                   <CardHeader>
                     <CardTitle className="flex items-center text-2xl">
-                      <MapPin className="mr-3 h-6 w-6 text-kasuwa-primary" />
+                      <MapPin className="mr-3 h-6 w-6 text-primary" />
                       Shipping Information
                     </CardTitle>
                   </CardHeader>
@@ -1066,7 +1076,7 @@ export default function CheckoutPage() {
                             <motion.div
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
-                              className="rounded-lg border border-kasuwa-primary bg-kasuwa-primary/5 p-4"
+                              className="rounded-lg border border-primary bg-primary/5 p-4"
                             >
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
@@ -1076,7 +1086,7 @@ export default function CheckoutPage() {
                                         selectedAddress.address_type
                                       )
                                       return (
-                                        <IconComponent className="h-5 w-5 text-kasuwa-primary" />
+                                        <IconComponent className="h-5 w-5 text-primary" />
                                       )
                                     })()}
                                     <span className="font-medium">
@@ -1106,7 +1116,7 @@ export default function CheckoutPage() {
                                   variant="outline"
                                   size="sm"
                                   onClick={handleChangeAddress}
-                                  className="border-kasuwa-primary text-kasuwa-primary hover:bg-kasuwa-primary hover:text-white"
+                                  className="border-primary text-primary hover:bg-primary hover:text-white"
                                 >
                                   Change
                                 </Button>
@@ -1127,7 +1137,7 @@ export default function CheckoutPage() {
                               <Button
                                 type="button"
                                 onClick={handleChangeAddress}
-                                className="bg-kasuwa-primary hover:bg-kasuwa-primary/90"
+                                className="bg-primary hover:bg-primary/90"
                               >
                                 <Plus className="mr-2 h-4 w-4" />
                                 {savedAddresses.length === 0
@@ -1143,7 +1153,7 @@ export default function CheckoutPage() {
                               type="button"
                               variant="outline"
                               onClick={() => setShowNewAddressForm(true)}
-                              className="w-full border-2 border-dashed hover:border-kasuwa-primary hover:text-kasuwa-primary"
+                              className="w-full border-2 border-dashed hover:border-primary hover:text-primary"
                             >
                               <Plus className="mr-2 h-4 w-4" />
                               Add New Address for This Order
@@ -1266,114 +1276,7 @@ export default function CheckoutPage() {
                   </CardContent>
                 </Card>
 
-                <Card className="glass-card">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-2xl">
-                      <CreditCard className="mr-3 h-6 w-6 text-kasuwa-primary" />
-                      Payment Method
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <RadioGroup
-                      value={selectedPaymentMethod}
-                      onValueChange={setSelectedPaymentMethod}
-                    >
-                      {paymentMethods.map((method) => {
-                        const IconComponent = method.icon
-                        return (
-                          <div
-                            key={method.id}
-                            className="flex cursor-pointer items-start space-x-3 rounded-lg border p-4 transition-all hover:bg-gray-50"
-                          >
-                            <RadioGroupItem
-                              value={method.id}
-                              id={method.id}
-                              className="mt-1"
-                            />
-                            <div className="flex-1">
-                              <Label htmlFor={method.id} className="cursor-pointer">
-                                <div className="mb-2 flex items-center space-x-2">
-                                  <IconComponent className="h-5 w-5 text-kasuwa-primary" />
-                                  <span className="font-medium">{method.name}</span>
-                                  {method.id === 'whatsapp' && (
-                                    <Badge variant="outline" className="text-xs">
-                                      Recommended
-                                    </Badge>
-                                  )}
-                                </div>
-                                <p className="text-sm text-gray-600">
-                                  {method.description}
-                                </p>
-                              </Label>
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </RadioGroup>
-
-                    {/* Payment method specific information */}
-                    {selectedPaymentMethod === 'transfer' && (
-                      <Alert className="border-blue-200 bg-blue-50">
-                        <Banknote className="h-4 w-4" />
-                        <AlertDescription>
-                          <div className="mt-2 space-y-2">
-                            <div className="font-semibold">Bank Transfer Details:</div>
-                            <div className="space-y-1 text-sm">
-                              <div>
-                                <strong>Bank:</strong> Keystone Bank
-                              </div>
-                              <div>
-                                <strong>Account Number:</strong> 1013842470
-                              </div>
-                              <div>
-                                <strong>Account Name:</strong> Prospora Tech Nigeria
-                                Limited
-                              </div>
-                            </div>
-                          </div>
-                        </AlertDescription>
-                      </Alert>
-                    )}
-
-                    {selectedPaymentMethod === 'whatsapp' && (
-                      <Alert className="border-green-200 bg-green-50">
-                        <Smartphone className="h-4 w-4" />
-                        <AlertDescription>
-                          <div className="mt-2 space-y-2">
-                            <div className="font-semibold">WhatsApp Order Process:</div>
-                            <div className="space-y-1 text-sm">
-                              <div>• Your order details will be sent via WhatsApp</div>
-                              <div>• Our team will respond within 24 hours</div>
-                              <div>
-                                • Do not make payment until you receive your order
-                              </div>
-                              <div>• Support: +2349067393633</div>
-                            </div>
-                          </div>
-                        </AlertDescription>
-                      </Alert>
-                    )}
-
-                    {selectedPaymentMethod === 'card' && (
-                      <Alert className="border-purple-200 bg-purple-50">
-                        <Lock className="h-4 w-4" />
-                        <AlertDescription>
-                          <div className="mt-2 space-y-2">
-                            <div className="font-semibold">Secure Card Payment:</div>
-                            <div className="space-y-1 text-sm">
-                              <div>• Powered by Interswitch payment gateway</div>
-                              <div>
-                                • Card details entered securely on Interswitch platform
-                              </div>
-                              <div>• Supports Visa, Mastercard, and Verve</div>
-                              <div>• No card information stored on our servers</div>
-                            </div>
-                          </div>
-                        </AlertDescription>
-                      </Alert>
-                    )}
-                  </CardContent>
-                </Card>
+                {/* Payment Method Section - Disabled */}
               </div>
 
               {/* Order Summary */}
@@ -1451,7 +1354,7 @@ export default function CheckoutPage() {
 
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary text-white hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90"
+                      className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90"
                       size="lg"
                       disabled={getTotalItems() === 0 || isProcessing}
                     >
@@ -1462,21 +1365,8 @@ export default function CheckoutPage() {
                         </>
                       ) : (
                         <>
-                          {selectedPaymentMethod === 'whatsapp' && (
-                            <Smartphone className="mr-2 h-5 w-5" />
-                          )}
-                          {selectedPaymentMethod === 'card' && (
-                            <CreditCard className="mr-2 h-5 w-5" />
-                          )}
-                          {selectedPaymentMethod === 'transfer' && (
-                            <Banknote className="mr-2 h-5 w-5" />
-                          )}
-                          {selectedPaymentMethod === 'whatsapp'
-                            ? 'Send Order via WhatsApp'
-                            : selectedPaymentMethod === 'card'
-                              ? 'Pay with Card'
-                              : 'Place Order'}{' '}
-                          (₦
+                          <Package className="mr-2 h-5 w-5" />
+                          Place Order (₦
                           {getTotalItems() > 0
                             ? (
                                 getTotalPrice() + Math.round(getTotalPrice() * 0.075)
@@ -1492,121 +1382,7 @@ export default function CheckoutPage() {
             </div>
           </form>
 
-          {/* Payment Confirmation Modal */}
-          <Dialog open={showPaymentModal} onOpenChange={setShowPaymentModal}>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle className="flex items-center">
-                  {selectedPaymentMethod === 'whatsapp' && (
-                    <Smartphone className="mr-2 h-5 w-5 text-green-600" />
-                  )}
-                  {selectedPaymentMethod === 'card' && (
-                    <CreditCard className="mr-2 h-5 w-5 text-blue-600" />
-                  )}
-                  {selectedPaymentMethod === 'transfer' && (
-                    <Banknote className="mr-2 h-5 w-5 text-purple-600" />
-                  )}
-                  Confirm Your Order
-                </DialogTitle>
-                <DialogDescription>
-                  Please review your order details before proceeding.
-                </DialogDescription>
-              </DialogHeader>
-
-              <div className="space-y-4">
-                {/* Order Summary */}
-                <div className="rounded-lg bg-gray-50 p-4">
-                  <h4 className="mb-2 font-medium">Order Summary</h4>
-                  <div className="space-y-1 text-sm">
-                    <div className="flex justify-between">
-                      <span>Items ({getTotalItems()})</span>
-                      <span>₦{getTotalPrice().toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Tax</span>
-                      <span>₦{Math.round(getTotalPrice() * 0.075).toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between border-t pt-2 font-semibold">
-                      <span>Total</span>
-                      <span>
-                        ₦
-                        {(
-                          getTotalPrice() + Math.round(getTotalPrice() * 0.075)
-                        ).toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Payment Method Info */}
-                <div className="rounded-lg bg-blue-50 p-4">
-                  <h4 className="mb-2 font-medium">Payment Method</h4>
-                  <div className="flex items-center space-x-2">
-                    {selectedPaymentMethod === 'whatsapp' && (
-                      <Smartphone className="h-4 w-4 text-green-600" />
-                    )}
-                    {selectedPaymentMethod === 'card' && (
-                      <CreditCard className="h-4 w-4 text-blue-600" />
-                    )}
-                    {selectedPaymentMethod === 'transfer' && (
-                      <Banknote className="h-4 w-4 text-purple-600" />
-                    )}
-                    <span className="text-sm">
-                      {
-                        paymentMethods.find(
-                          (method) => method.id === selectedPaymentMethod
-                        )?.name
-                      }
-                    </span>
-                  </div>
-                </div>
-
-                {/* Delivery Address */}
-                <div className="rounded-lg bg-green-50 p-4">
-                  <h4 className="mb-2 font-medium">Delivery Address</h4>
-                  <div className="text-sm text-gray-600">
-                    <div>
-                      {formData.firstName} {formData.lastName}
-                    </div>
-                    <div>{formData.address}</div>
-                    <div>
-                      {formData.city}, {formData.state} {formData.postalCode}
-                    </div>
-                    <div>{formData.phone}</div>
-                  </div>
-                </div>
-              </div>
-
-              <DialogFooter className="flex-col space-y-2">
-                {selectedPaymentMethod === 'card' ? (
-                  <>
-                    {/*  */}
-                    <div className="flex w-full justify-center">
-                      <InterswitchPay {...paymentParameters} />
-                    </div>
-                  </>
-                ) : (
-                  <Button
-                    onClick={handlePaymentConfirmation}
-                    className="w-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary text-white hover:from-kasuwa-primary/90 hover:to-kasuwa-secondary/90"
-                    disabled={isProcessing}
-                  >
-                    {isProcessing ? (
-                      <>
-                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white"></div>
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <CheckCircle className="mr-2 h-4 w-4" />
-                        Confirm Order
-                      </>
-                    )}
-                  </Button>
-                )}
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          {/* Payment Confirmation Modal - Disabled */}
 
           {/* Address Modal */}
           <AddressModal

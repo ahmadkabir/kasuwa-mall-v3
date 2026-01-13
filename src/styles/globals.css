@@ -4,49 +4,60 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 345 65% 15%; /* Dark brown text for better contrast */
-    --card: 210 20% 98%; /* Light cream */
-    --card-foreground: 345 65% 15%;
-    --popover: 210 20% 98%;
-    --popover-foreground: 345 65% 15%;
-    --primary: 345 57% 25%; /* #542b2b as HSL - dark brown */
-    --primary-foreground: 38 12% 95%; /* Light cream */
-    --secondary: 38 20% 95%; /* #f2eadb as HSL - cream */
-    --secondary-foreground: 345 65% 15%;
-    --muted: 38 20% 95%;
-    --muted-foreground: 30 15% 60%;
-    --accent: 0 60% 30%; /* #a52a2a as HSL - reddish brown */
-    --accent-foreground: 38 12% 95%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 38 15% 85%; /* Light brown border */
-    --input: 38 15% 85%;
-    --ring: 345 57% 25%; /* Primary color */
+    /* NACCIMA Color Palette - CSS Variables */
+    --color-primary: #0E54AF;
+    --color-secondary: #167146;
+    --color-accent: #D90B0B;
+    --color-soft-neutral: #90B3B9;
+    --color-background: #FFFFFF;
+    --color-text: #333333;
+    --color-text-muted: #6B7280;
+    --color-border: #E5E7EB;
+
+    /* Tailwind CSS Variables (HSL format) */
+    --background: 0 0% 100%; /* White */
+    --foreground: 0 0% 20%; /* Dark gray #333333 */
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 0 0% 20%; /* Dark gray */
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 0 0% 20%; /* Dark gray */
+    --primary: 214 85% 38%; /* #0E54AF - NACCIMA Primary Blue */
+    --primary-foreground: 0 0% 100%; /* White */
+    --secondary: 147 66% 28%; /* #167146 - NACCIMA Secondary Green */
+    --secondary-foreground: 0 0% 100%; /* White */
+    --muted: 210 20% 98%; /* Light gray */
+    --muted-foreground: 215 16% 47%; /* #6B7280 - Muted text */
+    --accent: 192 25% 65%; /* #90B3B9 - NACCIMA Soft Neutral */
+    --accent-foreground: 0 0% 100%; /* White */
+    --destructive: 0 93% 45%; /* #D90B0B - NACCIMA Accent Red */
+    --destructive-foreground: 0 0% 100%; /* White */
+    --border: 220 13% 91%; /* #E5E7EB - Light gray border */
+    --input: 220 13% 91%; /* #E5E7EB - Light gray border */
+    --ring: 214 85% 38%; /* #0E54AF - Primary blue for focus rings */
     --radius: 0.5rem;
     --whatsapp: 122 39% 49%; /* #25D366 - WhatsApp green */
   }
 
   .dark {
-    --background: 345 10% 10%; /* Dark brown background */
-    --foreground: 38 15% 95%; /* Light cream text */
-    --card: 345 10% 12%;
-    --card-foreground: 38 15% 95%;
-    --popover: 345 10% 12%;
-    --popover-foreground: 38 15% 95%;
-    --primary: 345 40% 40%; /* Darker brown for dark mode */
-    --primary-foreground: 38 15% 95%;
-    --secondary: 38 15% 15%; /* Darker cream */
-    --secondary-foreground: 38 15% 95%;
-    --muted: 345 10% 15%;
-    --muted-foreground: 30 10% 55%;
-    --accent: 0 50% 40%; /* Darker reddish brown */
-    --accent-foreground: 38 15% 95%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 38 15% 95%;
-    --border: 345 10% 20%;
-    --input: 345 10% 20%;
-    --ring: 345 40% 40%;
+    --background: 0 0% 10%; /* Very dark background */
+    --foreground: 0 0% 95%; /* Light text */
+    --card: 0 0% 12%; /* Dark card */
+    --card-foreground: 0 0% 95%; /* Light text */
+    --popover: 0 0% 12%; /* Dark popover */
+    --popover-foreground: 0 0% 95%; /* Light text */
+    --primary: 214 70% 50%; /* Lighter blue for dark mode */
+    --primary-foreground: 0 0% 100%; /* White */
+    --secondary: 147 60% 40%; /* Lighter green for dark mode */
+    --secondary-foreground: 0 0% 100%; /* White */
+    --muted: 0 0% 15%; /* Dark muted */
+    --muted-foreground: 0 0% 65%; /* Lighter muted text */
+    --accent: 192 30% 50%; /* Lighter soft neutral for dark mode */
+    --accent-foreground: 0 0% 100%; /* White */
+    --destructive: 0 80% 55%; /* Lighter red for dark mode */
+    --destructive-foreground: 0 0% 100%; /* White */
+    --border: 0 0% 25%; /* Darker border */
+    --input: 0 0% 25%; /* Darker input border */
+    --ring: 214 70% 50%; /* Primary blue for focus rings */
     --whatsapp: 122 39% 49%; /* #25D366 - WhatsApp green */
   }
 }
@@ -89,7 +100,7 @@
 
   /* Gradient Text */
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-kasuwa-primary via-kasuwa-brown to-primary;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
   }
 
   /* Glow Effects */
@@ -143,6 +154,34 @@
   /* Smooth Transitions */
   .smooth-transition {
     @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Button Hover Effects with NACCIMA Colors */
+  .btn-primary-hover {
+    @apply transition-all duration-200 hover:bg-primary/90 active:scale-95;
+  }
+
+  .btn-secondary-hover {
+    @apply transition-all duration-200 hover:bg-secondary/90 active:scale-95;
+  }
+
+  .btn-danger-hover {
+    @apply transition-all duration-200 hover:bg-destructive/90 active:scale-95;
+  }
+
+  /* Link Hover Effects */
+  .link-primary {
+    @apply text-primary transition-colors duration-200 hover:text-primary/80;
+  }
+
+  /* Card Hover Effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:border-primary/20;
+  }
+
+  /* Input Focus Effects */
+  .input-focus {
+    @apply transition-all duration-200 focus:ring-2 focus:ring-primary focus:border-primary;
   }
   
   /* WhatsApp Color */

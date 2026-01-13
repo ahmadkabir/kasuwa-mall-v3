@@ -1,5 +1,5 @@
 /**
- * API Client for Kasuwa Mall V3
+ * API Client for NACCIMA E-commerce V3
  * Uses React Query for data fetching and caching
  */
 
