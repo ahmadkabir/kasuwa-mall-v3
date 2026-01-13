@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ShoppingCart,
-  CreditCard,
+  // CreditCard,
   User,
   Mail,
   MapPin,
@@ -11,8 +11,8 @@ import {
   Plus,
   Home,
   Building,
-  Banknote,
-  Smartphone,
+  // Banknote,
+  // Smartphone,
   CheckCircle,
   Package,
 } from 'lucide-react'
@@ -60,13 +60,13 @@ interface CheckoutFormData {
   postalCode: string
 }
 
-interface PaymentMethod {
-  id: string
-  name: string
-  description: string
-  icon: any
-  type: 'card' | 'transfer' | 'whatsapp'
-}
+// interface PaymentMethod {
+//   id: string
+//   name: string
+//   description: string
+//   icon: any
+//   type: 'card' | 'transfer' | 'whatsapp'
+// }
 
 export default function CheckoutPage() {
   const { user, isAuthenticated } = useUserStore()
@@ -83,29 +83,29 @@ export default function CheckoutPage() {
   const [transactionRef, setTransactionRef] = useState('')
 
   // Payment methods available
-  const paymentMethods: PaymentMethod[] = [
-    {
-      id: 'whatsapp',
-      name: 'WhatsApp Order',
-      description: 'Contact seller via WhatsApp (Recommended)',
-      icon: Smartphone,
-      type: 'whatsapp',
-    },
-    {
-      id: 'card',
-      name: 'Credit/Debit Card',
-      description: 'Pay with Visa, Mastercard via Interswitch',
-      icon: CreditCard,
-      type: 'card',
-    },
-    {
-      id: 'transfer',
-      name: 'Bank Transfer',
-      description: 'Direct bank transfer',
-      icon: Banknote,
-      type: 'transfer',
-    },
-  ]
+  // const paymentMethods: PaymentMethod[] = [
+  //   {
+  //     id: 'whatsapp',
+  //     name: 'WhatsApp Order',
+  //     description: 'Contact seller via WhatsApp (Recommended)',
+  //     icon: Smartphone,
+  //     type: 'whatsapp',
+  //   },
+  //   {
+  //     id: 'card',
+  //     name: 'Credit/Debit Card',
+  //     description: 'Pay with Visa, Mastercard via Interswitch',
+  //     icon: CreditCard,
+  //     type: 'card',
+  //   },
+  //   {
+  //     id: 'transfer',
+  //     name: 'Bank Transfer',
+  //     description: 'Direct bank transfer',
+  //     icon: Banknote,
+  //     type: 'transfer',
+  //   },
+  // ]
 
   // User addresses state
   const [savedAddresses, setSavedAddresses] = useState<Address[]>([])
@@ -476,78 +476,78 @@ export default function CheckoutPage() {
   }, []) // Run only on mount
 
   // Handle card payment with Interswitch
-  const handleCardPayment = async () => {
-    setIsProcessing(true)
+  // const handleCardPayment = async () => {
+  //   setIsProcessing(true)
 
-    try {
-      // 1. Initiate secure payment session in backend with cart/order details
-      const paymentInitiationData = await paymentApi.initiateSecurePayment({
-        amount: getTotalPrice() + Math.round(getTotalPrice() * 0.075), // Amount in naira
-        userId: user?.id || '',
-        // Note: We might not have a specific cart_id in the current implementation,
-        // but we could generate and store cart details server-side if needed
-        customerEmail: user?.email || '',
-        customerName: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
-      })
+  //   try {
+  //     // 1. Initiate secure payment session in backend with cart/order details
+  //     const paymentInitiationData = await paymentApi.initiateSecurePayment({
+  //       amount: getTotalPrice() + Math.round(getTotalPrice() * 0.075), // Amount in naira
+  //       userId: user?.id || '',
+  //       // Note: We might not have a specific cart_id in the current implementation,
+  //       // but we could generate and store cart details server-side if needed
+  //       customerEmail: user?.email || '',
+  //       customerName: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
+  //     })
 
-      if (!paymentInitiationData.success) {
-        throw new Error(
-          paymentInitiationData.message || 'Failed to initiate secure payment'
-        )
-      }
+  //     if (!paymentInitiationData.success) {
+  //       throw new Error(
+  //         paymentInitiationData.message || 'Failed to initiate secure payment'
+  //       )
+  //     }
 
-      const { paymentReference } = paymentInitiationData
+  //     const { paymentReference } = paymentInitiationData
 
-      toast({
-        title: 'Initiating Payment',
-        description: 'Redirecting to secure payment gateway...',
-      })
+  //     toast({
+  //       title: 'Initiating Payment',
+  //       description: 'Redirecting to secure payment gateway...',
+  //     })
 
-      // 2. Redirect to Interswitch
-      // Create and submit the form to Interswitch with secure reference
-      // Instead of opening in a new tab, we'll redirect the current window to maintain proper flow
-      const form = document.createElement('form')
-      form.method = 'POST'
-      form.action = 'https://webpay.interswitchng.com/collections/w/pay'
-      form.target = '_self' // Redirect current window
-      form.style.display = 'none'
+  //     // 2. Redirect to Interswitch
+  //     // Create and submit the form to Interswitch with secure reference
+  //     // Instead of opening in a new tab, we'll redirect the current window to maintain proper flow
+  //     const form = document.createElement('form')
+  //     form.method = 'POST'
+  //     form.action = 'https://webpay.interswitchng.com/collections/w/pay'
+  //     form.target = '_self' // Redirect current window
+  //     form.style.display = 'none'
 
-      const fields = {
-        merchant_code: 'MX162337',
-        pay_item_id: 'Default_Payable_MX162337',
-        txn_ref: paymentReference, // Use secure payment reference from backend
-        amount: Math.round(
-          (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100
-        ).toString(), // Amount in kobo
-        currency: 'NGN',
-        site_redirect_url: `${window.location.origin}/checkout`,
-        cust_email: user?.email || '',
-        cust_name: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
-        pay_method: 'both',
-        mode: 'LIVE',
-      }
+  //     const fields = {
+  //       merchant_code: 'MX162337',
+  //       pay_item_id: 'Default_Payable_MX162337',
+  //       txn_ref: paymentReference, // Use secure payment reference from backend
+  //       amount: Math.round(
+  //         (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100
+  //       ).toString(), // Amount in kobo
+  //       currency: 'NGN',
+  //       site_redirect_url: `${window.location.origin}/checkout`,
+  //       cust_email: user?.email || '',
+  //       cust_name: `${user?.firstname || ''} ${user?.lastname || ''}`.trim(),
+  //       pay_method: 'both',
+  //       mode: 'LIVE',
+  //     }
 
-      Object.entries(fields).forEach(([key, value]) => {
-        const input = document.createElement('input')
-        input.type = 'hidden'
-        input.name = key
-        input.value = String(value)
-        form.appendChild(input)
-      })
+  //     Object.entries(fields).forEach(([key, value]) => {
+  //       const input = document.createElement('input')
+  //       input.type = 'hidden'
+  //       input.name = key
+  //       input.value = String(value)
+  //       form.appendChild(input)
+  //     })
 
-      document.body.appendChild(form)
-      form.submit()
-      // Note: The page will redirect, so no code after this will execute
-    } catch (error) {
-      console.error('Secure payment initiation error:', error)
-      toast({
-        title: 'Payment Failed',
-        description: 'Unable to start secure payment. Please try again.',
-        variant: 'destructive',
-      })
-      setIsProcessing(false)
-    }
-  }
+  //     document.body.appendChild(form)
+  //     form.submit()
+  //     // Note: The page will redirect, so no code after this will execute
+  //   } catch (error) {
+  //     console.error('Secure payment initiation error:', error)
+  //     toast({
+  //       title: 'Payment Failed',
+  //       description: 'Unable to start secure payment. Please try again.',
+  //       variant: 'destructive',
+  //     })
+  //     setIsProcessing(false)
+  //   }
+  // }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -799,103 +799,103 @@ export default function CheckoutPage() {
   // }
 
   // Handle WhatsApp order
-  const handleWhatsAppOrder = async () => {
-    setIsProcessing(true)
+  // const handleWhatsAppOrder = async () => {
+  //   setIsProcessing(true)
 
-    try {
-      // Create order in database
-      const orderCreated = await createOrder()
+  //   try {
+  //     // Create order in database
+  //     const orderCreated = await createOrder()
 
-      if (orderCreated) {
-        // Prepare WhatsApp message
-        let message = `📦 *New Order from NACCIMA E-commerce*\n\n`
-        message += `👤 *Customer Details:*\n`
-        message += `Name: ${formData.firstName} ${formData.lastName}\n`
-        message += `Email: ${formData.email}\n`
-        message += `Phone: ${formData.phone}\n\n`
+  //     if (orderCreated) {
+  //       // Prepare WhatsApp message
+  //       let message = `📦 *New Order from NACCIMA E-commerce*\n\n`
+  //       message += `👤 *Customer Details:*\n`
+  //       message += `Name: ${formData.firstName} ${formData.lastName}\n`
+  //       message += `Email: ${formData.email}\n`
+  //       message += `Phone: ${formData.phone}\n\n`
 
-        message += `📍 *Delivery Address:*\n`
-        message += `${formData.address}\n`
-        message += `${formData.city}, ${formData.state} ${formData.postalCode}\n\n`
+  //       message += `📍 *Delivery Address:*\n`
+  //       message += `${formData.address}\n`
+  //       message += `${formData.city}, ${formData.state} ${formData.postalCode}\n\n`
 
-        message += `🛒 *Order Items:*\n`
-        items.forEach((item, index) => {
-          message += `${index + 1}. ${item.name}\n`
-          message += `   Quantity: ${item.quantity}\n`
-          message += `   Price: ₦${item.price.toLocaleString()}\n`
-          message += `   Subtotal: ₦${(item.price * item.quantity).toLocaleString()}\n\n`
-        })
+  //       message += `🛒 *Order Items:*\n`
+  //       items.forEach((item, index) => {
+  //         message += `${index + 1}. ${item.name}\n`
+  //         message += `   Quantity: ${item.quantity}\n`
+  //         message += `   Price: ₦${item.price.toLocaleString()}\n`
+  //         message += `   Subtotal: ₦${(item.price * item.quantity).toLocaleString()}\n\n`
+  //       })
 
-        message += `💰 *Order Summary:*\n`
-        message += `Shipping: ₦2,500\n`
-        message += `Tax: ₦${Math.round(getTotalPrice() * 0.075).toLocaleString()}\n`
-        message += `*Total: ₦${(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}*\n\n`
+  //       message += `💰 *Order Summary:*\n`
+  //       message += `Shipping: ₦2,500\n`
+  //       message += `Tax: ₦${Math.round(getTotalPrice() * 0.075).toLocaleString()}\n`
+  //       message += `*Total: ₦${(getTotalPrice() + Math.round(getTotalPrice() * 0.075)).toLocaleString()}*\n\n`
 
-        message += `⚠️ *Important:* Do not make payment until you receive your order.\n`
-        message += `📞 *Support:* +2349067393633`
+  //       message += `⚠️ *Important:* Do not make payment until you receive your order.\n`
+  //       message += `📞 *Support:* +2349067393633`
 
-        // Admin WhatsApp Number
-        const adminWhatsAppNumber = '+2347017222999';
-        const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
+  //       // Admin WhatsApp Number
+  //       const adminWhatsAppNumber = '+2347017222999';
+  //       const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
 
-        // Clear cart
-        clearCart()
+  //       // Clear cart
+  //       clearCart()
 
-        // Open WhatsApp
-        window.open(whatsappUrl, '_blank')
+  //       // Open WhatsApp
+  //       window.open(whatsappUrl, '_blank')
 
-        // Show success
-        setOrderSuccess(true)
+  //       // Show success
+  //       setOrderSuccess(true)
 
-        toast({
-          title: 'Order Sent Successfully!',
-          description:
-            'Your order has been sent via WhatsApp. Our team will respond within 24 hours.',
-        })
-      } else {
-        throw new Error('Failed to create order')
-      }
-    } catch (error) {
-      console.error('WhatsApp order error:', error)
-      toast({
-        title: 'Order Failed',
-        description: 'There was an error processing your order. Please try again.',
-        variant: 'destructive',
-      })
-    } finally {
-      setIsProcessing(false)
-    }
-  }
+  //       toast({
+  //         title: 'Order Sent Successfully!',
+  //         description:
+  //           'Your order has been sent via WhatsApp. Our team will respond within 24 hours.',
+  //       })
+  //     } else {
+  //       throw new Error('Failed to create order')
+  //     }
+  //   } catch (error) {
+  //     console.error('WhatsApp order error:', error)
+  //     toast({
+  //       title: 'Order Failed',
+  //       description: 'There was an error processing your order. Please try again.',
+  //       variant: 'destructive',
+  //     })
+  //   } finally {
+  //     setIsProcessing(false)
+  //   }
+  // }
 
   // Handle bank transfer
-  const handleBankTransfer = async () => {
-    setIsProcessing(true)
+  // const handleBankTransfer = async () => {
+  //   setIsProcessing(true)
 
-    try {
-      // Create order
-      const orderCreated = await createOrder()
+  //   try {
+  //     // Create order
+  //     const orderCreated = await createOrder()
 
-      if (orderCreated) {
-        clearCart()
-        setOrderSuccess(true)
+  //     if (orderCreated) {
+  //       clearCart()
+  //       setOrderSuccess(true)
 
-        toast({
-          title: 'Order Placed!',
-          description:
-            'Please make payment to the provided bank details. Your order will be processed after payment confirmation.',
-        })
-      }
-    } catch (error) {
-      console.error('Bank transfer error:', error)
-      toast({
-        title: 'Order Failed',
-        description: 'There was an error processing your order. Please try again.',
-        variant: 'destructive',
-      })
-    } finally {
-      setIsProcessing(false)
-    }
-  }
+  //       toast({
+  //         title: 'Order Placed!',
+  //         description:
+  //           'Please make payment to the provided bank details. Your order will be processed after payment confirmation.',
+  //       })
+  //     }
+  //   } catch (error) {
+  //     console.error('Bank transfer error:', error)
+  //     toast({
+  //       title: 'Order Failed',
+  //       description: 'There was an error processing your order. Please try again.',
+  //       variant: 'destructive',
+  //     })
+  //   } finally {
+  //     setIsProcessing(false)
+  //   }
+  // }
 
   // Show success page if order completed
   if (orderSuccess) {
