@@ -22,95 +22,109 @@ const config: Config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#542b2b', // Kasuwa v2 primary (color1)
-          foreground: '#f2eadb', // Kasuwa v2 cream (color2 as text on primary)
-          50: '#f3ebe3',
-          100: '#e6d5c1',
-          200: '#d4b896',
-          300: '#c09b68',
-          400: '#ac7e3a',
-          500: '#99611a',
-          600: '#542b2b', // Main dark brown
-          700: '#4a2626',
-          800: '#3f2121',
-          900: '#341c1c',
-          950: '#241414',
+          DEFAULT: '#0E54AF', // NACCIMA Primary Blue
+          foreground: '#FFFFFF', // White text on primary
+          50: '#E6F0FA',
+          100: '#CCE1F5',
+          200: '#99C3EB',
+          300: '#66A5E1',
+          400: '#3387D7',
+          500: '#0E54AF', // Main blue
+          600: '#0B3F8F',
+          700: '#082A6F',
+          800: '#05154F',
+          900: '#02002F',
+          950: '#01001F',
         },
         secondary: {
-          DEFAULT: '#f2eadb', // Kasuwa v2 secondary (color2)
-          foreground: '#542b2b', // Kasuwa v2 primary (color1 as text on secondary)
-          50: '#faf7f1',
-          100: '#f5eee4',
-          200: '#efe4d6',
-          300: '#e8d5c4',
-          400: '#e0c6b2',
-          500: '#d8b7a0',
-          600: '#cfaa8e',
-          700: '#c69d7c',
-          800: '#bd906a',
-          900: '#b48358',
-          950: '#aa7646',
+          DEFAULT: '#167146', // NACCIMA Secondary Green (Success)
+          foreground: '#FFFFFF', // White text on secondary
+          50: '#E6F5EC',
+          100: '#CCEBD9',
+          200: '#99D7B3',
+          300: '#66C38D',
+          400: '#33AF67',
+          500: '#167146', // Main green
+          600: '#115A38',
+          700: '#0C432A',
+          800: '#082C1C',
+          900: '#04150E',
+          950: '#020A07',
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: '#D90B0B', // NACCIMA Accent Red (Danger)
+          foreground: '#FFFFFF', // White text on destructive
+          50: '#FCE6E6',
+          100: '#F9CCCC',
+          200: '#F39999',
+          300: '#ED6666',
+          400: '#E73333',
+          500: '#D90B0B', // Main red
+          600: '#AD0909',
+          700: '#820707',
+          800: '#570505',
+          900: '#2C0202',
+          950: '#160101',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
         accent: {
-          DEFAULT: '#a52a2a', // Kasuwa v2 accent (color3)
-          foreground: '#f2eadb', // kasuwa cream
+          DEFAULT: '#90B3B9', // NACCIMA Soft Neutral Blue-Gray
+          foreground: '#FFFFFF', // White text on accent
+          50: '#F0F7F8',
+          100: '#E1EFF1',
+          200: '#C3DFE3',
+          300: '#A5CFD5',
+          400: '#87BFC7',
+          500: '#90B3B9', // Main soft neutral
+          600: '#738F94',
+          700: '#566B6F',
+          800: '#39474A',
+          900: '#1C2325',
+          950: '#0E1213',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: '#f2eadb', // Kasuwa v2 cream color
-          foreground: '#542b2b',
+          DEFAULT: '#FFFFFF', // White background
+          foreground: '#333333', // Dark gray text
         },
-        // Kasuwa Mall Brand Colors (from v2)
+        // NACCIMA Brand Colors (for backward compatibility and specific use cases)
         'kasuwa-primary': {
-          DEFAULT: '#8B4513', // Saddle Brown
-          50: '#F5F0E8',
-          100: '#E8D5C4',
-          200: '#D4B896',
-          300: '#C09B68',
-          400: '#AC7E3A',
-          500: '#8B4513', // Main brown
-          600: '#7A3C11',
-          700: '#69330F',
-          800: '#582A0D',
-          900: '#47210B',
-        },
-        'kasuwa-brown': {
-          DEFAULT: '#654321', // Dark Brown
-          50: '#F2EDE6',
-          100: '#E0D0C0',
-          200: '#CCB299',
-          300: '#B89472',
-          400: '#A4764B',
-          500: '#654321', // Main dark brown
-          600: '#5A3B1E',
-          700: '#4F331A',
-          800: '#442B17',
-          900: '#392313',
+          DEFAULT: '#0E54AF', // NACCIMA Primary Blue
+          50: '#E6F0FA',
+          100: '#CCE1F5',
+          200: '#99C3EB',
+          300: '#66A5E1',
+          400: '#3387D7',
+          500: '#0E54AF',
+          600: '#0B3F8F',
+          700: '#082A6F',
+          800: '#05154F',
+          900: '#02002F',
         },
         'kasuwa-secondary': {
-          DEFAULT: '#f2eadb', // Cream/Beige
-          50: '#fefcfa',
-          100: '#fdf8f3',
-          200: '#fbf1e7',
-          300: '#f8e9db',
-          400: '#f5e2cf',
-          500: '#f2eadb', // Main cream
-          600: '#e8d4c1',
-          700: '#ddbea7',
-          800: '#d3a88d',
-          900: '#c89273',
+          DEFAULT: '#167146', // NACCIMA Secondary Green
+          50: '#E6F5EC',
+          100: '#CCEBD9',
+          200: '#99D7B3',
+          300: '#66C38D',
+          400: '#33AF67',
+          500: '#167146',
+          600: '#115A38',
+          700: '#0C432A',
+          800: '#082C1C',
+          900: '#04150E',
         },
+        // Text colors
+        'text-default': '#333333',
+        'text-muted': '#6B7280',
+        // Border color
+        'border-light': '#E5E7EB',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -182,9 +196,9 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'glass-gradient': 'linear-gradient(135deg, rgba(242, 234, 219, 0.1), rgba(84, 43, 43, 0.05))', // kasuwa secondary to primary
-        'kasuwa-gradient': 'linear-gradient(135deg, #f2eadb 0%, #8B4513 50%, #654321 100%)', // cream to saddle brown to dark brown
-        'kasuwa-radial': 'radial-gradient(circle at center, #8B4513 0%, #654321 100%)', // saddle brown to dark brown
+        'glass-gradient': 'linear-gradient(135deg, rgba(14, 84, 175, 0.1), rgba(22, 113, 70, 0.05))', // NACCIMA primary to secondary
+        'kasuwa-gradient': 'linear-gradient(135deg, #0E54AF 0%, #167146 100%)', // NACCIMA primary blue to secondary green
+        'kasuwa-radial': 'radial-gradient(circle at center, #0E54AF 0%, #167146 100%)', // NACCIMA primary to secondary
       },
     },
   },

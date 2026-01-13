@@ -58,7 +58,7 @@ export function FloatingContact({
             variant="default"
             size="lg"
             className="rounded-full bg-whatsapp hover:bg-whatsapp/90 shadow-lg h-14 w-14 p-0 group"
-            onClick={() => handleWhatsAppMessage(cleanWhatsappNumber, 'Hello, I need help with my order on Kasuwa Mall')}
+            onClick={() => handleWhatsAppMessage(cleanWhatsappNumber, 'Hello, I need help with my order on NACCIMA E-commerce')}
             aria-label="Chat on WhatsApp"
           >
             <MessageCircle className="h-6 w-6 text-white" />
@@ -157,10 +157,10 @@ export function FloatingContact({
           <Button
             variant="default"
             size="lg"
-            className="rounded-full bg-kasuwa-primary hover:bg-kasuwa-primary/90 shadow-lg h-12 w-12 p-0 group"
+            className="rounded-full bg-primary hover:bg-primary/90 shadow-lg h-12 w-12 p-0 group"
             onClick={() => {
               // On mobile, default to WhatsApp
-              handleWhatsAppMessage(cleanWhatsappNumber, 'Hello, I need help with my order on Kasuwa Mall');
+              handleWhatsAppMessage(cleanWhatsappNumber, 'Hello, I need help with my order on NACCIMA E-commerce');
             }}
             aria-label="Get help"
           >

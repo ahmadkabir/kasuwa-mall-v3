@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { CartDropdown } from '@/components/layout/cart-dropdown'
 import { useCartStore } from '@/store/cart-store'
 import { useUserStore } from '@/store/user-store'
+import naccimaLogo from '@/assets/Nassima _Logo.png'
 // import { useThemeStore } from '@/store/theme-store'
 
 export function SearchNavbar() {
@@ -24,10 +25,10 @@ export function SearchNavbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="sticky top-0 z-50 w-full border-b bg-kasuwa-primary text-white shadow-lg"
+      className="sticky top-0 z-50 w-full border-b bg-primary text-white shadow-lg"
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-24">
           {/* Back Button */}
           <Button
             variant="ghost"
@@ -43,12 +44,12 @@ export function SearchNavbar() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="h-12 w-auto"
+              className="h-24 w-auto rounded-lg p-4 flex items-center justify-center"
             >
               <img
-                src="/images/kasuwamall-cut.png"
-                alt="Kasuwa Mall Logo"
-                className="h-12 w-auto object-contain"
+                src={naccimaLogo}
+                alt="NACCIMA E-commerce Logo"
+                className="h-20 w-auto object-contain"
                 onError={(e) => {
                   // Fallback to text if image fails to load
                   const target = e.target as HTMLImageElement;
@@ -57,7 +58,7 @@ export function SearchNavbar() {
                   if (parent) {
                     const textElement = document.createElement('div');
                     textElement.className = 'text-2xl font-bold text-white';
-                    textElement.textContent = 'Kasuwa Mall';
+                    textElement.textContent = 'NACCIMA E-commerce';
                     parent.appendChild(textElement);
                   }
                 }}
@@ -103,7 +104,7 @@ export function SearchNavbar() {
               </Link>
             ) : (
               <Link to="/login">
-                <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-kasuwa-primary">
+                <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary">
                   Login
                 </Button>
               </Link>

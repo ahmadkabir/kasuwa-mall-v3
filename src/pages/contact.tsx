@@ -96,7 +96,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-kasuwa-secondary via-kasuwa-primary/10 to-kasuwa-brown/10 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-secondary via-primary/10 to-accent/10 py-8">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,7 +119,7 @@ export default function ContactPage() {
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="flex items-center text-2xl">
-                    <Phone className="h-6 w-6 mr-3 text-kasuwa-primary" />
+                    <Phone className="h-6 w-6 mr-3 text-primary" />
                     Get in Touch
                   </CardTitle>
                 </CardHeader>
@@ -134,7 +134,7 @@ export default function ContactPage() {
                       >
                         <div>
                           <p className="font-medium text-gray-900 dark:text-white">{contact.label}</p>
-                          <p className="text-lg font-semibold text-kasuwa-primary">{contact.number}</p>
+                          <p className="text-lg font-semibold text-primary">{contact.number}</p>
                         </div>
                         <div className="flex space-x-2">
                           <Button
@@ -149,7 +149,7 @@ export default function ContactPage() {
                             variant="outline"
                             size="icon"
                             className="rounded-full bg-green-500 hover:bg-green-600 text-white border-green-500"
-                            onClick={() => handleWhatsAppMessage(contact.number, 'Hello, I need help with my order on Kasuwa Mall')}
+                            onClick={() => handleWhatsAppMessage(contact.number, 'Hello, I need help with my order on NACCIMA E-commerce')}
                           >
                             <MessageCircle className="h-4 w-4" />
                           </Button>
@@ -163,7 +163,7 @@ export default function ContactPage() {
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Email Support</h3>
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-kasuwa-primary">help@kasuwamall.com</p>
+                        <p className="text-primary">help@kasuwamall.com</p>
                         <p className="text-sm text-gray-500">General inquiries</p>
                       </div>
                       <Button
@@ -181,7 +181,7 @@ export default function ContactPage() {
                   <div className="p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Office Address</h3>
                     <div className="flex items-start">
-                      <MapPin className="h-5 w-5 text-kasuwa-primary mt-0.5 mr-2 flex-shrink-0" />
+                      <MapPin className="h-5 w-5 text-primary mt-0.5 mr-2 flex-shrink-0" />
                       <p className="text-gray-600 dark:text-gray-300">
                         No 33. H.M House behind Rahama, Unity road, Kantin Kwari. Kano State.
                       </p>
@@ -192,13 +192,13 @@ export default function ContactPage() {
                   <div className="p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Business Hours</h3>
                     <div className="flex items-center">
-                      <Clock className="h-5 w-5 text-kasuwa-primary mr-2" />
+                      <Clock className="h-5 w-5 text-primary mr-2" />
                       <p className="text-gray-600 dark:text-gray-300">
                         Monday - Saturday: 8:00 AM - 8:00 PM
                       </p>
                     </div>
                     <div className="flex items-center mt-2">
-                      <Clock className="h-5 w-5 text-kasuwa-primary mr-2" />
+                      <Clock className="h-5 w-5 text-primary mr-2" />
                       <p className="text-gray-600 dark:text-gray-300">
                         Sunday: 10:00 AM - 6:00 PM
                       </p>
@@ -211,7 +211,7 @@ export default function ContactPage() {
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="flex items-center text-2xl">
-                    <User className="h-6 w-6 mr-3 text-kasuwa-primary" />
+                    <User className="h-6 w-6 mr-3 text-primary" />
                     Quick Support
                   </CardTitle>
                 </CardHeader>
@@ -249,7 +249,7 @@ export default function ContactPage() {
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="flex items-center text-2xl">
-                    <Mail className="h-6 w-6 mr-3 text-kasuwa-primary" />
+                    <Mail className="h-6 w-6 mr-3 text-primary" />
                     Send us a Message
                   </CardTitle>
                   <p className="text-gray-600 dark:text-gray-300">
@@ -342,7 +342,7 @@ export default function ContactPage() {
                     
                     <Button 
                       type="submit" 
-                      className="w-full bg-kasuwa-primary hover:bg-kasuwa-primary/90"
+                      className="w-full bg-primary hover:bg-primary/90"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -363,7 +363,7 @@ export default function ContactPage() {
                 <Card className="glass-card">
                   <CardContent className="p-6">
                     <div className="flex items-start">
-                      <Building className="h-6 w-6 text-kasuwa-primary mt-1 mr-3" />
+                      <Building className="h-6 w-6 text-primary mt-1 mr-3" />
                       <div>
                         <h3 className="font-semibold text-gray-900 dark:text-white">Business Inquiries</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
@@ -377,7 +377,7 @@ export default function ContactPage() {
                 <Card className="glass-card">
                   <CardContent className="p-6">
                     <div className="flex items-start">
-                      <Clock className="h-6 w-6 text-kasuwa-primary mt-1 mr-3" />
+                      <Clock className="h-6 w-6 text-primary mt-1 mr-3" />
                       <div>
                         <h3 className="font-semibold text-gray-900 dark:text-white">Response Time</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">

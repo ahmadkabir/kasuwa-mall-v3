@@ -67,7 +67,7 @@ export default function CartPage() {
           className="glass-card p-12 rounded-2xl text-center"
         >
           <div className="max-w-md mx-auto">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary/20 to-kasuwa-brown/20 flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
               <ShoppingBag className="h-12 w-12 text-primary" />
             </div>
             <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
@@ -282,11 +282,11 @@ export default function CartPage() {
                   <span>Secure checkout</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <Truck className="h-4 w-4 text-kasuwa-brown" />
+                  <Truck className="h-4 w-4 text-accent" />
                   <span>Fast delivery</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <Tag className="h-4 w-4 text-kasuwa-secondary" />
+                  <Tag className="h-4 w-4 text-secondary" />
                   <span>Best prices guaranteed</span>
                 </div>
               </div>
@@ -329,7 +329,7 @@ function CartItemImage({ item }: { item: any }) {
   const imageUrl = !imageError ? getProductImageUrl(item.image_urls) : null
 
   return (
-    <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-primary/10 to-kasuwa-brown/10">
+    <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
       {imageUrl ? (
         <img
           src={imageUrl}

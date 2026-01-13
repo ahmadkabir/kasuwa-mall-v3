@@ -20,7 +20,7 @@ const buttonVariants = cva(
         glass:
           'bg-white text-foreground hover:bg-gray-100 hover:shadow-lg hover:scale-105 active:scale-95 border border-gray-200',
         gradient:
-          'bg-gradient-to-r from-kasuwa-primary via-kasuwa-brown to-primary text-white hover:shadow-xl hover:shadow-primary/50 hover:scale-105 active:scale-95',
+          'bg-gradient-to-r from-primary to-secondary text-white hover:shadow-xl hover:shadow-primary/50 hover:scale-105 active:scale-95',
         glow: 'bg-primary text-primary-foreground shadow-lg shadow-primary/50 hover:shadow-xl hover:shadow-primary/70 hover:scale-105 active:scale-95',
         white: 'bg-white text-foreground hover:bg-gray-100 shadow-sm hover:shadow-md border border-gray-200',
       },

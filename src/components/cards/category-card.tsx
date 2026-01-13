@@ -29,7 +29,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
               }}
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-kasuwa-brown/20 flex items-center justify-center rounded-lg">
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center rounded-lg">
               <div className="text-center">
                 <div className="text-primary text-xl mb-1">
                   {category.ctgry_name.charAt(0).toUpperCase()}

@@ -11,7 +11,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="relative min-h-screen flex flex-col">
       {/* Background gradient */}
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-kasuwa-secondary via-kasuwa-primary/10 to-kasuwa-brown/10 dark:from-gray-900 dark:via-kasuwa-primary/20 dark:to-kasuwa-brown/20" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-secondary/5 via-primary/10 to-accent/10 dark:from-gray-900 dark:via-primary/20 dark:to-secondary/20" />
       
 
       <Navbar />

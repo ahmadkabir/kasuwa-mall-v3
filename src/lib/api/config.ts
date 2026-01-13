@@ -1,6 +1,6 @@
 /**
- * API Configuration for Kasuwa Mall V3
- * Matches the existing backend endpoints from kasuwa-backend
+ * API Configuration for NACCIMA E-commerce V3
+ * Matches the existing backend endpoints
  */
 
 export const API_CONFIG = {

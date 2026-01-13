@@ -37,7 +37,7 @@ const PrivacyPage = () => {
     "Logistics Partners: For delivery and shipping services",
     "Payment Processors: To handle payment transactions securely",
     "Service Providers: For IT support, marketing, or analytics",
-    "Legal Requirements: If required by law or to protect Kasuwa Mall's legal rights",
+    "Legal Requirements: If required by law or to protect NACCIMA E-commerce's legal rights",
   ];
 
   const yourRights = [
@@ -59,14 +59,14 @@ const PrivacyPage = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center p-3 rounded-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary mb-6">
+            <div className="inline-flex items-center justify-center p-3 rounded-full bg-gradient-to-r from-primary to-secondary mb-6">
               <Shield className="h-10 w-10 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Privacy Policy
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              At Kasuwa Mall, your privacy is our top priority. We are committed to protecting the personal information you share with us and ensuring transparency in how we collect, store, use, and share your data.
+              At NACCIMA E-commerce, your privacy is our top priority. We are committed to protecting the personal information you share with us and ensuring transparency in how we collect, store, use, and share your data.
             </p>
           </div>
 
@@ -93,7 +93,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Globe className="h-6 w-6 text-kasuwa-primary" />
+                  <Globe className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">1. Information We Collect</h2>
               </div>
@@ -105,7 +105,7 @@ const PrivacyPage = () => {
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0">
                   {informationWeCollect.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-2 text-kasuwa-primary">•</span>
+                      <span className="mr-2 text-primary">•</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -117,7 +117,7 @@ const PrivacyPage = () => {
                 <ul className="space-y-3">
                   {typesOfDataCollected.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-3 mt-1 text-kasuwa-primary font-semibold">{index + 1}.</span>
+                      <span className="mr-3 mt-1 text-primary font-semibold">{index + 1}.</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -129,7 +129,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Lock className="h-6 w-6 text-kasuwa-primary" />
+                  <Lock className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">2. How We Use Your Information</h2>
               </div>
@@ -141,7 +141,7 @@ const PrivacyPage = () => {
                 <ul className="space-y-3">
                   {howWeUseInfo.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-3 mt-1 text-kasuwa-primary font-semibold">{index + 1}.</span>
+                      <span className="mr-3 mt-1 text-primary font-semibold">{index + 1}.</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -153,7 +153,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Shield className="h-6 w-6 text-kasuwa-primary" />
+                  <Shield className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">3. How We Store and Protect Your Data</h2>
               </div>
@@ -162,7 +162,7 @@ const PrivacyPage = () => {
                 <ul className="space-y-3">
                   {dataProtection.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-3 mt-1 text-kasuwa-primary font-semibold">{index + 1}.</span>
+                      <span className="mr-3 mt-1 text-primary font-semibold">{index + 1}.</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -174,7 +174,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Globe className="h-6 w-6 text-kasuwa-primary" />
+                  <Globe className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">4. Sharing of Information</h2>
               </div>
@@ -186,7 +186,7 @@ const PrivacyPage = () => {
                 <ul className="space-y-3">
                   {sharingInfo.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-3 mt-1 text-kasuwa-primary font-semibold">{index + 1}.</span>
+                      <span className="mr-3 mt-1 text-primary font-semibold">{index + 1}.</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -201,7 +201,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Shield className="h-6 w-6 text-kasuwa-primary" />
+                  <Shield className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">5. Your Rights</h2>
               </div>
@@ -213,7 +213,7 @@ const PrivacyPage = () => {
                 <ul className="space-y-3">
                   {yourRights.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-3 mt-1 text-kasuwa-primary font-semibold">{index + 1}.</span>
+                      <span className="mr-3 mt-1 text-primary font-semibold">{index + 1}.</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -225,19 +225,19 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Cookie className="h-6 w-6 text-kasuwa-primary" />
+                  <Cookie className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">6. Cookies and Tracking Technologies</h2>
               </div>
               
               <div>
                 <p className="text-gray-700 mb-6">
-                  Kasuwa Mall uses cookies to:
+                  NACCIMA E-commerce uses cookies to:
                 </p>
                 <ul className="space-y-3">
                   {cookiesUsage.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="mr-3 mt-1 text-kasuwa-primary font-semibold">{index + 1}.</span>
+                      <span className="mr-3 mt-1 text-primary font-semibold">{index + 1}.</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -252,7 +252,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Shield className="h-6 w-6 text-kasuwa-primary" />
+                  <Shield className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">7. Children's Privacy</h2>
               </div>
@@ -268,7 +268,7 @@ const PrivacyPage = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                  <Clock className="h-6 w-6 text-kasuwa-primary" />
+                  <Clock className="h-6 w-6 text-primary" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">8. Changes to This Policy</h2>
               </div>
@@ -281,7 +281,7 @@ const PrivacyPage = () => {
             </div>
 
             {/* Contact Section */}
-            <div className="bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-white bg-opacity-20">
                   <Mail className="h-6 w-6 text-white" />
@@ -295,7 +295,7 @@ const PrivacyPage = () => {
                 </p>
                 <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
                   <div className="font-semibold text-white text-lg mb-4">
-                    Kasuwa Mall Support Team
+                    NACCIMA E-commerce Support Team
                   </div>
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3 text-white">

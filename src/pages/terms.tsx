@@ -4,7 +4,7 @@ const TermsPage = () => {
   const termsData = [
     {
       title: "1. Introduction",
-      content: "Welcome to Kasuwa Mall. By accessing or using our platform, you agree to comply with the following terms and conditions. Please read them carefully before making any purchases or listing any products.\n\nThese Terms and Conditions govern your use of our e-commerce platform, including the display and sale of products by vendors and the logistics services we offer."
+      content: "Welcome to NACCIMA E-commerce. By accessing or using our platform, you agree to comply with the following terms and conditions. Please read them carefully before making any purchases or listing any products.\n\nThese Terms and Conditions govern your use of our e-commerce platform, including the display and sale of products by vendors and the logistics services we offer."
     },
     {
       title: "2. Eligibility",
@@ -32,11 +32,11 @@ const TermsPage = () => {
     },
     {
       title: "8. Intellectual Property",
-      content: "All content, logos, and materials on this website are the intellectual property of Kasuwa Mall or its vendors. Any unauthorized use of such content is prohibited."
+      content: "All content, logos, and materials on this website are the intellectual property of NACCIMA E-commerce or its vendors. Any unauthorized use of such content is prohibited."
     },
     {
       title: "9. Liability",
-      content: "Kasuwa Mall is not responsible for any direct or indirect damages arising from the use of this platform, including but not limited to issues with product quality, delayed deliveries, or incorrect orders.\n\nVendors are fully responsible for the products they sell, and any disputes arising from product issues must be resolved between the vendor and the customer."
+      content: "NACCIMA E-commerce is not responsible for any direct or indirect damages arising from the use of this platform, including but not limited to issues with product quality, delayed deliveries, or incorrect orders.\n\nVendors are fully responsible for the products they sell, and any disputes arising from product issues must be resolved between the vendor and the customer."
     },
     {
       title: "10. Modification of Terms",
@@ -54,14 +54,14 @@ const TermsPage = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center p-4 rounded-full bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary mb-6">
+            <div className="inline-flex items-center justify-center p-4 rounded-full bg-gradient-to-r from-primary to-secondary mb-6">
               <Scale className="h-12 w-12 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Terms & Conditions
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Please read these terms and conditions carefully before using our platform. By accessing or using Kasuwa Mall, you agree to be bound by these terms.
+              Please read these terms and conditions carefully before using our platform. By accessing or using NACCIMA E-commerce, you agree to be bound by these terms.
             </p>
           </div>
 
@@ -88,22 +88,22 @@ const TermsPage = () => {
               <div 
                 key={index} 
                 className={`bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100 transition-all duration-300 hover:shadow-xl ${
-                  index % 2 === 0 ? 'border-l-4 border-l-kasuwa-primary' : 'border-r-4 border-r-kasuwa-secondary'
+                  index % 2 === 0 ? 'border-l-4 border-l-primary' : 'border-r-4 border-r-secondary'
                 }`}
               >
                 <div className="flex items-center mb-6">
                   <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-gray-100">
-                    {index === 0 && <FileText className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 1 && <User className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 2 && <Building className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 3 && <User className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 4 && <CreditCard className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 5 && <Truck className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 6 && <Package className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 7 && <Shield className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 8 && <Scale className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 9 && <Calendar className="h-6 w-6 text-kasuwa-primary" />}
-                    {index === 10 && <Building className="h-6 w-6 text-kasuwa-primary" />}
+                    {index === 0 && <FileText className="h-6 w-6 text-primary" />}
+                    {index === 1 && <User className="h-6 w-6 text-primary" />}
+                    {index === 2 && <Building className="h-6 w-6 text-primary" />}
+                    {index === 3 && <User className="h-6 w-6 text-primary" />}
+                    {index === 4 && <CreditCard className="h-6 w-6 text-primary" />}
+                    {index === 5 && <Truck className="h-6 w-6 text-primary" />}
+                    {index === 6 && <Package className="h-6 w-6 text-primary" />}
+                    {index === 7 && <Shield className="h-6 w-6 text-primary" />}
+                    {index === 8 && <Scale className="h-6 w-6 text-primary" />}
+                    {index === 9 && <Calendar className="h-6 w-6 text-primary" />}
+                    {index === 10 && <Building className="h-6 w-6 text-primary" />}
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900">{section.title}</h2>
                 </div>
@@ -116,7 +116,7 @@ const TermsPage = () => {
             ))}
 
             {/* Contact Section */}
-            <div className="bg-gradient-to-r from-kasuwa-primary to-kasuwa-secondary rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
               <div className="flex items-center mb-6">
                 <div className="mr-3 flex-shrink-0 p-2 rounded-full bg-white bg-opacity-20">
                   <Mail className="h-6 w-6 text-white" />
@@ -130,7 +130,7 @@ const TermsPage = () => {
                 </p>
                 <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
                   <div className="font-semibold text-white text-lg mb-4">
-                    Kasuwa Mall Support Team
+                    NACCIMA E-commerce Support Team
                   </div>
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3 text-white">

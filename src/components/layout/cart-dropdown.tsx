@@ -81,7 +81,7 @@ export function CartDropdown() {
               {items.length === 0 ? (
                 /* Empty State */
                 <div className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-kasuwa-brown/20 flex items-center justify-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                     <ShoppingCart className="h-8 w-8 text-primary" />
                   </div>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -116,7 +116,7 @@ export function CartDropdown() {
                             onClick={() => setIsOpen(false)}
                             className="flex-shrink-0"
                           >
-                            <div className="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-primary/10 to-kasuwa-brown/10">
+                            <div className="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                               {imageUrl ? (
                                 <img
                                   src={imageUrl}

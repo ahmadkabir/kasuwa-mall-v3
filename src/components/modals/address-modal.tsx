@@ -169,7 +169,7 @@ export function AddressModal({
 
             {loading ? (
               <div className="flex justify-center items-center h-32">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-kasuwa-primary"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
               </div>
             ) : (
               <>
@@ -185,21 +185,21 @@ export function AddressModal({
                         <Card 
                           key={address.id} 
                           className={`cursor-pointer hover:shadow-md transition-all ${
-                            selectedAddressIdState === address.id ? 'ring-2 ring-kasuwa-primary' : ''
+                            selectedAddressIdState === address.id ? 'ring-2 ring-primary' : ''
                           }`}
                           onClick={() => handleAddressSelect(address)}
                         >
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-3">
-                                <IconComponent className="h-5 w-5 text-kasuwa-primary mt-0.5" />
+                                <IconComponent className="h-5 w-5 text-primary mt-0.5" />
                                 <div>
                                   <div className="flex items-center space-x-2">
                                     <span className="font-medium">
                                       {address.first_name} {address.last_name}
                                     </span>
                                     {address.is_default && (
-                                      <span className="text-xs bg-kasuwa-primary text-white px-2 py-0.5 rounded">
+                                      <span className="text-xs bg-primary text-white px-2 py-0.5 rounded">
                                         Default
                                       </span>
                                     )}
@@ -231,7 +231,7 @@ export function AddressModal({
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full border-dashed border-2 hover:border-kasuwa-primary hover:text-kasuwa-primary"
+                    className="w-full border-dashed border-2 hover:border-primary hover:text-primary"
                     onClick={() => {
                       setShowNewAddressForm(true);
                       setSelectedAddressIdState(null);
@@ -363,7 +363,7 @@ export function AddressModal({
                           id="is_default"
                           checked={newAddress.is_default}
                           onChange={(e) => setNewAddress({...newAddress, is_default: e.target.checked})}
-                          className="h-4 w-4 text-kasuwa-primary rounded focus:ring-kasuwa-primary"
+                          className="h-4 w-4 text-primary rounded focus:ring-primary"
                         />
                         <Label htmlFor="is_default">Set as default address</Label>
                       </div>
@@ -383,7 +383,7 @@ export function AddressModal({
                         <Button
                           type="button"
                           onClick={handleSaveAddress}
-                          className="flex-1 bg-kasuwa-primary hover:bg-kasuwa-primary/90"
+                          className="flex-1 bg-primary hover:bg-primary/90"
                         >
                           Save Address
                         </Button>

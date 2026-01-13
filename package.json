@@ -3,7 +3,7 @@
   "private": true,
   "version": "3.0.0",
   "type": "module",
-  "description": "Modern Kasuwa Mall E-commerce Platform - React + Vite with Glassmorphism UI",
+  "description": "NACCIMA E-commerce Platform - Premium Shopping Platform - React + Vite with Glassmorphism UI",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
