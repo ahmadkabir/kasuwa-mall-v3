@@ -696,109 +696,51 @@ export default function CheckoutPage() {
       const result = await mainOrderApi.create(orderData)
       if (result.success && (result.result || result.results)) {
         // console.log('Order created successfully:', result)
-        const responseData = result.result || result.results
-        console.log('Order created successfully:', responseData)
         return true
-
-      console.log('Creating order with data:', orderData);
-
-      // Type assertion needed because backend expects { id, products } but TypeScript interface may differ
-      const result = await mainOrderApi.create(orderData as any);
-      
-      console.log('Order API response:', result);
-      
-      // Handle different response structures
-      // New backend returns: { success: true, result: { orders: [...], taxTransactions: [...], primaryOrderId: ... } }
-      if (result.success) {
-        // Check if result has result property or orderId or just success
-        const hasResult = result.result !== undefined;
-        const responseAny = result as any;
-        const hasOrderId = responseAny.orderId !== undefined;
-        const hasPrimaryOrderId = result.result?.primaryOrderId !== undefined;
-        
-        if (hasResult || hasOrderId || hasPrimaryOrderId || result.success) {
-          // Extract order information
-          const primaryOrderId = result.result?.primaryOrderId || responseAny.orderId || result.result?.orders?.[0]?.orderId;
-          const orderIds = result.result?.orders?.map((o: any) => o.orderId) || [];
-          const taxTransactions = result.result?.taxTransactions || [];
-          
-          console.log('Order created successfully:', {
-            primaryOrderId,
-            orderIds,
-            taxTransactions,
-            totalOrders: result.result?.totalOrders,
-            totalTaxTransactions: result.result?.totalTaxTransactions,
-          });
-          
-          // Store order ID for potential future use (e.g., order tracking)
-          if (primaryOrderId) {
-            console.log(`Primary order ID: ${primaryOrderId}`);
-            // You can store this in state or localStorage if needed
-            // setOrderId(primaryOrderId);
-          }
-          
-          // Send notification after successful order creation
-          try {
-            // Format order data for notification
-            // Convert to format expected by notification service (add total for compatibility)
-            const notificationOrderData = {
-              ...orderData,
-              customer_id: user.id, // Use customer ID from user
-              total: total,
-              orderId: primaryOrderId, // Include order ID in notification
-            };
-            const formattedOrder = formatOrderForNotification(notificationOrderData, user, `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`);
-            
-            // Send notification (this is for demonstration - in real implementation notifications are handled server-side)
-            console.log('Order notification formatted:', formattedOrder);
-            
-            // In a real implementation, you might want to send this to your backend
-            // await sendOrderNotification(formattedOrder, user, `${formData.address}, ${formData.city}, ${formData.state} ${formData.postalCode}`);
-          } catch (notificationError) {
-            console.error('Error with post-order notification:', notificationError);
-            // Don't fail the order creation if notification fails
-          }
-          
-          return true;
-        }
+      } else {
+        throw new Error('Failed to create order')
       }
-      
-      // If we get here, order creation didn't succeed
-      console.error('Order creation failed - unexpected response structure:', result);
-      
-      // Try to extract error message from various possible locations
-      let errorMessage = 'Failed to create order';
-      const resultAny = result as any;
-      
-      if (result.result && typeof result.result === 'object') {
-        const resultObj = result.result as any;
-        errorMessage = resultObj.message || resultObj.error || errorMessage;
-      } else if (resultAny.message) {
-        errorMessage = resultAny.message;
-      } else if (typeof result === 'string') {
-        errorMessage = result;
-      }
-      
-      throw new Error(errorMessage);
-    } catch (error: any) {
-      console.error('Order creation error:', error);
-      
-      // Log detailed error information for debugging
-      if (error.response) {
-        console.error('Error response:', error.response);
-      }
-      if (error.status) {
-        console.error('Error status:', error.status);
-      }
-      if (error.message) {
-        console.error('Error message:', error.message);
-      }
-      
-      // Re-throw with more context for the calling function
-      const errorMessage = error.message || error.toString() || 'Unknown error occurred while creating order';
-      throw new Error(errorMessage);
+    } catch (error) {
+      console.error('Order creation error:', error)
+      return false
     }
   }
+
+            
+            
+      // Try to extract error message from various possible locations
+  //     let errorMessage = 'Failed to create order';
+  //     const resultAny = result as any;
+      
+  //     if (result.result && typeof result.result === 'object') {
+  //       const resultObj = result.result as any;
+  //       errorMessage = resultObj.message || resultObj.error || errorMessage;
+  //     } else if (resultAny.message) {
+  //       errorMessage = resultAny.message;
+  //     } else if (typeof result === 'string') {
+  //       errorMessage = result;
+  //     }
+      
+  //     throw new Error(errorMessage);
+  //   } catch (error: any) {
+  //     console.error('Order creation error:', error);
+      
+  //     // Log detailed error information for debugging
+  //     if (error.response) {
+  //       console.error('Error response:', error.response);
+  //     }
+  //     if (error.status) {
+  //       console.error('Error status:', error.status);
+  //     }
+  //     if (error.message) {
+  //       console.error('Error message:', error.message);
+  //     }
+      
+  //     // Re-throw with more context for the calling function
+  //     const errorMessage = error.message || error.toString() || 'Unknown error occurred while creating order';
+  //     throw new Error(errorMessage);
+  //   }
+  // }
 
   // Handle WhatsApp order
   const handleWhatsAppOrder = async () => {
