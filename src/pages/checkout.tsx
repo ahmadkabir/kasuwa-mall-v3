@@ -14,24 +14,13 @@ import {
   Banknote,
   Smartphone,
   CheckCircle,
-  Lock,
   Package,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
-import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { AddressModal } from '@/components/modals/address-modal'
 import { useUserStore } from '@/store/user-store'
@@ -41,7 +30,6 @@ import { getProductImageUrl } from '@/lib/utils/image'
 import { addressApi, paymentApi } from '@/lib/api/checkout-api'
 import { orderApi as mainOrderApi } from '@/lib/api/client'
 import { formatOrderForNotification } from '@/services/notificationService'
-import { InterswitchPay } from 'react-interswitch'
 
 interface Address {
   id: number
@@ -90,8 +78,7 @@ export default function CheckoutPage() {
   const [showNewAddressForm, setShowNewAddressForm] = useState(false)
   const [showAddressModal, setShowAddressModal] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null)
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('whatsapp')
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [selectedPaymentMethod, _setSelectedPaymentMethod] = useState<string>('whatsapp')
   const [orderSuccess, setOrderSuccess] = useState(false)
   const [transactionRef, setTransactionRef] = useState('')
 
@@ -380,7 +367,6 @@ export default function CheckoutPage() {
         if (orderCreated) {
           clearCart();
           setOrderSuccess(true);
-          setShowPaymentModal(false);
           
           toast({
             title: 'Order Placed Successfully!',
@@ -517,9 +503,7 @@ export default function CheckoutPage() {
         description: 'Redirecting to secure payment gateway...',
       })
 
-      // 2. Close the payment modal and redirect to Interswitch
-      setShowPaymentModal(false)
-
+      // 2. Redirect to Interswitch
       // Create and submit the form to Interswitch with secure reference
       // Instead of opening in a new tab, we'll redirect the current window to maintain proper flow
       const form = document.createElement('form')
@@ -862,7 +846,6 @@ export default function CheckoutPage() {
 
         // Show success
         setOrderSuccess(true)
-        setShowPaymentModal(false)
 
         toast({
           title: 'Order Sent Successfully!',
@@ -895,7 +878,6 @@ export default function CheckoutPage() {
       if (orderCreated) {
         clearCart()
         setOrderSuccess(true)
-        setShowPaymentModal(false)
 
         toast({
           title: 'Order Placed!',
@@ -912,58 +894,6 @@ export default function CheckoutPage() {
       })
     } finally {
       setIsProcessing(false)
-    }
-  }
-
-  // Interswitch payment parameters - This is used by the InterswitchPay component if still being used
-  const paymentParameters = {
-    merchantCode: 'MX162337',
-    payItemID: 'Default_Payable_MX162337',
-    customerEmail: user?.email || '',
-    redirectURL: `${window.location.origin}/checkout`, // Redirect back to checkout page to handle response
-    text: 'Pay with Interswitch',
-    mode: 'LIVE', // Use TEST for development, LIVE for production
-    transactionReference: transactionRef, // This will be replaced by the secure reference in handleCardPayment
-    amount: Math.round(
-      (getTotalPrice() + Math.round(getTotalPrice() * 0.075)) * 100
-    ).toString(), // Amount in kobo
-    style: {
-      width: '200px',
-      height: '40px',
-      border: 'none',
-      color: '#fff',
-      backgroundColor: '#552b2b',
-      borderRadius: '5px',
-    },
-    callback: (response: any) => {
-      console.log(response)
-      paymentCallback(response)
-    },
-  }
-
-  // Handle payment confirmation
-  const handlePaymentConfirmation = async () => {
-    const selectedMethod = paymentMethods.find(
-      (method) => method.id === selectedPaymentMethod
-    )
-
-    switch (selectedMethod?.type) {
-      case 'whatsapp':
-        await handleWhatsAppOrder()
-        break
-      case 'card':
-        setShowPaymentModal(false)
-        await handleCardPayment()
-        break
-      case 'transfer':
-        await handleBankTransfer()
-        break
-      default:
-        toast({
-          title: 'Invalid Payment Method',
-          description: 'Please select a valid payment method.',
-          variant: 'destructive',
-        })
     }
   }
 

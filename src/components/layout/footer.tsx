@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Facebook, Mail, Phone, MapPin, MessageCircle, Instagram, Linkedin } from 'lucide-react'
-import pospora from './prosporatech2.png'
 
 export function Footer() {
   return (
